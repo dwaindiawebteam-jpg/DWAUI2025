@@ -1,65 +1,147 @@
-import Image from "next/image";
+import HeroSection from "@/components/HeroSection";
+import DualContentBlock from "@/components/DualContentBlock";
+import ProgramsGrid from "@/components/home/ProgramsGrid";
+import Testimonials from "@/components/home/Testimonials";
+import ImpactStats from "@/components/ImpactStats";
+import FeaturedProjects from "@/components/home/FeaturedProjects";
+import BenevityBoardSection from "@/components/home/BenevityBoardSection";
+import WhyTrustUs from "@/components/home/WhyTrustUs";
+import TechPartners from "@/components/home/TechPartners";
+import GetMoreInfo from "@/components/home/GetMoreInfo";
 
-export default function Home() {
+// Define types for the content structure
+interface TextContent {
+  text: string;
+  weight?: "normal" | "bold" | "light" | "medium" | "semibold";
+  color?: string;
+}
+
+interface ContentBlock {
+  title: string;
+  titleColor: string;
+  bgColor: string;
+  type: "list";
+  content: TextContent[][];
+}
+
+interface HeroSectionProps {
+  belowText: {
+    content: TextContent[];
+  };
+}
+
+interface DualContentBlockProps {
+  left: ContentBlock;
+  right: ContentBlock;
+}
+
+interface ImpactStatsProps {
+  bgColor: string;
+  textColor: string;
+}
+
+export default function Home(): React.JSX.Element {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <main>
+      <HeroSection 
+        belowText={{
+          content: [
+            {
+              text: `For the past 32 years`,
+              weight: "bold",
+              color: "#004265"
+            },
+            {
+              text: `, our organization has been working tirelessly to uplift Dalit
+               communities and rural villages, striving to break cycles of poverty, inequality, and discrimination. 
+               With a deep commitment to social justice and empowerment, we have focused on education, livelihood 
+               opportunities, women's empowerment, and community development. Our journey has been one of resilience 
+               and hope— ensuring that the most marginalized have access to dignity, equal opportunities, and a`,
+            },
+            {
+              text: ` better future`,
+              weight: "bold",
+              color: "#004265"
+            },
+            {
+              text: `.`,
+            },
+          ],
+        }}
+      />
+      
+      <DualContentBlock
+        left={{
+          title: "Goals",
+          titleColor: "#FFFFFF",
+          bgColor: "#004265",
+          type: "list",
+          content: [
+            [
+              { text: "End poverty & discrimination 🚫", weight: "normal", color: "#FFFFFF" },
+            ],
+            [
+              { text: "Equal learning for every child 👧👦", weight: "normal", color: "#FFFFFF" },
+            ],
+            [
+              { text: "Economic independence for families 💰", weight: "normal", color: "#FFFFFF" },
+            ],
+            [
+              { text: "Strong, healthy communities 🌱", weight: "normal", color: "#FFFFFF" },
+            ],
+            [
+              { text: "Self-reliant rural villages 🌾", weight: "normal", color: "#FFFFFF" },
+            ],
+            [
+              { text: "Inclusive growth & participation 🌍", weight: "normal", color: "#FFFFFF" },
+            ],
+            [
+              { text: "Respect and empowerment for Dalits 🌟", weight: "normal", color: "#FFFFFF" },
+            ],
+          ],
+        }}
+        right={{
+          title: "Objectives",
+          titleColor: "#000000",
+          bgColor: "#9FDFFC",
+          type: "list",
+          content: [
+            [
+              { text: "Promote equality & justice ⚖️", weight: "normal", color: "#000000" },
+            ],
+            [
+              { text: "Quality education for children 📚", weight: "normal", color: "#000000" },
+            ],
+            [
+              { text: "Women's empowerment & livelihoods 👩‍👩‍👧", weight: "normal", color: "#000000" },
+            ],
+            [
+              { text: "Better health & nutrition 🏥", weight: "normal", color: "#000000" },
+            ],
+            [
+              { text: "Sustainable livelihoods & skills 🛠️", weight: "normal", color: "#000000" },
+            ],
+            [
+              { text: "Community leadership 🤝", weight: "normal", color: "#000000" },
+            ],
+            [
+              { text: "Rights & dignity advocacy ✊", weight: "normal", color: "#000000" },
+            ],
+          ],
+        }}
+      />
+      
+      <ProgramsGrid />
+      <ImpactStats
+        bgColor="#9FDFFC"
+        textColor="#004265"
+      />
+      <Testimonials />
+      <FeaturedProjects />
+      <BenevityBoardSection />
+      <WhyTrustUs />
+      <TechPartners />
+      <GetMoreInfo />
+    </main>
   );
 }
