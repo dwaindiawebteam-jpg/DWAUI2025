@@ -15,12 +15,6 @@ interface RightNumber {
   value: string
 }
 
-interface WeightMap {
-  normal: string
-  bold: string
-  [key: string]: string // Index signature for string access
-}
-
 const FeaturedProjects: React.FC = () => {
   const leftProjects: LeftProject[] = [
     {
@@ -49,11 +43,10 @@ const FeaturedProjects: React.FC = () => {
     { label: "5. TAX Exemption: ", value: "AAKFD2353BE20214" },
   ];
 
-  const weightMap: WeightMap = {
-    normal: "400",
-    bold: "700",
-  };
-
+const weightMap: Record<ContentSegment["weight"], string> = {
+  normal: "400",
+  bold: "700",
+};
   return (
     <section className="grid grid-cols-1 md:grid-cols-2">
       {/* Left Column */}
@@ -76,7 +69,7 @@ const FeaturedProjects: React.FC = () => {
 
       {/* Right Column */}
       <div className="flex p-12" style={{ backgroundColor: "#9FDFFC", color: "#000000" }}>
-        <div className="max-w-md mx-auto flex flex-col justify-start space-y-6">
+        <div className="mx-auto flex flex-col justify-start space-y-6">
           <h2 className="text-5xl font-bold flex items-center mb-16">
             <img src="/icons/homepage/arrow-left.svg" alt="Arrow Left" className="h-8 w-8 mr-4" />
             Featured Projects
