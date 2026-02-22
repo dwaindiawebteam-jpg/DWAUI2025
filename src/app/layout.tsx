@@ -33,11 +33,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+          className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        >
         <ThemeProvider>
           <Navigation />
-          {children}
+          <main className="flex-grow">
+            {children}
+          </main>
           <Footer />
         </ThemeProvider>
       </body>
