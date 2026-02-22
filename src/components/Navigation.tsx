@@ -27,45 +27,59 @@ const Navigation: FC = () => {
 
           {/* Navigation Links */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              <Link
-                href="/about"
-                className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium underline"
-              >
+          <div className="ml-10 flex items-baseline space-x-8">
+            <Link
+              href="/about"
+              className="relative group px-3 py-2 text-sm font-medium"
+            >
+              <span className="relative pb-1 text-gray-900 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gray-900 after:transition-all after:duration-300 group-hover:after:w-full">
                 About Us
-              </Link>
-              <Link
-                href="/projects"
-                className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium underline"
-              >
+              </span>
+            </Link>
+
+            <Link
+              href="/projects"
+              className="relative group px-3 py-2 text-sm font-medium"
+            >
+              <span className="relative pb-1 text-gray-900 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gray-900 after:transition-all after:duration-300 group-hover:after:w-full">
                 Projects
-              </Link>
-              <Link
-                href="/resources"
-                className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium underline"
-              >
+              </span>
+            </Link>
+
+            <Link
+              href="/resources"
+              className="relative group px-3 py-2 text-sm font-medium"
+            >
+              <span className="relative pb-1 text-gray-900 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gray-900 after:transition-all after:duration-300 group-hover:after:w-full">
                 Resources
-              </Link>
-              <Link
-                href="/support"
-                className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium underline"
-              >
+              </span>
+            </Link>
+
+            <Link
+              href="/support"
+              className="relative group px-3 py-2 text-sm font-medium"
+            >
+              <span className="relative pb-1 text-gray-900 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gray-900 after:transition-all after:duration-300 group-hover:after:w-full">
                 Support
-              </Link>
-              <Link
-                href="/blog"
-                className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium underline"
-              >
+              </span>
+            </Link>
+
+            <Link
+              href="/blog"
+              className="relative group px-3 py-2 text-sm font-medium"
+            >
+              <span className="relative pb-1 text-gray-900 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gray-900 after:transition-all after:duration-300 group-hover:after:w-full">
                 Blog
-              </Link>
-            </div>
+              </span>
+            </Link>
+          </div>
           </div>
 
           {/* CTA Button */}
           <div className="flex items-center">
-            <Button asChild className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-md">
-              <Link href="/donate">Donate Now</Link>
-            </Button>
+          <Button asChild className="bg-[#FF9DF0] hover:bg-[#FF9DF0]/80 text-black px-4 py-6 rounded-none font-semibold">
+            <Link href="/donate">Donate Now</Link>
+          </Button>
           </div>
         </div>
       </div>
