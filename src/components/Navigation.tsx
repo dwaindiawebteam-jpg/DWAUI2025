@@ -12,7 +12,7 @@ const Navigation: FC = () => {
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center space-x-3">
               <Image
-                src="/images/homepage/DWA Logo.jpg"
+                src="/images/icon.jpg"
                 alt="Dalit Welfare Association"
                 width={48}
                 height={48}

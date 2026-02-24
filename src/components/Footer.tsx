@@ -11,7 +11,7 @@ const Footer: FC = () => {
             <div className="flex items-center mb-4">
               <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center mr-4">
                 <Image
-                  src="/images/homepage/DWA Logo.jpg"
+                  src="/images/icon.jpg"
                   alt="DWA Logo"
                   width={48}
                   height={48}
