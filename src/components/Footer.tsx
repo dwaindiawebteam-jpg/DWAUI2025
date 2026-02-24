@@ -90,7 +90,7 @@ const Footer: FC = () => {
             <a href="#" className="hover:text-gray-300 transition-colors">Privacy Policy</a>
           </div>
           <div>
-            ©DWA INDIA 2025
+            ©DWA INDIA 2026       
           </div>
         </div>
       </div>
