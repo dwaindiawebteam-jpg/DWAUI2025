@@ -1,0 +1,73 @@
+"use client";
+
+import Image from "next/image";
+import blogPosts from "../../data/blogPosts";
+import { useState } from "react";
+
+// Define the type for a blog post
+interface BlogPost {
+  slug: string;
+  image: string;
+  title: string;
+  description: string;
+  date: string;
+}
+
+export default function CardGrid() {
+  const [showAll, setShowAll] = useState<boolean>(false);
+
+  const Card = ({ slug, image, title, description, date }: BlogPost) => (
+    <a
+      href={`/blog/${slug}`}
+      className={`flex flex-col md:flex-row bg-white shadow-md overflow-hidden w-full hover:shadow-lg transition cursor-pointer`}
+    >
+      {/* Left image */}
+      <div className="relative md:w-1/2 h-48 md:h-auto">
+        <Image src={image} alt={title} fill className="object-cover" />
+      </div>
+
+      {/* Right content */}
+      <div className="flex flex-col justify-between p-4 md:w-1/2">
+        <div>
+          <h2 className="font-bold text-xl mb-2">{title}</h2>
+          <p className="text-gray-700">{description}</p>
+        </div>
+
+        {/* Button and date */}
+        <div className="flex items-center justify-center mt-4 text-gray-500 text-sm space-x-4">
+          <div className="px-4 py-2 bg-[#7F4592] text-white font-semibold hover:bg-[#693770] transition">
+            View Post
+          </div>
+          <span className="border-l border-gray-300 pl-4">{date}</span>
+        </div>
+      </div>
+    </a>
+  );
+
+  const cardsToShow = showAll ? blogPosts : blogPosts.slice(0, 4);
+
+  return (
+    <>
+      {/* Card grid */}
+      <div className={`w-full px-8 lg:px-32 mt-10`}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-center">
+          {cardsToShow.map((card: BlogPost, index: number) => (
+            <Card key={index} {...card} />
+          ))}
+        </div>
+      </div>
+
+      {/* Full-width toggle button */}
+      {blogPosts.length > 4 && (
+        <div className="w-full bg-[#E8E7E7] py-12 flex justify-center mt-10">
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="px-6 py-3 bg-[#7F4592] text-white font-semibold hover:bg-[#693770] transition"
+          >
+            {showAll ? "View Less" : "View More"}
+          </button>
+        </div>
+      )}
+    </>
+  );
+}
