@@ -4,7 +4,7 @@ import ProjectsGallery from "@/components/resources/ProjectsGallery"
 import OrphanageOldageHome from "@/components/resources/OrphanageOldageHome"
 import AnnualReports from "@/components/resources/AnnualReports"
 import GetMoreInfo from "@/components/home/GetMoreInfo"
-import GetInvolved from "@/components/support/GetInvolved-d"
+import GetInvolved from "@/components/support/GetInvolved"
 
 export default function ResourcesPage() {
   return (
