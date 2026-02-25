@@ -90,7 +90,7 @@ const Navigation: FC = () => {
 
           {/* CTA Button and Mobile Menu Toggle */}
           <div className="flex items-center space-x-4">
-            <Button asChild className="bg-[#FF9DF0] hover:bg-[#FF9DF0]/80 text-black px-4 py-6 rounded-none font-semibold">
+            <Button asChild className="bg-[#E6A4F9] hover:bg-[#E6A4F9]/80 text-black px-4 py-6 rounded-none font-semibold">
               <Link href="/donate">Donate Now</Link>
             </Button>
             
