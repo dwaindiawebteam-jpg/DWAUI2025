@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-export default function GetInvolved() {
+const GetInvolved: React.FC = () => {
   return (
     <section className="w-full bg-[#FF9DF080] h-[70px] max-md:h-[60px] max-sm:h-[40px] text-center ">
       <div className="flex justify-end items-center gap-8 h-full pr-15 max-md:pr-2 max-md:justify-center ">
@@ -12,5 +12,7 @@ export default function GetInvolved() {
         </button>
       </div>
     </section>
-  )
-}
+  );
+};
+
+export default GetInvolved;
