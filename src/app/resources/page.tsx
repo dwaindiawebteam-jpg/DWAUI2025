@@ -19,7 +19,7 @@ export default function ResourcesPage() {
             {
               text: `The resources we share bring together knowledge, insights, and practical guidance from our network.
                         Whether you’re a supporter, partner, or community member, you’ll find tools here to help you learn, grow,
-                        and make a difference.`,
+                        and make a difference..`,
               color: "black",
             },
           ],
