@@ -18,3 +18,33 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
 }
+
+/* Custom scrollbar */
+.scrollable-description::-webkit-scrollbar,
+textarea.scrollable-description::-webkit-scrollbar {
+  width: 6px;
+  height: 4px;
+}
+
+.scrollable-description::-webkit-scrollbar-track,
+textarea.scrollable-description::-webkit-scrollbar-track {
+  background: #EDE5D8;
+  border-radius: 3px;
+}
+
+.scrollable-description::-webkit-scrollbar-thumb,
+textarea.scrollable-description::-webkit-scrollbar-thumb {
+  background: #3A7CA5;
+  border-radius: 3px;
+}
+
+.scrollable-description::-webkit-scrollbar-thumb:hover,
+textarea.scrollable-description::-webkit-scrollbar-thumb:hover {
+  background: #2C5F7F;
+}
+
+/* Firefox scrollbar support */
+.scrollable-description {
+  scrollbar-width: thin;
+  scrollbar-color: #3A7CA5 #EDE5D8;
+}
