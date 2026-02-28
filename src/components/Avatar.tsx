@@ -33,7 +33,7 @@ const Avatar = ({
   initials,
   size = 45,
   textColor = "white",
-  fallbackSrc = "/assets/icons/Profile.svg",
+  fallbackSrc = "/icons/Profile.svg",
 }: AvatarProps) => {
   const displayInitials = initials || getInitials(firstName || "", lastName || "");
   const bgColor = displayInitials ? stringToColor((firstName || "") + (lastName || "")) : undefined;

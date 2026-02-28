@@ -287,7 +287,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister, forceForgot }: LoginM
                       <button
                         type="button"
                         onClick={switchToForgotPassword}
-                        className="text-[#004265] font-inter text-base md:text-lg hover:text-[#00344d] transition-colors"
+                        className="text-[#004265] font-inter text-lg hover:text-[#00344d] transition-colors"
                       >
                         Forgot Password?
                       </button>
@@ -427,7 +427,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister, forceForgot }: LoginM
 
                     {/* Create Account */}
                     <div className="text-center">
-                      <span className="text-[#004265] font-inter text-sm">
+                      <span className="text-[#004265] font-inter text-lg">
                         New to StoryBridge?{" "}
                         <button
                           onClick={handleSwitchToRegister}

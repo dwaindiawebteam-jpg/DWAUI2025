@@ -436,7 +436,7 @@ const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfir
 
                 {/* Create Account */}
                 <div className="text-center">
-                  <span className="text-[#004265] font-inter text-sm">
+                  <span className="text-[#004265] font-inter text-lg">
                     Already have an account?{" "}
                     <button
                       onClick={handleSwitchToLogin}
