@@ -84,7 +84,7 @@ const Navigation: FC = () => {
 
             {/* Desktop Profile (only when logged in) */}
             {user && (
-              <div className="hidden md:flex items-center">
+              <div className="hidden md:flex items-center ml-12">
                 <ul className="flex gap-3">
                   <li className="relative group">
                     
@@ -100,7 +100,7 @@ const Navigation: FC = () => {
 
                     {/* Dropdown */}
                     <ul
-                      className="absolute right-0 mt-4 w-52 bg-white border border-gray-200 text-gray-900 rounded-md shadow-lg py-1
+                      className="absolute right-[-80px] mt-4 w-52 bg-white border border-gray-200 text-gray-900 rounded-md shadow-lg py-1
                       opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50
                       text-sm font-medium"
                     >
