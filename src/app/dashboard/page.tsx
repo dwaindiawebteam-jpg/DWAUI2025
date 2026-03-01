@@ -34,7 +34,6 @@ export default function DashboardHome() {
 
   // Options for different roles
   const profileOptions: Option[] = [
-    { label: "My Favourites", href: "/dashboard/favourites", icon: FiHeart },
     { label: "My Profile", href: "/dashboard/profile", icon: FiUser },
     { label: "Change Password", action: "forgot", icon: FiLock },
     { label: "Change Email", href: "/dashboard/email", icon: FiMail },
@@ -60,11 +59,11 @@ export default function DashboardHome() {
         <div
           key={option.label}
           onClick={() => openLoginModal(true)}
-          className="flex flex-col items-center justify-center py-6 px-8 border border-[#D8CDBE] rounded-md bg-white/40 text-[#4A3820] hover:bg-[#E6DCCB] transition-colors duration-200 text-lg font-medium group text-center cursor-pointer"
+          className="flex flex-col items-center justify-center py-6 px-8 border border-[#D8CDBE] hover:border-[#004265] rounded-md bg-white/40 transition-colors duration-200 text-lg font-medium group text-center cursor-pointer"
           style={{ minWidth: "200px", minHeight: "120px" }}
         >
-          <Icon size={28} className="mb-2 stroke-current text-[#4A3820] transition-colors duration-300 group-hover:text-[#6D4F27]" />
-          <span className="leading-tight">{option.label}</span>
+          <Icon size={28} className="mb-2 stroke-current transition-colors duration-300 group-hover:text-[#004265]" />
+          <span className="leading-tight transition-colors duration-300 group-hover:text-[#004265]">{option.label}</span>
         </div>
       );
     }
@@ -73,11 +72,11 @@ export default function DashboardHome() {
       <Link
         key={option.label}
         href={option.href!}
-        className="flex flex-col items-center justify-center py-6 px-8 border border-[#D8CDBE] rounded-md bg-white/40 text-[#4A3820] hover:bg-[#E6DCCB] transition-colors duration-200 text-lg font-medium group text-center"
+        className="flex flex-col items-center justify-center py-6 px-8 border border-[#D8CDBE] hover:border-[#004265] rounded-md bg-white/40 transition-colors duration-200 text-lg font-medium group text-center"
         style={{ minWidth: "200px", minHeight: "120px" }}
       >
-        <Icon size={28} className="mb-2 stroke-current text-[#4A3820] transition-colors duration-300 group-hover:text-[#6D4F27]" />
-        <span className="leading-tight">{option.label}</span>
+        <Icon size={28} className="mb-2 stroke-current transition-colors duration-300 group-hover:text-[#004265]" />
+        <span className="leading-tight transition-colors duration-300 group-hover:text-[#004265]">{option.label}</span>
       </Link>
     );
   };
@@ -91,10 +90,10 @@ export default function DashboardHome() {
   if (!authReady) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="w-48 h-2 bg-[#E0D6C7] rounded-full overflow-hidden">
-          <div className="h-full w-full animate-pulse bg-[#4A3820]"></div>
+        <div className="w-48 h-2 rounded-full overflow-hidden bg-gray-200">
+          <div className="h-full w-full bg-[#004265] animate-pulse"></div>
         </div>
-        <p className="mt-4 text-[#4A3820] font-medium text-lg font-sans!">Loading dashboard…</p>
+        <p className="mt-4 font-medium text-lg font-sans!">Loading dashboard…</p>
       </div>
     );
   }
@@ -102,28 +101,29 @@ export default function DashboardHome() {
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-[#4A3820] text-xl font-semibold font-sans!">You must be logged in to access this page.</p>
+        <p className="text-xl font-semibold font-sans!">You must be logged in to access this page.</p>
       </div>
     );
   }
 
   return (
     <>
-      <div className="min-h-screen px-4 sm:px-6 lg:px-8 font-sans!">
+      <div className="min-h-screen px-4 sm:px-6 py-12 lg:px-8 font-sans!">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-extrabold text-[#4A3820] mb-2 text-center font-sans!">
-            Welcome to Your Dashboard
+          <h1 className="text-3xl font-extrabold mb-2 text-center font-sans!">
+            Tshiamo is the coolest
           </h1>
-          <p className="text-3xl! text-[#4A3820] mb-8 text-center">
+          <p className="text-3xl! mb-8 text-center">
             Hello {greetingName}, <span className="font-semibold text-3xl! capitalize">{role || "Guest"}</span>
           </p>
+          
 
           {/* Role-based sections */}
           <div className="space-y-8">
             {role === "admin" && (
               <div className="space-y-6">
-                <div className="bg-[#F0E8DB] border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8">
-                  <h2 className="text-2xl font-extrabold text-[#4A3820] mb-6 text-center font-sans!">Admin Tools</h2>
+                <div className="border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8">
+                  <h2 className="text-2xl font-extrabold mb-6 text-center font-sans!">Admin Tools</h2>
                   <div className="flex flex-wrap justify-center gap-4">{adminOptions.map(renderOptionCard)}</div>
                 </div>
               </div>
@@ -131,16 +131,16 @@ export default function DashboardHome() {
 
             {(role === "author" || role === "admin") && (
               <div className="space-y-6">
-                <div className="bg-[#F0E8DB] border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8">
-                  <h2 className="text-2xl font-extrabold text-[#4A3820] mb-6 text-center font-sans!">Author Tools</h2>
+                <div className="border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8">
+                  <h2 className="text-2xl font-extrabold mb-6 text-center font-sans!">Author Tools</h2>
                   <div className="flex flex-wrap justify-center gap-4">{authorOptions.map(renderOptionCard)}</div>
                 </div>
               </div>
             )}
 
             <div className="space-y-6">
-              <div className="bg-[#F0E8DB] border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8">
-                <h2 className="text-2xl font-extrabold text-[#4A3820] mb-6 text-center font-sans!">My Account</h2>
+              <div className="bg-gray-50 border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8">
+                <h2 className="text-2xl font-extrabold mb-6 text-center font-sans!">My Account</h2>
                 <div className="flex flex-wrap justify-center gap-4">{profileOptions.map(renderOptionCard)}</div>
               </div>
             </div>
