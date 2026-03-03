@@ -111,7 +111,7 @@ export default function DashboardHome() {
       <div className="min-h-screen px-4 sm:px-6 py-12 lg:px-8 font-sans!">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-extrabold mb-2 text-center font-sans!">
-            Tshiamo is the coolest
+            Welcome to Your Dashboard
           </h1>
           <p className="text-3xl! mb-8 text-center">
             Hello {greetingName}, <span className="font-semibold text-3xl! capitalize">{role || "Guest"}</span>
