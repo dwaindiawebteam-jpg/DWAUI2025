@@ -14,12 +14,10 @@ export default function LoginPortalPage() {
 const [showRegister, setShowRegister] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      if (role === "admin") router.replace("/admin");
-      else if (role === "author") router.replace("/author");
-      else router.replace("/");
-    }
-  }, [user, role, router]);
+  if (user) {
+    router.replace("/dashboard");
+  }
+}, [user, router]);
 
 return (
   <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gray-50 px-4">

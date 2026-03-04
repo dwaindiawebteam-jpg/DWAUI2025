@@ -280,7 +280,7 @@ useEffect(() => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center ">
         <div className="w-48 h-2 bg-[#E0D6C7] rounded-full overflow-hidden">
-          <div className="h-full w-full animate-pulse bg-[#4A3820]"></div>
+          <div className="h-full w-full animate-pulse bg-[#004265]"></div>
         </div>
         <p className="mt-4 font-medium text-lg font-sans!">
           Loading users...
@@ -510,7 +510,7 @@ useEffect(() => {
           <h3 className="font-sans! text-2xl font-bold  mb-4">
             Confirm Role Change
           </h3>
-          <p className=" mb-6 font-sans!">
+          <p className=" mb-6 font-sans text-xl!">
             Are you sure you want to change <strong>{userToUpdate.userName}</strong>'s role from{" "}
             <span className="font-bold text-[#805C2C] text-xl! font-sans!">{userToUpdate.currentRole}</span> to{" "}
             <span className="font-bold text-[#805C2C] text-xl! font-sans!">{userToUpdate.newRole}</span>?
@@ -540,15 +540,15 @@ useEffect(() => {
           <h3 className="font-sans! text-2xl font-bold  mb-4">
             {userToDisable.currentDisabled ? "Enable User" : "Disable User"}
           </h3>
-          <p className=" mb-6 font-sans!">
+          <p className=" mb-6 text-xl font-sans!">
             Are you sure you want to {userToDisable.currentDisabled ? "enable" : "disable"} <strong>{userToDisable.userName}</strong>?
             {!userToDisable.currentDisabled && (
-              <span className="block mt-2 text-sm text-red-600">
+              <span className="block mt-2 text-lg text-red-600">
                 This will prevent the user from logging into their account.
               </span>
             )}
             {userToDisable.currentDisabled && (
-              <span className="block mt-2 text-sm text-emerald-600">
+              <span className="block mt-2 text-lg text-emerald-600">
                 This will allow the user to log into their account again.
               </span>
             )}

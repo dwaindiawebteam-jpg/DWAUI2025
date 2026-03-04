@@ -17,7 +17,7 @@ export async function GET(req: Request) {
 
 
     // 3️⃣ Admin guard
-    if (!decoded.admin) {
+    if (decoded.role !== "admin") {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
