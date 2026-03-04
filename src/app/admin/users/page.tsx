@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { SUPER_ADMIN_UID } from "@/lib/constants";
 
 type UserRecord = {
   uid: string;
@@ -392,7 +393,7 @@ useEffect(() => {
                   "
                 >
                   {filteredUsers.map((u) => {
-                    const isSuperAdmin = u.uid === "z2Vhrt7WiBSBDLlvnNuJ3PMtsvk2";
+                    const isSuperAdmin = u.uid === SUPER_ADMIN_UID;
                     const isCurrentUser = u.uid === currentAuthUser?.uid;
                     return (
                       <div
