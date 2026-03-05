@@ -48,3 +48,250 @@ textarea.scrollable-description::-webkit-scrollbar-thumb:hover {
   scrollbar-width: thin;
   scrollbar-color: #3A7CA5 #EDE5D8;
 }
+
+
+/* ===== EDITOR STYLES ===== */
+.editor-content {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+/* Headings */
+.editor-content [data-level="1"],
+.editor-content [data-level="1"] h1 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.editor-content [data-level="2"],
+.editor-content [data-level="2"] h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Typography */
+.editor-content p,
+.editor-content li,
+.editor-content span {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 18px;
+}
+
+.editor-content > p {
+  margin-left: 1.5rem; /* For drag handle spacing */
+}
+
+.editor-content li > p {
+  margin-left: 0; /* Remove extra space inside lists */
+}
+
+/* Lists */
+.editor-content ul {
+  list-style-type: disc !important;
+  margin-left: 0;
+  padding-left: 1.5rem;
+}
+
+.editor-content ol {
+  list-style-type: decimal !important;
+  margin-left: 0rem;
+  padding-left: 1.5rem;
+}
+
+.editor-content li {
+  margin: 0.25rem 0;
+  padding-left: 0;
+}
+
+/* Links */
+.editor-content a {
+  color: inherit;
+  font-size: 18px;
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 2px;
+}
+
+.editor-content a span {
+  text-decoration-line: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 2px;
+}
+
+.editor-content a:hover {
+  opacity: 0.85;
+}
+
+/* Focus state */
+.editor-content .ProseMirror:focus {
+  outline: none;
+}
+
+/* ===== TABLE STYLES (Editor & Preview) ===== */
+/* Shared table styles */
+.article-content table,
+.tiptap-editor-wrapper table {
+  border-collapse: collapse;
+  width: max-content; /* Shrink-to-fit table content */
+}
+
+.tiptap-editor-wrapper {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.tiptap-table,
+.tiptap-table-cell,
+.tiptap-table-header {
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* Table cells */
+.tiptap-table-cell,
+.article-content td {
+  border: 1px solid #cfcfcf;
+  position: relative;
+  overflow: visible !important;
+  padding: 8px 8px 8px 14px;
+}
+
+.article-content td {
+  border-color: #c7b89d;
+  padding: 0.5rem 0.75rem;
+  vertical-align: center;
+  word-break: break-word;
+  white-space: normal;
+}
+
+/* Table headers */
+.tiptap-table-header,
+.article-content th {
+  background: #498AAC  ;
+  font-weight: bold;
+  border: 1px solid #cfcfcf;
+  padding: 4px;
+}
+
+.article-content th {
+  background-color: #f0e8db;
+  border-color: #c7b89d;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Column resizing */
+.ProseMirror {
+  position: relative;
+}
+
+.ProseMirror table {
+  user-select: none;
+}
+
+.ProseMirror .column-resize-handle {
+  position: absolute;
+  right: -3px;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+  z-index: 20;
+  pointer-events: auto;
+}
+
+.ProseMirror.resize-cursor {
+  cursor: col-resize !important;
+}
+
+/* Table selection */
+.ProseMirror td.selectedCell,
+.ProseMirror th.selectedCell {
+  background-color: rgba(128, 92, 44, 0.18);
+}
+
+.ProseMirror .columnSelected,
+.ProseMirror .rowSelected {
+  background-color: rgba(128, 92, 44, 0.12);
+}
+
+.ProseMirror td.selectedCell::after,
+.ProseMirror th.selectedCell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid #805C2C;
+  pointer-events: none;
+}
+
+/* ===== ARTICLE CONTENT (Preview) ===== */
+.article-content {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 18px;
+  line-height: 1.7;
+  overflow-x: auto;
+}
+
+.article-content table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.article-content p,
+.article-content li,
+.article-content span {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 18px;
+}
+
+.article-content h1 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.article-content h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.article-content a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.article-content a span {
+  text-decoration-line: underline;
+  text-decoration-color: currentColor;
+}
+
+.article-content tr:nth-child(even) td {
+  background-color: #faf7f2;
+}
+
+/* ===== EMBEDS ===== */
+/* YouTube & block embeds */
+.youtube-embed,
+.youtube-embed-debug,
+.article-content > div[youtube-embed],
+.article-content .youtube-embed-debug,
+.article-content .youtube-embed,
+.article-content iframe[src*="youtube"] {
+  display: flex !important;
+  justify-content: center !important;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.youtube-embed iframe,
+.youtube-embed-debug iframe {
+  width: 100%;
+  max-width: 800px;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+}
+
+.article-content > div {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
