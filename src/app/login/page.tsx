@@ -20,7 +20,7 @@ const [showRegister, setShowRegister] = useState(false);
 }, [user, router]);
 
 return (
-  <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gray-50 px-4">
+  <div className="min-h-screen w-full flex flex-col items-center py-12 bg-gray-50 px-4">
 
     <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-10 text-center space-y-6">
 

@@ -371,7 +371,7 @@ useEffect(() => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                  className="w-full sm:w-80 px-4 py-2 rounded-xl 
                 border border-[#C9BBAA] bg-white 
-                placeholder-[#4A3820]/50 focus:ring-2 focus:ring-[#805C2C]/40"
+                placeholder-[#4A3820]/50 focus:ring-2 focus:ring-[#004265]/40"
                 />
               </div>
             </div>
@@ -402,7 +402,7 @@ useEffect(() => {
                           rounded-lg bg-white border border-[#E6DED1]
                           p-4
                           shadow-sm hover:shadow-md transition-shadow
-                          ${isCurrentUser ? "border-l-4 border-l-[#805C2C]" : ""}
+                          ${isCurrentUser ? "border-l-4 border-l-[#004265]" : ""}
                           ${u.disabled ? "opacity-70" : ""}
                         `}
                       >
@@ -424,22 +424,22 @@ useEffect(() => {
 
                               {/* Role Tags */}
                               {isSuperAdmin && (
-                                <span className="ml-2 px-2 py-1 text-sm! bg-purple-100 text-purple-800 rounded-full">
+                                <span className="px-2 py-1 text-sm! bg-purple-100 text-purple-800 rounded-full">
                                   Super Admin
                                 </span>
                               )}
                               {u.role === "admin" && (
-                                <span className="ml-2 px-2 py-1 text-sm! bg-red-100 text-red-800 rounded-full">
+                                <span className="px-2 py-1 text-sm! bg-red-100 text-red-800 rounded-full">
                                   Admin
                                 </span>
                               )}
                               {u.role === "author" && (
-                                <span className="ml-2 px-2 py-1 text-sm! bg-blue-100 text-blue-800 rounded-full">
+                                <span className="px-2 py-1 text-sm! bg-blue-100 text-blue-800 rounded-full">
                                   Author
                                 </span>
                               )}
                               {u.disabled && (
-                                <span className="ml-2 px-2 py-1 text-sm! bg-gray-200 text-gray-800 rounded-full">
+                                <span className="px-2 py-1 text-sm! bg-gray-200 text-gray-800 rounded-full">
                                   Disabled
                                 </span>
                               )}
@@ -459,8 +459,7 @@ useEffect(() => {
                             <select
                               className="
                                 px-3 py-1.5 text-sm rounded-md border 
-                                bg-[#F7F2EB] 
-                                focus:ring-2 focus:ring-[#805C2C]/40
+                                focus:ring-2 focus:ring-[#004265]/40
                                 disabled:bg-gray-100 disabled:border-gray-300 disabled:text-gray-500
                               "
                               value={u.role || 'reader'}

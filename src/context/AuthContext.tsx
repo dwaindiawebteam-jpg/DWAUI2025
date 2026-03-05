@@ -15,6 +15,7 @@ import {
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { getInitials } from "@/utils/getInitials";
+import { useRouter } from "next/navigation";
 
 type Role = "admin" | "author" | "reader" | null;
 
@@ -60,6 +61,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [authReady, setAuthReady] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [forceForgot, setForceForgot] = useState(false);
+
+  const router = useRouter();
 
   const openLoginModal = (forgot = false) => {
     setForceForgot(forgot);
@@ -212,12 +215,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // Logout
   const logout = async () => {
-    await signOut(auth);
-    setUser(null);
-    setRole(null);
-    document.cookie = "auth-token=; path=/; max-age=0";
-    document.cookie = "user-role=; path=/; max-age=0";
-  };
+  await signOut(auth);
+
+  setUser(null);
+  setRole(null);
+
+  document.cookie = "auth-token=; path=/; max-age=0";
+  document.cookie = "user-role=; path=/; max-age=0";
+
+  router.push("/login");
+};
 
   return (
     <AuthContext.Provider
