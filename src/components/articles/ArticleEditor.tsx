@@ -29,7 +29,7 @@ import { TableHeader } from "@tiptap/extension-table-header";
 import type { JSONContent } from "@tiptap/core";
 import { BubbleMenu } from '@tiptap/react/menus';
 import { compressImageClient } from "@/lib/compressImage";
-
+import Color from "@tiptap/extension-color";
 
 
 interface ArticleEditorProps {
@@ -66,15 +66,31 @@ export default function ArticleEditor({
   const [tableMenuOpen, setTableMenuOpen] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState(0);
-  const isDraggingRef = useRef(false);
+  const [colorMenuOpen, setColorMenuOpen] = useState(false);
 
+  const isDraggingRef = useRef(false);
   const hasHydratedRef = useRef(false);
   const lastArticleIdRef = useRef<string | null>(null);
+  const colorMenuRef = useRef<HTMLDivElement | null>(null);
+  
   const TOOLBAR_BTN_BASE =
   "px-2 py-1 rounded bg-white font-sans! transition-colors duration-150";
   const TOOLBAR_BTN_HOVER =
   "hover:bg-[#E6DCCB] disabled:opacity-50 disabled:hover:bg-white";
-
+    const COLORS = [
+    "#E53935",
+    "#059669",
+    "#2563EB",
+    "#413320",
+    "#B26C1F",
+    "#7C3AED",
+    "#F97316",
+    "#FBBF24",
+    "#14B8A6",
+    "#DB2777",
+    "#000000",
+    "#4B5563",
+  ];
 
 
   const getSafePos = (pos: number | undefined, editor: ReturnType<typeof useEditor>): number => {
@@ -99,7 +115,7 @@ export default function ArticleEditor({
   };
 
   const pendingSaveRef = useRef<JSONContent | null>(null);
-const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 
 // how often we force a server commit
@@ -184,6 +200,7 @@ const DisableImagePaste = Extension.create({
       }),
       DisableImagePaste,
       TextStyleKit,
+      Color.configure({ types: ["textStyle"] }),
       DraggableParagraph,
       DraggableHeading,
       DraggableCodeBlock,
@@ -488,7 +505,30 @@ useEffect(() => {
   return () => window.removeEventListener("beforeunload", handleBeforeUnload);
 }, [flushSave]);
 
+useEffect(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      colorMenuRef.current &&
+      !colorMenuRef.current.contains(event.target as Node)
+    ) {
+      setColorMenuOpen(false);
+    }
+  };
 
+  document.addEventListener("mousedown", handleClickOutside);
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, []);
+
+const activeColor =
+  editor?.getAttributes("textStyle")?.color || "#000000";
+
+const selectionIsHeading = (): boolean => {
+  if (!editor) return false;
+  return editor.isActive("heading");
+};
   if (!editor) return null;
 
   return (
@@ -545,14 +585,73 @@ useEffect(() => {
               <path d="M256-213.85 213.85-256l224-224-224-224L256-746.15l224 224 224-224L746.15-704l-224 224 224 224L704-213.85l-224-224-224 224Z" />
             </svg>
           </button>
-          <button
-            onClick={() => editor.chain().focus().toggleUnderline().run()}
-            className={`cursor-pointer ${TOOLBAR_BTN_BASE} ${TOOLBAR_BTN_HOVER} ${
-           editor.isActive("underline") ? "bg-[#E6DCCB]" : "" }`}
+          <div ref={colorMenuRef} className="relative">
+            {/* Main color box */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setColorMenuOpen((v) => !v);
+              }}
+              className={`cursor-pointer flex items-center justify-center h-[30px] w-[34px] rounded bg-white ${TOOLBAR_BTN_HOVER}`}
+            >
+              <span
+                style={{
+                  width: 20,
+                  height: 20,
+                  backgroundColor: activeColor,
+                  borderRadius: 4,
+                  border: "1px solid #999",
+                  display: "block",
+                }}
+              />
+            </button>
 
-          >
-            U
-          </button>
+            {/* Dropdown palette */}
+            {colorMenuOpen && (
+              <div
+  onClick={(e) => e.stopPropagation()}
+  className="absolute z-50 mt-1 p-3 w-56 grid grid-cols-6 gap-1 justify-items-center rounded border bg-white shadow"
+  style={{ borderColor: "#D8CDBE" }}
+>
+                {COLORS.map((color) => {
+                  const disabled = selectionIsHeading();
+                  return (
+                    <button
+                      key={color}
+                      onClick={() => {
+                        if (disabled) return; // prevent applying color
+                        editor.chain().focus().setColor(color).run();
+                        setColorMenuOpen(false);
+                      }}
+                      disabled={disabled}
+                      style={{
+                        backgroundColor: color,
+                        width: 18,
+                        height: 18,
+                        borderRadius: 4,
+                        cursor: disabled ? "not-allowed" : "pointer",
+                        opacity: disabled ? 0.5 : 1,
+                      }}
+                      className={`border transition-transform hover:scale-110 ${
+                        editor.isActive("textStyle", { color }) ? "border-black" : "border-gray-300"
+                      }`}
+                    />
+                  );
+                })}
+                <button
+                  onClick={() => {
+                    editor.chain().focus().unsetColor().run();
+                    setColorMenuOpen(false);
+                  }}
+                  className="col-span-6 text-sm mt-1 border rounded px-4 py-0.5 font-sans cursor-pointer"
+                >
+                  Reset
+                </button>
+              </div>
+            )}
+          </div>
+
+          
           <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
            className={`cursor-pointer ${TOOLBAR_BTN_BASE} ${TOOLBAR_BTN_HOVER} ${
@@ -676,34 +775,35 @@ useEffect(() => {
           <div className="flex-1" />
 
      <button
-  onClick={handleExportDocx}
-  disabled={isExporting}
-  className={`
-    relative px-3 py-1 rounded border border-[#004265]
-    text-[#004265] bg-white shadow font-sans!
-    ${isExporting ? "cursor-not-allowed opacity-70" : "hover:bg-[#f9f9f9]"}
-  `}
-  title="Export article to DOCX"
->
-  {/* Label */}
-  <span className={`text-sm! cursor-pointer ${isExporting ? "opacity-0" : "opacity-100"}`}>
-    Export docx
-  </span>
+          onClick={handleExportDocx}
+          disabled={isExporting}
+          className={`
+            relative px-3 py-1 rounded border border-[#004265]
+            text-[#004265] bg-white shadow font-sans!
+            ${isExporting ? "cursor-not-allowed opacity-70" : "hover:bg-[#f9f9f9]"}
+          `}
+          title="Export article to DOCX"
+        >
+          {/* Label */}
+          <span className={`text-sm cursor-pointer ${isExporting ? "opacity-0" : "opacity-100"}`}>
+            Export docx
+          </span>
 
-  {/* Spinner */}
-  {isExporting && (
-    <span className="absolute inset-0 flex items-center justify-center">
-      <span className="
-        h-4 w-4
-        border-2 border-[#004265]/30
-        border-t-[#004265]
-        rounded-full
-        animate-spin
-      " />
-    </span>
-  )}
-</button>
+          {/* Spinner */}
+          {isExporting && (
+            <span className="absolute inset-0 flex items-center justify-center">
+              <span className="
+                h-4 w-4
+                border-2 border-[#004265]/30
+                border-t-[#004265]
+                rounded-full
+                animate-spin
+              " />
+            </span>
+          )}
+        </button>
         </div>
+ 
       </div>
 
       {linkModalOpen && (
@@ -789,7 +889,7 @@ useEffect(() => {
 
       <div className="relative border rounded bg-white p-4 min-h-75 editor-content max-w-none" style={{ borderColor: "#D8CDBE" }}>
         <div className="tiptap-editor-wrapper py-8 scrollable-description overflow-x-auto">
-          {editor && (
+          {/* {editor && (
           <BubbleMenu
             editor={editor}
             shouldShow={({ editor, from }) => {
@@ -869,7 +969,7 @@ useEffect(() => {
                 </button>
               </div>
             </BubbleMenu>
-          )}
+          )} */}
 
           <EditorContent editor={editor} />
         </div>
