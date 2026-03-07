@@ -28,7 +28,7 @@ textarea.scrollable-description::-webkit-scrollbar {
 
 .scrollable-description::-webkit-scrollbar-track,
 textarea.scrollable-description::-webkit-scrollbar-track {
-  background: #EDE5D8;
+  background: #E8F0F5; /* Light blue-gray track */
   border-radius: 3px;
 }
 
@@ -46,7 +46,7 @@ textarea.scrollable-description::-webkit-scrollbar-thumb:hover {
 /* Firefox scrollbar support */
 .scrollable-description {
   scrollbar-width: thin;
-  scrollbar-color: #3A7CA5 #EDE5D8;
+  scrollbar-color: #3A7CA5 #E8F0F5;
 }
 
 
@@ -158,7 +158,7 @@ textarea.scrollable-description::-webkit-scrollbar-thumb:hover {
 }
 
 .article-content td {
-  border-color: #c7b89d;
+  border-color: #B0C4D9; /* Soft blue-gray border */
   padding: 0.5rem 0.75rem;
   vertical-align: center;
   word-break: break-word;
@@ -168,15 +168,15 @@ textarea.scrollable-description::-webkit-scrollbar-thumb:hover {
 /* Table headers */
 .tiptap-table-header,
 .article-content th {
-  background: #498AAC  ;
+  background: #498AAC;
   font-weight: bold;
   border: 1px solid #cfcfcf;
   padding: 4px;
 }
 
 .article-content th {
-  background-color: #f0e8db;
-  border-color: #c7b89d;
+  background-color: #D4E3F0; /* Light blue header background */
+  border-color: #B0C4D9; /* Matching cell border color */
   padding: 0.5rem 0.75rem;
 }
 
@@ -204,15 +204,15 @@ textarea.scrollable-description::-webkit-scrollbar-thumb:hover {
   cursor: col-resize !important;
 }
 
-/* Table selection */
+/* Table selection - Using blue tones */
 .ProseMirror td.selectedCell,
 .ProseMirror th.selectedCell {
-  background-color: rgba(128, 92, 44, 0.18);
+  background-color: rgba(58, 124, 165, 0.18); /* Based on #3A7CA5 */
 }
 
 .ProseMirror .columnSelected,
 .ProseMirror .rowSelected {
-  background-color: rgba(128, 92, 44, 0.12);
+  background-color: rgba(58, 124, 165, 0.12); /* Based on #3A7CA5 */
 }
 
 .ProseMirror td.selectedCell::after,
@@ -220,7 +220,7 @@ textarea.scrollable-description::-webkit-scrollbar-thumb:hover {
   content: "";
   position: absolute;
   inset: 0;
-  border: 2px solid #805C2C;
+  border: 2px solid #3A7CA5; /* Matching your scrollbar blue */
   pointer-events: none;
 }
 
@@ -266,7 +266,7 @@ textarea.scrollable-description::-webkit-scrollbar-thumb:hover {
 }
 
 .article-content tr:nth-child(even) td {
-  background-color: #faf7f2;
+  background-color: #F0F7FC; /* Very light blue alternating row background */
 }
 
 /* ===== EMBEDS ===== */
