@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function ImageNodeView({ node, editor, getPos, updateAttributes }: any) {
   const src = node.attrs.src;
+  const fileId = node.attrs.fileId;
   const [alt, setAlt] = useState(node.attrs.alt || "");
   const isEditable = editor?.isEditable;
 
@@ -12,16 +13,16 @@ export default function ImageNodeView({ node, editor, getPos, updateAttributes }
   }, [node.attrs.alt]);
 
   const handleRemove = () => {
-    const pos = getPos();
+  const pos = getPos();
 
-    editor
-      .chain()
-      .focus()
-      .deleteRange({ from: pos, to: pos + node.nodeSize })
-      .run();
+  editor
+    .chain()
+    .focus()
+    .deleteRange({ from: pos, to: pos + node.nodeSize })
+    .run();
 
-    editor.storage.imageWithRemove?.onImageRemoved?.(src);
-  };
+  editor.storage.imageWithRemove?.onImageRemoved?.(src, fileId);
+};
 
   return (
     <NodeViewWrapper className="group w-full flex flex-col items-center relative my-6">

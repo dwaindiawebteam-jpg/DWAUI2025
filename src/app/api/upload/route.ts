@@ -1,14 +1,11 @@
 import { NextResponse } from "next/server";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import ImageKit from "imagekit";
 import sharp from "sharp";
 
-const r2 = new S3Client({
-  region: "auto",
-  endpoint: `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-  credentials: {
-    accessKeyId: process.env.CLOUDFLARE_R2_ACCESS_KEY!,
-    secretAccessKey: process.env.CLOUDFLARE_R2_SECRET_KEY!,
-  },
+const imagekit = new ImageKit({
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY!,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
+  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
 });
 
 //-------------------------------------
@@ -94,65 +91,58 @@ export async function POST(req: Request) {
     extension = format!;
 
   //-------------------------------------
-  // Static images → AVIF
-  //-------------------------------------
-  } else {
-    let transformer = sharp(originalBuffer).rotate();
+// Static images → resize only (no format conversion)
+//-------------------------------------
+} else {
+  let transformer = sharp(originalBuffer).rotate();
 
-    if (tooLarge) {
-      transformer = transformer.resize({
-        width: 1600,
-        height: 1600,
-        fit: "inside",
-        withoutEnlargement: true,
-      });
-    }
-
-    body = await transformer
-      .avif({
-        quality: tooLarge ? 75 : 80,
-        effort: 4,
-      })
-      .toBuffer();
-
-    contentType = "image/avif";
-    extension = "avif";
+  if (tooLarge) {
+    transformer = transformer.resize({
+      width: 1600,
+      height: 1600,
+      fit: "inside",
+      withoutEnlargement: true,
+    });
   }
 
-  //-------------------------------------
-  // Generate R2 key
-  //-------------------------------------
-  let key: string;
+  body = await transformer.toBuffer();
 
-  if (articleId) {
-    key = `articles/${articleId}/${assetType}/${crypto.randomUUID()}.${extension}`;
-  } else if (folder) {
-    const baseFolder =
-      draft && sessionId
-        ? `tmp/${sessionId}/${folder}`
-        : folder;
-
-    key = `${baseFolder}/${crypto.randomUUID()}.${extension}`;
-  } else {
-    return NextResponse.json(
-      { error: "Missing articleId or folder" },
-      { status: 400 }
-    );
-  }
+  contentType = file.type;
+  extension = format!;
+}
 
   //-------------------------------------
-  // Upload to Cloudflare R2
+  // Generate imagekit key
   //-------------------------------------
-  await r2.send(
-    new PutObjectCommand({
-      Bucket: process.env.CLOUDFLARE_R2_BUCKET!,
-      Key: key,
-      Body: body,
-      ContentType: contentType,
-    })
+ let folderPath: string;
+
+if (articleId) {
+  folderPath = `articles/${articleId}/${assetType}`;
+} else if (folder) {
+  folderPath =
+    draft && sessionId
+      ? `tmp/${sessionId}/${folder}`
+      : folder;
+} else {
+  return NextResponse.json(
+    { error: "Missing articleId or folder" },
+    { status: 400 }
   );
+}
 
-  return NextResponse.json({
-    url: `${process.env.CLOUDFLARE_R2_PUBLIC_URL}/${key}`,
-  });
+const fileName = `${crypto.randomUUID()}.${extension}`;
+
+//-------------------------------------
+// Upload to ImageKit
+//-------------------------------------
+const upload = await imagekit.upload({
+  file: body,
+  fileName,
+  folder: folderPath,
+});
+
+return NextResponse.json({
+  url: upload.url,
+  fileId: upload.fileId,
+});
 }

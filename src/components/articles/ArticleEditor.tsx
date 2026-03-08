@@ -98,21 +98,29 @@ export default function ArticleEditor({
     return editor?.state.selection.from ?? 0;
   };
 
-  const uploadImageToR2 = async (file: File): Promise<string> => {
-    const formData = new FormData();
-    formData.append("file", file);
-    if (!articleId) {
-  throw new Error("Article ID is missing — upload aborted");
-  }
-  
-  formData.append("articleId", articleId);
-    formData.append("assetType", "content");
+const uploadImage = async (
+  file: File
+): Promise<{ url: string; fileId: string }> => {
+  const formData = new FormData();
+  formData.append("file", file);
 
-    const res = await fetch("/api/upload", { method: "POST", body: formData });
-    if (!res.ok) throw new Error("Image upload failed");
-    const data = await res.json();
-    return data.url;
+  if (!articleId) {
+    throw new Error("Article ID is missing — upload aborted");
+  }
+
+  formData.append("articleId", articleId);
+  formData.append("assetType", "content");
+
+  const res = await fetch("/api/upload", { method: "POST", body: formData });
+  if (!res.ok) throw new Error("Image upload failed");
+
+  const data = await res.json();
+
+  return {
+    url: data.url,
+    fileId: data.fileId,
   };
+};
 
   const pendingSaveRef = useRef<JSONContent | null>(null);
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -228,17 +236,22 @@ const DisableImagePaste = Extension.create({
       ImageWithRemove.configure({
         inline: false,
         allowBase64: false,
-        onImageRemoved: async (url: string) => {
-          try {
-            await fetch("/api/delete-asset", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ url }),
-            });
-          } catch (err) {
-            console.error("Failed to delete image:", err);
-          }
-        },
+        onImageRemoved: async (url: string, fileId?: string) => {
+        try {
+          if (!fileId) return;
+
+          await fetch("/api/delete-asset", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              fileId,
+              url,
+            }),
+          });
+        } catch (err) {
+          console.error("Failed to delete image:", err);
+        }
+      },
       }),
       DragHandle.configure({
         render: () => {
@@ -297,7 +310,7 @@ const DisableImagePaste = Extension.create({
 
     try {
       const compressedFile = await compressImageClient(file);
-      const url = await uploadImageToR2(compressedFile);
+      const { url, fileId } = await uploadImage(compressedFile);
       const tr = editorInstance.state.tr;
       const defaultAlt =
         file.name?.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ") || "";
@@ -308,9 +321,10 @@ const DisableImagePaste = Extension.create({
             p,
             p + node.nodeSize,
             editorInstance.schema.nodes.imageWithRemove.create({
-              src: url,
-              alt: defaultAlt,
-            })
+            src: url,
+            alt: defaultAlt,
+            fileId,
+          })
           );
         }
       });

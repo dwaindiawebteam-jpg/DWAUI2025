@@ -1,74 +1,63 @@
 import { NextResponse } from "next/server";
-import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import ImageKit from "imagekit";
 
-const r2 = new S3Client({
-  region: "auto",
-  endpoint: `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-  credentials: {
-    accessKeyId: process.env.CLOUDFLARE_R2_ACCESS_KEY!,
-    secretAccessKey: process.env.CLOUDFLARE_R2_SECRET_KEY!,
-  },
+const imagekit = new ImageKit({
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY!,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
+  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
 });
 
-// Extract object key from full R2 URL
-function extractKeyFromUrl(url: string): string | null {
-  // Examples supported:
-  // https://pub-xxx.r2.dev/folder/file.webp
-  // https://mycdn.com/folder/file.webp
-  // https://<bucket>.<account>.r2.cloudflarestorage.com/folder/file.webp
-
-  try {
-    const parsed = new URL(url);
-
-    // First attempt: split on domain suffix used by public R2 buckets
-    const r2Public = parsed.href.split(".r2.dev/");
-    if (r2Public.length === 2) return r2Public[1];
-
-    // Second attempt: split on cloudflarestorage.com bucket URL
-    const r2Direct = parsed.href.split(".r2.cloudflarestorage.com/");
-    if (r2Direct.length === 2) return r2Direct[1];
-
-    // Third attempt: custom domains → use pathname without leading slash
-    if (parsed.pathname) return parsed.pathname.replace(/^\//, "");
-
-    return null;
-  } catch {
-    return null;
-  }
-}
-
 export async function POST(req: Request) {
+  console.log("---- DELETE ASSET ROUTE HIT ----");
+
   try {
-    const { url } = await req.json();
+    //----------------------------------
+    // Read request body
+    //----------------------------------
+    const body = await req.json();
+    console.log("Request body:", body);
 
-    if (!url || typeof url !== "string") {
+    const { fileId } = body;
+
+    //----------------------------------
+    // Validate fileId
+    //----------------------------------
+    if (!fileId) {
+      console.error("Missing fileId in request");
+
       return NextResponse.json(
-        { error: "Missing or invalid URL" },
+        { error: "Missing fileId", received: body },
         { status: 400 }
       );
     }
 
-    const key = extractKeyFromUrl(url);
+    console.log("Deleting fileId:", fileId);
 
-    if (!key) {
-      return NextResponse.json(
-        { error: "Could not extract R2 key from URL", url },
-        { status: 400 }
-      );
-    }
+    //----------------------------------
+    // Call ImageKit delete
+    //----------------------------------
+    const result = await imagekit.deleteFile(fileId);
 
-    await r2.send(
-      new DeleteObjectCommand({
-        Bucket: process.env.CLOUDFLARE_R2_BUCKET!,
-        Key: key,
-      })
-    );
+    console.log("ImageKit delete result:", result);
 
-    return NextResponse.json({ success: true, deleted: key });
+    return NextResponse.json({
+      success: true,
+      deleted: fileId,
+      result,
+    });
+
   } catch (err: any) {
-    console.error("R2 delete error:", err);
+    console.error("ImageKit delete error FULL:", err);
+    console.error("Error message:", err?.message);
+    console.error("Error stack:", err?.stack);
+    console.error("Error response:", err?.response);
+
     return NextResponse.json(
-      { error: "Failed to delete object", details: err.message },
+      {
+        error: "Failed to delete image",
+        message: err?.message,
+        details: err,
+      },
       { status: 500 }
     );
   }
