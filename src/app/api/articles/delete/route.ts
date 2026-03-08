@@ -20,13 +20,15 @@ export async function POST(req: Request) {
 
     const article = snap.data()!;
 
-    const usedAssets = extractArticleAssets({
-      coverImage: article.coverImage,
-      body: article.body,
-    });
+   const uploadedAssets = article.uploadedAssets ?? [];
 
-    const uploadedAssets = article.uploadedAssets ?? [];
-
+    const usedAssets = extractArticleAssets(
+      {
+        coverImage: article.coverImage,
+        body: article.body,
+      },
+      uploadedAssets.map((a: any) => a.url)
+    );
     /**
      * uploadedAssets should look like:
      * [{ url: string, fileId: string }]

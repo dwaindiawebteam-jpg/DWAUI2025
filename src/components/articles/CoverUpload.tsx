@@ -4,12 +4,12 @@ import { useState, useRef } from "react";
 import { compressImageClient } from "@/lib/compressImage";
 
 interface CoverUploadProps {
-  value: string | null;
+  value: { url: string; fileId: string } | null;
   articleId: string;
   position: { x: number; y: number };
   onPositionChange: (pos: { x: number; y: number }) => void;
-  onChange: (url: string | null) => void;
-  onUploaded?: (url: string) => void;
+  onChange: (file: { url: string; fileId: string } | null) => void;
+  onUploaded?: (file: { url: string; fileId: string }) => void;
 }
 
 export default function CoverUpload({
@@ -60,12 +60,12 @@ export default function CoverUpload({
 };
 
 
-  const deleteOldAsset = async (url: string) => {
+  const deleteOldAsset = async (fileId: string) => {
     try {
       await fetch("/api/delete-asset", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url }),
+        body: JSON.stringify({ fileId }),
       });
     } catch (err) {
       console.error("Error deleting old asset:", err);
@@ -97,15 +97,21 @@ export default function CoverUpload({
 
       // Delete previous asset (best-effort)
       if (value) {
-        // don't await so we don't block UI, but we do attempt it
-        deleteOldAsset(value).catch((err) =>
-          console.warn("Failed to delete previous cover asset", err)
-        );
-      }
+          deleteOldAsset(value.fileId).catch((err) =>
+            console.warn("Failed to delete previous cover asset", err)
+          );
+        }
 
       // Notify parent: update model and let them also record uploadedAssets
-      onChange(data.url);
-      onUploaded?.(data.url);
+      onChange({
+          url: data.url,
+          fileId: data.fileId,
+        });
+
+        onUploaded?.({
+          url: data.url,
+          fileId: data.fileId,
+        });
 
       setUploading(false);
       setProgress(100);
@@ -205,7 +211,7 @@ const stopClick = (e: React.MouseEvent | React.PointerEvent) => {
             "
           >
             <img
-              src={value}
+              src={value.url}
               alt="Cover"
               draggable={false}
               className="absolute inset-0 w-full h-full object-cover cursor-grab active:cursor-grabbing"
@@ -234,7 +240,7 @@ const stopClick = (e: React.MouseEvent | React.PointerEvent) => {
                 className="text-red-600 text-sm underline font-sans!"
                 onClick={async () => {
                   try {
-                    await deleteOldAsset(value);
+                    await deleteOldAsset(value.fileId);
                   } catch (err) {
                     console.warn("Failed to delete cover on remove:", err);
                   }

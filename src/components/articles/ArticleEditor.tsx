@@ -42,7 +42,7 @@ interface ArticleEditorProps {
   // new optional metadata props (passed from parent)
   title?: string | null;
   metaDescription?: string | null;
-  coverImage?: string | null;
+  coverImage?: { url: string; fileId: string } | null;
   coverImageAlt?: string | null;
 }
 
@@ -352,7 +352,7 @@ const DisableImagePaste = Extension.create({
     await exportArticleToDocx(editor.getJSON(), {
       title,
       metaDescription,
-      coverImage,
+      coverImage: coverImage?.url ?? null,
       coverImageAlt,
       // OPTIONAL: pass a progress callback later if you want finer control
       // onProgress: setExportProgress,

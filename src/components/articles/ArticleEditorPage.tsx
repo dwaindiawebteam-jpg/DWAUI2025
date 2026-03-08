@@ -57,7 +57,7 @@ export default function ArticleEditorPage({ articleId, mode }: ArticleEditorPage
     title: "",
     slug: "",
     metaDescription: "",
-    coverImage: null as string | null,
+    coverImage: null as { url: string; fileId: string } | null,
     coverImageAlt: "",
     coverImagePosition: DEFAULT_COVER_POSITION,
     body: null as any,
@@ -751,7 +751,10 @@ try {
   let unusedAssets: string[] = [];
 
   if (body && typeof body === "object") {
-    const usedAssets = extractArticleAssets({ coverImage, body });
+    const usedAssets = extractArticleAssets(
+      { coverImage, body },
+      uploadedAssets
+    );
     unusedAssets = findUnusedAssets(uploadedAssets, usedAssets);
   }
 
@@ -1017,19 +1020,20 @@ try {
               </label>
             {articleReady && articleIdRef.current && (
             <CoverUpload
-              value={coverImage}
-              articleId={articleIdRef.current}
-              position={articleData.coverImagePosition}
-              onPositionChange={(pos) => updateArticleData({ coverImagePosition: pos })}
-              onChange={(url) => {
-                updateArticleData({ coverImage: url });
-                if (url) {
-                  setUploadedAssets(prev =>
-                    prev.includes(url) ? prev : [...prev, url]
-                  );
-                }
-              }}
-            />
+  value={coverImage}
+  articleId={articleIdRef.current}
+  position={articleData.coverImagePosition}
+  onPositionChange={(pos) => updateArticleData({ coverImagePosition: pos })}
+  onChange={(file) => {
+    updateArticleData({ coverImage: file });
+
+    if (file) {
+      setUploadedAssets(prev =>
+        prev.includes(file.url) ? prev : [...prev, file.url]
+      );
+    }
+  }}
+/>
           )}
 
               <div className="mt-4">
