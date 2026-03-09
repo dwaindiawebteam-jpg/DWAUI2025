@@ -1,28 +1,28 @@
 // lib/articles/extractArticleAssets.ts
 
-export function extractArticleAssets(article: {
-  coverImage: string | null;
-  body: any;
-}): string[] {
-  const urls = new Set<string>();
+export function extractArticleAssets(
+  article: {
+    coverImage: { url: string; fileId: string } | null;
+    body: any;
+  },
+  uploadedAssets: string[]
+): string[] {
+  const usedUrls = new Set<string>();
 
-  // Cover image
   if (article.coverImage) {
-    urls.add(article.coverImage);
+    usedUrls.add(article.coverImage.url);
   }
 
   function scan(node: any) {
     if (!node) return;
 
-    // ✅ Handle TipTap image extensions
     if (
       (node.type === "image" || node.type === "imageWithRemove") &&
       node.attrs?.src
     ) {
-      urls.add(node.attrs.src);
+      usedUrls.add(node.attrs.src);
     }
 
-    // Recurse children
     if (Array.isArray(node.content)) {
       node.content.forEach(scan);
     }
@@ -30,5 +30,5 @@ export function extractArticleAssets(article: {
 
   scan(article.body);
 
-  return Array.from(urls);
+  return uploadedAssets.filter(url => usedUrls.has(url));
 }

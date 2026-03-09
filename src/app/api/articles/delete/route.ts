@@ -1,25 +1,7 @@
 import { NextResponse } from "next/server";
 import { adminDb } from "@/lib/firebaseAdmin";
-import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { imagekit } from "@/lib/imagekit";
 import { extractArticleAssets } from "@/lib/articles/extractArticleAssets";
-
-const r2 = new S3Client({
-  region: "auto",
-  endpoint: `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-  credentials: {
-    accessKeyId: process.env.CLOUDFLARE_R2_ACCESS_KEY!,
-    secretAccessKey: process.env.CLOUDFLARE_R2_SECRET_KEY!,
-  },
-});
-
-function extractKeyFromUrl(url: string): string | null {
-  try {
-    const parsed = new URL(url);
-    return parsed.pathname.replace(/^\//, "");
-  } catch {
-    return null;
-  }
-}
 
 export async function POST(req: Request) {
   try {
@@ -38,42 +20,42 @@ export async function POST(req: Request) {
 
     const article = snap.data()!;
 
-    const usedAssets = extractArticleAssets({
-      coverImage: article.coverImage,
-      body: article.body,
-    });
+   const uploadedAssets = article.uploadedAssets ?? [];
 
-    const uploadedAssets: string[] = article.uploadedAssets ?? [];
-
-    const assetUrls = Array.from(
-      new Set([...usedAssets, ...uploadedAssets])
+    const usedAssets = extractArticleAssets(
+      {
+        coverImage: article.coverImage,
+        body: article.body,
+      },
+      uploadedAssets.map((a: any) => a.url)
     );
+    /**
+     * uploadedAssets should look like:
+     * [{ url: string, fileId: string }]
+     */
 
-    // 🔥 Delete R2 objects first
+    const assetFileIds = uploadedAssets
+      .filter((a: any) => a.fileId)
+      .map((a: any) => a.fileId);
+
+    // 🔥 Delete files from ImageKit
     await Promise.all(
-      assetUrls.map(async (url) => {
-        const key = extractKeyFromUrl(url);
-        if (!key) return;
-
-        await r2.send(
-          new DeleteObjectCommand({
-            Bucket: process.env.CLOUDFLARE_R2_BUCKET!,
-            Key: key,
-          })
-        );
+      assetFileIds.map(async (fileId: string) => {
+        try {
+          await imagekit.deleteFile(fileId);
+        } catch (err) {
+          console.error("ImageKit delete failed:", fileId, err);
+        }
       })
     );
 
-    // 🧹 Delete Firestore doc LAST
-    // 🔥 Delete subcollections first
+    // 🔥 Delete article and subcollections
     await adminDb.recursiveDelete(ref);
-
-    // (recursiveDelete already deletes the doc itself)
-
 
     return NextResponse.json({ success: true });
   } catch (err: any) {
     console.error("Article delete failed:", err);
+
     return NextResponse.json(
       { error: "Delete failed", details: err.message },
       { status: 500 }

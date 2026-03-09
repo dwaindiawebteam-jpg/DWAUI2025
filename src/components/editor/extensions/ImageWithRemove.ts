@@ -17,19 +17,28 @@ export const ImageWithRemove = Image.extend<ImageWithRemoveOptions>({
   },
 
   // ✅ ADD THIS
-  addAttributes() {
-    return {
-      ...this.parent?.(),
+ addAttributes() {
+  return {
+    ...this.parent?.(),
 
-      alt: {
-        default: "",
-        renderHTML: attributes => {
-          if (!attributes.alt) return {};
-          return { alt: attributes.alt };
-        },
+    alt: {
+      default: "",
+      renderHTML: attributes => {
+        if (!attributes.alt) return {};
+        return { alt: attributes.alt };
       },
-    };
-  },
+    },
+
+    fileId: {
+      default: null,
+      parseHTML: element => element.getAttribute("data-file-id"),
+      renderHTML: attributes => {
+        if (!attributes.fileId) return {};
+        return { "data-file-id": attributes.fileId };
+      },
+    },
+  };
+},
 
   addStorage() {
     return {

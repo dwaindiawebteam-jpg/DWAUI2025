@@ -125,11 +125,11 @@ export default function PreviewArticlePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#ECE1CF]">
+      <div className="min-h-screen flex flex-col items-center justify-center">
         <div className="w-48 h-2 bg-[#E0D6C7] rounded-full overflow-hidden">
-          <div className="h-full w-full animate-pulse bg-[#4A3820]"></div>
+          <div className="h-full w-full animate-pulse bg-[#004265]" />
         </div>
-        <p className="mt-4 font-medium text-lg font-sans">
+        <p className="mt-4 font-medium text-lg font-sans!">
           Loading preview…
         </p>
       </div>
@@ -138,13 +138,13 @@ export default function PreviewArticlePage() {
 
   if (errorMsg || !post) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#ECE1CF]">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold font-sans!">Preview not found</h1>
           <p className="mt-2 text-gray-600 font-sans!">{errorMsg || "No article data could be loaded."}</p>
           <button
             onClick={() => router.back()}
-            className="mt-4 px-6 py-2 bg-[#CF822A] text-white rounded-lg hover:bg-[#B36F24] transition font-sans!"
+            className="mt-4 px-6 py-2 bg-[#004265] text-white rounded-lg cursor-pointer transition font-sans!"
           >
             Go back
           </button>
@@ -154,7 +154,7 @@ export default function PreviewArticlePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#ECE1CF] py-4">
+    <div className="min-h-screen py-12 ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Back button - exact design from blog page */}
@@ -170,15 +170,15 @@ export default function PreviewArticlePage() {
               }
             }, 100);
           }}
-          className="mb-6 flex items-center text-[#CF822A] hover:text-[#B36F24] transition font-inter font-bold group relative pb-1"
+          className="mb-6 flex items-center text-[#004265] transition font-inter font-bold group relative pb-1"
         >
-          <span className="relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#B36F24] after:transition-all after:duration-300 group-hover:after:w-full">
+          <span className="relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-[#004265] after:transition-all text-lg after:duration-300 group-hover:after:w-full">
             Close Preview
           </span>
         </button>
 
         {/* Article Card - exact design from blog page */}
-        <div className="bg-[#F2ECE3] rounded-[30px] shadow-xl p-6 sm:p-8">
+        <div className="rounded-[30px] shadow-xl p-6 sm:p-8 border border-gray-200">
           {/* Article Header */}
           <h1 className="font-cinzel text-[22px] sm:text-[26px] lg:text-[30px] font-bold min-w-0 wrap-break-word text-center mb-4">
             {post.title || "Untitled draft"}
@@ -186,7 +186,7 @@ export default function PreviewArticlePage() {
           
           {/* Article Meta - with preview indicator */}
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 font-inter mb-6 justify-center text-center">
-            <span className="font-semibold">{post.author || "Author"}</span>
+            <span className="font-semibold text-base">{post.author || "Author"}</span>
             <span className="hidden sm:inline">•</span>
             <span>
               {post.date ? new Date(post.date).toLocaleDateString('en-GB', {
@@ -196,7 +196,7 @@ export default function PreviewArticlePage() {
               }) : "Draft"}
             </span>
             <span className="hidden sm:inline">•</span>
-            <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
+            <span className="bg-blue-100 px-3 py-1 rounded-full text-base font-medium">
               Draft Preview
             </span>
           </div>

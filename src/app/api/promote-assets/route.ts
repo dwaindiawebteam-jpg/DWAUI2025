@@ -1,56 +1,54 @@
 import { NextResponse } from "next/server";
-import {
-  S3Client,
-  CopyObjectCommand,
-  DeleteObjectCommand,
-} from "@aws-sdk/client-s3";
-
-const r2 = new S3Client({
-  region: "auto",
-  endpoint: `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-  credentials: {
-    accessKeyId: process.env.CLOUDFLARE_R2_ACCESS_KEY!,
-    secretAccessKey: process.env.CLOUDFLARE_R2_SECRET_KEY!,
-  },
-});
+import { imagekit } from "@/lib/imagekit";
 
 export async function POST(req: Request) {
-  const { urls } = await req.json();
+  try {
+    const payload = await req.json();
+    const urls = payload.urls;
 
-  if (!Array.isArray(urls)) {
-    return NextResponse.json({ error: "Invalid urls" }, { status: 400 });
-  }
-
-  const results: Record<string, string> = {};
-
-  for (const url of urls) {
-    const parsed = new URL(url);
-    const oldKey = parsed.pathname.replace(/^\//, "");
-
-    if (!oldKey.startsWith("tmp/")) {
-      results[url] = url; // already permanent
-      continue;
+    if (!Array.isArray(urls)) {
+      return NextResponse.json({ error: "Invalid urls" }, { status: 400 });
     }
 
-    const newKey = oldKey.replace(/^tmp\/[^/]+\//, "");
+    const replacements: Record<string, string> = {};
 
-    await r2.send(
-      new CopyObjectCommand({
-        Bucket: process.env.CLOUDFLARE_R2_BUCKET!,
-        CopySource: `${process.env.CLOUDFLARE_R2_BUCKET}/${oldKey}`,
-        Key: newKey,
-      })
-    );
+    for (const asset of urls) {
+      const { fileId, url } = asset;
 
-    await r2.send(
-      new DeleteObjectCommand({
-        Bucket: process.env.CLOUDFLARE_R2_BUCKET!,
-        Key: oldKey,
-      })
-    );
+      if (!fileId) {
+        replacements[url] = url; // fallback: no fileId, assume already permanent
+        continue;
+      }
 
-    results[url] = `${process.env.CLOUDFLARE_R2_PUBLIC_URL}/${newKey}`;
+      // Skip if not in tmp folder
+      if (!url.includes("/tmp/")) {
+        replacements[url] = url;
+        continue;
+      }
+
+   try {
+        const file = await imagekit.getFileDetails(fileId);
+
+        const uploaded = await imagekit.upload({
+          file: file.url, // use existing URL
+          fileName: file.name,
+          folder: "/articles", // permanent folder
+        });
+
+        await imagekit.deleteFile(fileId);
+
+        replacements[url] = uploaded.url;
+
+      } catch (err) {
+        console.error("ImageKit move failed:", fileId, err);
+        replacements[url] = url;
+      }
+    }
+
+    return NextResponse.json({ replacements });
+
+  } catch (err: any) {
+    console.error(err);
+    return NextResponse.json({ error: "Failed", details: err.message }, { status: 500 });
   }
-
-  return NextResponse.json({ replacements: results });
 }

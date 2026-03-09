@@ -1,7 +1,7 @@
 export function validateArticle(article: {
   title: string;
   slug: string;
-  coverImage: string | null;
+  coverImage: { url: string; fileId: string } | null;
   coverImageAlt: string;
   body: any;
   tags: string[];

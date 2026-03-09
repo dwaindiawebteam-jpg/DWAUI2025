@@ -302,3 +302,8 @@ textarea.scrollable-description::-webkit-scrollbar-thumb:hover {
   margin-left: 0 !important;
   margin-right: 0 !important;
 }
+
+/* You can also use the value directly if needed */
+span {
+  font-size: 1.125rem; /* This is typically what lg equals in Tailwind */
+}
