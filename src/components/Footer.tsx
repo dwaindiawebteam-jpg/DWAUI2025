@@ -9,7 +9,7 @@ const Footer: FC = () => {
         <span className="justify-center text-purple">
           Ready to get involved?
         </span>
-        <button className="py-4 px-6 mr-20 bg-purple text-white hover:bg-purple/80 transition-colors">
+        <button className="py-4 px-6 md:mr-20 bg-purple text-white hover:bg-purple/80 transition-colors">
           Donate Now
         </button>
       </div>
@@ -142,10 +142,10 @@ const Footer: FC = () => {
 
           {/* policies */}
           <div className="mt-4 relative flex flex-row justify-between items-center">
-            <a href="#" className="hover:underline">
+            <a href="#" className="hover:underline pr-2">
               Refund Policy
             </a>
-            <a href="#" className="hover:underline">
+            <a href="#" className="hover:underline pr-2">
               Privacy Policy
             </a>
             <a href="#" className="hover:underline">
