@@ -169,7 +169,34 @@ const Navigation: FC = () => {
               </Link>
             ))}
 
-            {/* Mobile Donate */}
+            {/* Mobile Dashboard (only when logged in) */}
+            {user && (
+              <div className="border-t border-gray-200 pt-3 mt-3">
+                
+                <div className="px-3 py-2 text-sm font-medium text-gray-500">
+                  Hello, {user?.firstName || "User"}
+                </div>
+
+                <Link
+                  href="/dashboard"
+                  onClick={closeMobileMenu}
+                  className="block px-3 py-3 text-base font-medium text-gray-900 hover:bg-gray-50 rounded-md transition-colors"
+                >
+                  Dashboard
+                </Link>
+
+                <button
+                  onClick={() => {
+                    logout();
+                    closeMobileMenu();
+                  }}
+                  className="w-full text-left px-3 py-3 text-base font-medium text-gray-900 hover:bg-gray-50 rounded-md transition-colors"
+                >
+                  Log Out
+                </button>
+
+              </div>
+            )}
             <div className="pt-2">
               <Button
                 asChild
