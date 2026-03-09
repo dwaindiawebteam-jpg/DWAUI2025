@@ -148,7 +148,7 @@ const Footer: FC = () => {
             <a href="#" className="hover:underline pr-2">
               Privacy Policy
             </a>
-            <div className="hover:underline">
+            <div>
               ©DWA INDIA 2026
             </div>
           </div>
