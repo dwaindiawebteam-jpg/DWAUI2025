@@ -15,8 +15,8 @@ const Footer: FC = () => {
       </div>
       <div className="relative flex flex-col md:flex-row editor-content bg-teal-900">
         {/* logo and company name */}
-        <div className="w-80 bg-navy-blue md:bg-blue relative flex flex-col justify-center items-center">
-          <div className="flex  flex-col mb-4">
+        <div className="md:w-80 bg-blue relative flex flex-col justify-center items-center">
+          <div className="flex flex-row md:flex-col mb-4 mt-5 md:mt-0">
             <div className="w-16 h-16">
               <Image
                 src="/images/icon.jpg"
@@ -36,9 +36,9 @@ const Footer: FC = () => {
         {/* address and contact details */}
         <div className="px-15 py-15 w-full bg-navy-blue text-white relative flex flex-col justify-center">
           {/* content */}
-          <div className=" relative flex flex-row mb-6 justify-between gap-4 items-start">
+          <div className=" relative flex  flex-col md:flex-row mb-6 justify-between gap-4 items-center md:items-start">
             {/* Left - Address and Contact */}
-            <div className="flex flex-col gap-12">
+            <div className="flex flex-col  gap-12">
               {/* Address and Contact Details */}
               <div className="text-sm">
                 <p># 4-84, Parnapalle,</p>
@@ -49,7 +49,7 @@ const Footer: FC = () => {
               </div>
 
               {/* Social Media Icons */}
-              <div className="flex space-x-4">
+              <div className="flex justify-center md:justify-start space-x-4">
                 <a
                   href="#"
                   className="text-white hover:text-blue transition-colors" // change color
