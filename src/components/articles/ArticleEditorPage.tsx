@@ -492,6 +492,13 @@ const getAuthorPayload = () => {
   // Server autosave function
   const autosaveToServer = useCallback(
     async (force = false, awaitConfirm = false) => {
+
+      console.log("Autosave triggered", {
+      force,
+      articleId: articleIdRef.current,
+      data: articleDataRef.current
+    });
+
       if (!hasRestoredRef.current || !currentAuthUser || !articleReady) {
         return;
       }
@@ -516,9 +523,12 @@ const getAuthorPayload = () => {
       // 🔒 Prevent resurrection
       const existingSnap = await getDoc(articleRef);
       if (!existingSnap.exists()) {
-        return;
-      }
+      console.warn("Autosave skipped: article doc does not exist yet");
+      return;
+    }
         
+    console.log("Autosave write success");
+
       try {
         await setDoc(
         articleRef,
@@ -693,8 +703,14 @@ useEffect(() => {
   }, [currentAuthUser]);
 
   
-
+  
   const handleSave = async () => {
+      console.log("SAVE CLICKED", {
+      articleId: articleIdRef.current,
+      uid: currentAuthUser?.uid,
+      role,
+      articleData,
+    });
     if (!articleIdRef.current) {
       setErrors({ general: "Article ID not ready yet." });
       return;
@@ -706,9 +722,12 @@ useEffect(() => {
     }
 
     // 🔁 Force latest autosave before final commit (same behavior as preview)
-    try {
+   try {
+      console.log("Running forced autosave...");
       await autosaveToServer(true, true);
+      console.log("Autosave completed");
     } catch (err) {
+      console.error("Autosave failed:", err);
       setErrors({ general: "Could not prepare article for save." });
       return;
     }
@@ -718,6 +737,8 @@ useEffect(() => {
     setSuccessMessage("");
 
     const validation = validateArticle(articleData);
+    console.log("Validation result:", validation);
+
     if (validation) {
       setErrors(validation);
       setSaving(false);
@@ -739,6 +760,7 @@ try {
   };
 
   let roleClaim = await ensureFreshRoleClaim();
+  console.log("Role claim from token:", roleClaim);
 
   if (roleClaim !== "admin" && roleClaim !== "author") {
     roleClaim = await ensureFreshRoleClaim();
@@ -764,7 +786,9 @@ try {
 
 
  const writePayload = async () => {
-  const payload = {
+  const snap = await getDoc(articleRef);
+
+   const payload = {
     title: articleData.title,
     slug: sanitizeSlug(articleData.slug),
     metaDescription: articleData.metaDescription,
@@ -777,12 +801,28 @@ try {
     authorId: resolveAuthorId(),
     ...getAuthorPayload(),
     updatedAt: serverTimestamp(),
-    ...(articleData.status === "published" && !existing?.publishedAt && {
+    ...(articleData.status === "published" && !snap.data()?.publishedAt && {
       publishedAt: serverTimestamp(),
     }),
   };
 
-  await updateDoc(articleRef, payload);
+
+  console.log("Writing article payload:", payload);
+  console.log("Article ref:", articleRef.path);
+
+   if (!snap.exists()) {
+    // FIRST SAVE → CREATE DOC
+    await setDoc(articleRef, {
+      ...payload,
+      createdAt: serverTimestamp(),
+    });
+  } else {
+    // SUBSEQUENT SAVES → UPDATE DOC
+    await updateDoc(articleRef, payload);
+    console.log("Firestore updateDoc success");
+  }
+  
+
 };
 
 
@@ -790,7 +830,9 @@ try {
   try {
     await writePayload();
   } catch (err: any) {
-    if (err?.code === "permission-denied") {
+  console.error("Firestore write failed:", err);
+
+  if (err?.code === "permission-denied") {
       await currentAuthUser.reload();
       await ensureFreshRoleClaim();
       await writePayload(); // retry once
@@ -1020,20 +1062,20 @@ try {
               </label>
             {articleReady && articleIdRef.current && (
             <CoverUpload
-  value={coverImage}
-  articleId={articleIdRef.current}
-  position={articleData.coverImagePosition}
-  onPositionChange={(pos) => updateArticleData({ coverImagePosition: pos })}
-  onChange={(file) => {
-    updateArticleData({ coverImage: file });
+              value={coverImage}
+              articleId={articleIdRef.current}
+              position={articleData.coverImagePosition}
+              onPositionChange={(pos) => updateArticleData({ coverImagePosition: pos })}
+              onChange={(file) => {
+                updateArticleData({ coverImage: file });
 
-    if (file) {
-      setUploadedAssets(prev =>
-        prev.includes(file.url) ? prev : [...prev, file.url]
-      );
-    }
-  }}
-/>
+                if (file) {
+                  setUploadedAssets(prev =>
+                    prev.includes(file.url) ? prev : [...prev, file.url]
+                  );
+                }
+              }}
+            />
           )}
 
               <div className="mt-4">
@@ -1094,35 +1136,35 @@ try {
             </div>
 
             {/* Tags */}
-            <div className="bg-white rounded-lg border border-[#D8CDBE] p-5 shadow-md">
-              <label className="block text-lg font-bold  mb-3 font-sans!">
-                Tags
-              </label>
-              <input
-                type="text"
-                placeholder="Type a tag and press Enter"
-                onKeyDown={handleAddTag}
-                className="w-full px-4 py-3 rounded-lg border-2 border-[#004265]"
-              />
-              <div className="flex gap-2 flex-wrap mt-3">
-                {tags.map((t) => (
-                  <span
-                    key={t}
-                    className="px-4 py-1.5 bg-[#F0E8DB] border border-[#D8CDBE] rounded-full flex items-center gap-2"
-                  >
-                    {t}
-                    <button
-                      onClick={() => handleRemoveTag(t)}
-                      className="p-1 rounded-full hover:bg-red-100"
-                    >
-                      <X size={14} />
-                    </button>
-                  </span>
-                ))}
-              </div>
-              {errors.tags && <p className="mt-2 text-red-600 font-medium">{errors.tags}</p>}
-            </div>
+        <div className="bg-white rounded-lg border border-[#BFDBFE] p-5 shadow-md">
+        <label className="block text-lg font-bold mb-3 font-sans!">
+          Tags
+        </label>
+        <input
+          type="text"
+          placeholder="Type a tag and press Enter"
+          onKeyDown={handleAddTag}
+          className="w-full px-4 py-3 rounded-lg border-2 border-[#004265]"
+        />
+        <div className="flex gap-2 flex-wrap mt-3">
+          {tags.map((t) => (
+            <span
+              key={t}
+              className="px-4 py-1.5 bg-[#BFDBFE] border border-[#BFDBFE] rounded-full flex items-center gap-2"
+            >
+              {t}
+              <button
+                onClick={() => handleRemoveTag(t)}
+                className="p-1 rounded-full hover:bg-[#BFDBFE]"
+              >
+                <X size={14} />
+              </button>
+            </span>
+          ))}
+        </div>
 
+          {errors.tags && <p className="mt-2 text-red-600 font-medium">{errors.tags}</p>}
+        </div>
             {/* Status */}
             <div className="bg-white rounded-lg border border-[#D8CDBE] p-5 shadow-md">
               <label className="block text-lg font-bold  mb-3 font-sans!">

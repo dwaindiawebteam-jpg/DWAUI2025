@@ -230,14 +230,14 @@ const stopClick = (e: React.MouseEvent | React.PointerEvent) => {
               <button
                 type="button"
                 onClick={handleBrowse}
-                className="text-sm text-[#4A3820]/70 underline font-sans!"
+                className="text-sm text-[#4A3820]/70 underline cursor-pointer font-sans!"
               >
                 Click to replace image
               </button>
 
               <button
                 type="button"
-                className="text-red-600 text-sm underline font-sans!"
+                className="text-red-600 text-sm underline cursor-pointer font-sans!"
                 onClick={async () => {
                   try {
                     await deleteOldAsset(value.fileId);

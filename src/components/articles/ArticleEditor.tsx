@@ -76,7 +76,7 @@ export default function ArticleEditor({
   const TOOLBAR_BTN_BASE =
   "px-2 py-1 rounded bg-white font-sans! transition-colors duration-150";
   const TOOLBAR_BTN_HOVER =
-  "hover:bg-[#E6DCCB] disabled:opacity-50 disabled:hover:bg-white";
+  "hover:bg-[#BFDBFE] disabled:opacity-50 disabled:hover:bg-white";
     const COLORS = [
     "#E53935",
     "#059669",
@@ -799,7 +799,7 @@ const selectionIsHeading = (): boolean => {
           title="Export article to DOCX"
         >
           {/* Label */}
-          <span className={`text-sm cursor-pointer ${isExporting ? "opacity-0" : "opacity-100"}`}>
+          <span className={`text-sm! cursor-pointer ${isExporting ? "opacity-0" : "opacity-100"}`}>
             Export docx
           </span>
 
@@ -903,88 +903,7 @@ const selectionIsHeading = (): boolean => {
 
       <div className="relative border rounded bg-white p-4 min-h-75 editor-content max-w-none" style={{ borderColor: "#D8CDBE" }}>
         <div className="tiptap-editor-wrapper py-8 scrollable-description overflow-x-auto">
-          {/* {editor && (
-          <BubbleMenu
-            editor={editor}
-            shouldShow={({ editor, from }) => {
-              if (editor.state.selection.empty) return false;
-              if (editor.isActive("heading")) return false;
-
-              if (!editor.view || !editor.view.dom) return false;
-            let coords;
-            try {
-              coords = editor.view.coordsAtPos(from);
-            } catch {
-              return false;
-            }
-
-              // toolbar height ≈ 64–72px + breathing room
-              const TOOLBAR_SAFE_ZONE = 120;
-
-              return coords.top > TOOLBAR_SAFE_ZONE;
-            }}
-          >
-              <div
-                className="
-                  flex items-center gap-1 p-2 bg-white border rounded shadow
-                  max-w-[90vw]
-                  overflow-x-auto
-                  scrollbar-thin
-                "
-                style={{ borderColor: "#D8CDBE" }}
-              >
-
-                {[
-                  "#E53935",
-                  "#059669",
-                  "#2563EB",
-                  "#413320",
-                  "#B26C1F",
-                  "#7C3AED",
-                  "#F97316",
-                  "#FBBF24",
-                  "#14B8A6",
-                  "#DB2777",
-                  "#F472B6",
-                  "#000000",
-                  "#4B5563",
-                ].map((color) => (
-                  <button
-                    key={color}
-                    onClick={() => {
-                      editor.chain().focus().setColor(color).run();
-                    }}
-                    style={{
-                      backgroundColor: color,
-                      width: 22,
-                      height: 22,
-                      borderRadius: 6,
-                    }}
-                    className={`
-                      relative
-                      border
-                      transition-all
-                      duration-150
-                      ease-out
-                      ${editor.isActive("textStyle", { color })
-                        ? "z-10 -translate-y-2 scale-110 shadow-lg border-black"
-                        : "z-0 border-gray-300 hover:-translate-y-0.5"
-                      }
-                    `}
-                  />
-                ))}
-                <button
-                  onClick={() => {
-                    editor.chain().focus().unsetColor().run();
-                  }}
-                  className="ml-2 px-2 py-1 text-sm border rounded font-sans!"
-                >
-                  Reset
-                </button>
-              </div>
-            </BubbleMenu>
-          )} */}
-
+       
           <EditorContent editor={editor} />
         </div>
       </div>
