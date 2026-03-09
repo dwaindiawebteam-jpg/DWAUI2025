@@ -40,8 +40,8 @@ const Navigation: FC = () => {
                 className="h-12 w-12"
               />
               <div className="flex flex-col">
-                <span className="text-lg font-bold text-gray-900">DALIT</span>
-                <span className="text-lg font-bold text-[#004265]">
+                <span className="font-bold text-gray-900">DALIT</span>
+                <span className="font-bold text-[#004265]">
                   WELFARE
                 </span>
               </div>
@@ -49,7 +49,7 @@ const Navigation: FC = () => {
           </div>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <div className="ml-10 flex items-baseline space-x-8">
               {[
                 { href: "/about", label: "About Us" },
@@ -63,7 +63,7 @@ const Navigation: FC = () => {
                   href={item.href}
                   className="relative group px-3 py-2 text-sm font-medium"
                 >
-                  <span className="relative pb-1 text-gray-900 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gray-900 after:transition-all after:duration-300 group-hover:after:w-full">
+                  <span className="relative pb-1 text-base! text-gray-900 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-gray-900 after:transition-all after:duration-300 group-hover:after:w-full">
                     {item.label}
                   </span>
                 </Link>
@@ -84,7 +84,7 @@ const Navigation: FC = () => {
 
             {/* Desktop Profile (only when logged in) */}
             {user && (
-              <div className="hidden md:flex items-center ml-12">
+              <div className="hidden lg:flex items-center ml-12">
                 <ul className="flex gap-3">
                   <li className="relative group">
                     
@@ -133,7 +133,7 @@ const Navigation: FC = () => {
             {/* Mobile Menu Toggle */}
             <button
               onClick={toggleMobileMenu}
-              className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500"
+              className="lg:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500"
               aria-expanded={isMobileMenuOpen}
             >
               <span className="sr-only">Open main menu</span>
@@ -150,7 +150,7 @@ const Navigation: FC = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-16 inset-x-0 bg-white border-b border-gray-200 shadow-lg">
+        <div className="lg:hidden absolute top-16 inset-x-0 bg-white border-b border-gray-200 shadow-lg">
           <div className="px-4 pt-2 pb-4 space-y-2">
             {[
               { href: "/about", label: "About Us" },
