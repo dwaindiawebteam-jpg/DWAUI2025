@@ -318,7 +318,7 @@ useEffect(() => {
         {/* Guest State - When user is not logged in */}
         {!currentAuthUser && (
           <div className="space-y-6 mt-8">
-            <div className="bg-[#F0E8DB] border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8">
+            <div className="bg-[#F0E8DB] border border-[#D8CDBE] shadow-md p-6 sm:p-8">
               <h2 className="text-2xl font-extrabold  mb-6 text-center font-sans!">
                 Please Log In
               </h2>
@@ -336,19 +336,19 @@ useEffect(() => {
           <>
             {/* Success Message */}
             {successMessage && (
-              <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+              <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700">
                 {successMessage}
               </div>
             )}
 
             {/* Error Message */}
             {errorMessage && (
-              <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+              <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700">
                 {errorMessage}
               </div>
             )}
 
-            <div className="border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8">
+            <div className="border border-[#D8CDBE] shadow-md p-6 sm:p-8">
              <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-6 mb-8">
               {/* LEFT: Heading + counts */}
               <div className="flex flex-col">
@@ -369,7 +369,7 @@ useEffect(() => {
                   placeholder="Search by name, email, role, disabled/enabled, or date (DD/MM/YYYY)..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                 className="w-full sm:w-80 px-4 py-2 rounded-xl 
+                 className="w-full sm:w-80 px-4 py-2
                 border border-[#C9BBAA] bg-white 
                 placeholder-[#4A3820]/50 focus:ring-2 focus:ring-[#004265]/40"
                 />
@@ -399,7 +399,7 @@ useEffect(() => {
                       <div
                         key={u.uid}
                         className={`
-                          rounded-lg bg-white border border-[#E6DED1]
+                           bg-white border border-[#E6DED1]
                           p-4
                           shadow-sm hover:shadow-md transition-shadow
                           ${isCurrentUser ? "border-l-4 border-l-[#004265]" : ""}
@@ -416,7 +416,7 @@ useEffect(() => {
                               <p className=" font-semibold leading-tight">
                                 {u.firstName} {u.lastName}
                                 {isCurrentUser && (
-                                  <span className="ml-2 px-2 py-1 text-sm! bg-amber-100 text-amber-800 rounded-full">
+                                  <span className="ml-2 px-2 py-1 text-sm! bg-amber-100 text-amber-800">
                                     You
                                   </span>
                                 )}
@@ -424,22 +424,22 @@ useEffect(() => {
 
                               {/* Role Tags */}
                               {isSuperAdmin && (
-                                <span className="px-2 py-1 text-sm! bg-purple-100 text-purple-800 rounded-full">
+                                <span className="px-2 py-1 text-sm! bg-purple-100 text-purple-800">
                                   Super Admin
                                 </span>
                               )}
                               {u.role === "admin" && (
-                                <span className="px-2 py-1 text-sm! bg-red-100 text-red-800 rounded-full">
+                                <span className="px-2 py-1 text-sm! bg-red-100 text-red-800">
                                   Admin
                                 </span>
                               )}
                               {u.role === "author" && (
-                                <span className="px-2 py-1 text-sm! bg-blue-100 text-blue-800 rounded-full">
+                                <span className="px-2 py-1 text-sm! bg-blue-100 text-blue-800">
                                   Author
                                 </span>
                               )}
                               {u.disabled && (
-                                <span className="px-2 py-1 text-sm! bg-gray-200 text-gray-800 rounded-full">
+                                <span className="px-2 py-1 text-sm! bg-gray-200 text-gray-800">
                                   Disabled
                                 </span>
                               )}
@@ -458,7 +458,7 @@ useEffect(() => {
                             {/* Role Selector */}
                             <select
                               className="
-                                px-3 py-1.5 text-sm rounded-md border 
+                                px-3 py-1.5 text-sm border 
                                 focus:ring-2 focus:ring-[#004265]/40
                                 disabled:bg-gray-100 disabled:border-gray-300 disabled:text-gray-500
                               "
@@ -476,7 +476,7 @@ useEffect(() => {
                               disabled={isSuperAdmin || isCurrentUser || updatingUid === u.uid}
                               onClick={() => handleDisableClick(u)}
                               className={`
-                                px-3 py-1.5 text-sm rounded-lg w-full sm:w-auto font-medium 
+                                px-3 py-1.5 text-sm w-full sm:w-auto font-medium 
                                 transition-all duration-200
                                 disabled:opacity-60 disabled:cursor-not-allowed font-sans!
                                 ${
@@ -506,7 +506,7 @@ useEffect(() => {
     {/* Role Change Confirmation Modal */}
     {userToUpdate && (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-        <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+        <div className="bg-white shadow-xl max-w-md w-full p-6">
           <h3 className="font-sans! text-2xl font-bold  mb-4">
             Confirm Role Change
           </h3>
@@ -518,13 +518,13 @@ useEffect(() => {
           <div className="flex justify-end gap-3">
             <button
               onClick={cancelUpdate}
-              className="px-4 py-2 rounded-lg border-2 border-[#D8CDBE]  font-sans! hover:bg-[#F0E8DB] transition-colors"
+              className="px-4 py-2 border-2 border-[#D8CDBE]  font-sans! hover:bg-[#F0E8DB] transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={confirmUpdateRole}
-              className="px-4 py-2 rounded-lg bg-[#805C2C] text-white font-sans! hover:bg-[#6B4C24] transition-colors"
+              className="px-4 py-2  bg-[#805C2C] text-white font-sans! hover:bg-[#6B4C24] transition-colors"
             >
               Confirm Change
             </button>
@@ -536,7 +536,7 @@ useEffect(() => {
     {/* Disable/Enable Confirmation Modal */}
     {userToDisable && (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-        <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+        <div className="bg-white shadow-xl max-w-md w-full p-6">
           <h3 className="font-sans! text-2xl font-bold  mb-4">
             {userToDisable.currentDisabled ? "Enable User" : "Disable User"}
           </h3>
@@ -556,13 +556,13 @@ useEffect(() => {
           <div className="flex justify-end gap-3">
             <button
               onClick={cancelUpdate}
-              className="px-4 py-2 rounded-lg border-2 border-[#D8CDBE]  font-sans! hover:bg-[#F0E8DB] transition-colors"
+              className="px-4 py-2 border-2 border-[#D8CDBE]  font-sans! hover:bg-[#F0E8DB] transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={confirmUpdateDisableStatus}
-              className={`px-4 py-2 rounded-lg text-white font-sans! transition-colors ${
+              className={`px-4 py-2 text-white font-sans! transition-colors ${
                 userToDisable.currentDisabled 
                   ? "bg-emerald-600 hover:bg-emerald-700" 
                   : "bg-red-600 hover:bg-red-700"

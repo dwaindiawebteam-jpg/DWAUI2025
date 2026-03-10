@@ -74,7 +74,7 @@ export default function ArticleEditor({
   const colorMenuRef = useRef<HTMLDivElement | null>(null);
   
   const TOOLBAR_BTN_BASE =
-  "px-2 py-1 rounded bg-white font-sans! transition-colors duration-150";
+  "px-2 py-1 bg-white font-sans! transition-colors duration-150";
   const TOOLBAR_BTN_HOVER =
   "hover:bg-[#BFDBFE] disabled:opacity-50 disabled:hover:bg-white";
     const COLORS = [
@@ -549,13 +549,13 @@ const selectionIsHeading = (): boolean => {
     <div className="space-y-3">
       <div className="sticky top-0 z-40 bg-white">
         <div
-          className="flex flex-wrap gap-2 p-2 border rounded"
+          className="flex flex-wrap gap-2 p-2 border "
           style={{ borderColor: "#D8CDBE" }}
         >
           <button
             onClick={() => editor.chain().focus().toggleBold().run()}
             className={`cursor-pointer ${TOOLBAR_BTN_BASE} ${TOOLBAR_BTN_HOVER} ${
-            editor.isActive("bold") ? "bg-[#E6DCCB]" : ""
+            editor.isActive("bold") ? "bg-[#BFDBFE]" : ""
           }`}
           >
             B
@@ -563,7 +563,7 @@ const selectionIsHeading = (): boolean => {
           <button
             onClick={() => editor.chain().focus().toggleItalic().run()}
             className={`cursor-pointer ${TOOLBAR_BTN_BASE} ${TOOLBAR_BTN_HOVER} ${
-            editor.isActive("italic") ? "bg-[#E6DCCB]" : ""
+            editor.isActive("italic") ? "bg-[#BFDBFE]" : ""
           }`}
 
           >
@@ -606,14 +606,14 @@ const selectionIsHeading = (): boolean => {
                 e.stopPropagation();
                 setColorMenuOpen((v) => !v);
               }}
-              className={`cursor-pointer flex items-center justify-center h-[30px] w-[34px] rounded bg-white ${TOOLBAR_BTN_HOVER}`}
+              className={`cursor-pointer flex items-center justify-center h-[30px] w-[34px]  bg-white ${TOOLBAR_BTN_HOVER}`}
             >
               <span
                 style={{
                   width: 20,
                   height: 20,
                   backgroundColor: activeColor,
-                  borderRadius: 4,
+                  borderRadius: 0,
                   border: "1px solid #999",
                   display: "block",
                 }}
@@ -623,10 +623,10 @@ const selectionIsHeading = (): boolean => {
             {/* Dropdown palette */}
             {colorMenuOpen && (
               <div
-  onClick={(e) => e.stopPropagation()}
-  className="absolute z-50 mt-1 p-3 w-56 grid grid-cols-6 gap-1 justify-items-center rounded border bg-white shadow"
-  style={{ borderColor: "#D8CDBE" }}
->
+                onClick={(e) => e.stopPropagation()}
+                className="absolute z-50 mt-1 p-3 w-56 grid grid-cols-6 gap-1 justify-items-center  border bg-white shadow"
+                style={{ borderColor: "#D8CDBE" }}
+              >
                 {COLORS.map((color) => {
                   const disabled = selectionIsHeading();
                   return (
@@ -642,7 +642,7 @@ const selectionIsHeading = (): boolean => {
                         backgroundColor: color,
                         width: 18,
                         height: 18,
-                        borderRadius: 4,
+                        borderRadius: 0,
                         cursor: disabled ? "not-allowed" : "pointer",
                         opacity: disabled ? 0.5 : 1,
                       }}
@@ -657,7 +657,7 @@ const selectionIsHeading = (): boolean => {
                     editor.chain().focus().unsetColor().run();
                     setColorMenuOpen(false);
                   }}
-                  className="col-span-6 text-sm mt-1 border rounded px-4 py-0.5 font-sans cursor-pointer"
+                  className="col-span-6 text-sm mt-1 border  px-4 py-0.5 font-sans cursor-pointer"
                 >
                   Reset
                 </button>
@@ -669,7 +669,7 @@ const selectionIsHeading = (): boolean => {
           <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
            className={`cursor-pointer ${TOOLBAR_BTN_BASE} ${TOOLBAR_BTN_HOVER} ${
-            editor.isActive("heading", { level: 1 }) ? "bg-[#E6DCCB]" : ""
+            editor.isActive("heading", { level: 1 }) ? "bg-[#BFDBFE]" : ""
           }`}
 
           >
@@ -678,7 +678,7 @@ const selectionIsHeading = (): boolean => {
           <button
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
             className={`cursor-pointer ${TOOLBAR_BTN_BASE} ${TOOLBAR_BTN_HOVER} ${
-            editor.isActive("heading", { level: 2 }) ? "bg-[#E6DCCB]" : ""
+            editor.isActive("heading", { level: 2 }) ? "bg-[#BFDBFE]" : ""
             }`}
 
           >
@@ -687,7 +687,7 @@ const selectionIsHeading = (): boolean => {
           <button
             onClick={() => editor.chain().focus().toggleList('bulletList', 'listItem').run()}
             className={`cursor-pointer ${TOOLBAR_BTN_BASE} ${TOOLBAR_BTN_HOVER} ${
-            editor.isActive("list", { type: "bulletList" }) ? "bg-[#E6DCCB]" : ""
+            editor.isActive("list", { type: "bulletList" }) ? "bg-[#BFDBFE]" : ""
           }`}
 
           >
@@ -696,7 +696,7 @@ const selectionIsHeading = (): boolean => {
           <button
             onClick={() => editor.chain().focus().toggleList('orderedList', 'listItem').run()}
            className={`cursor-pointer ${TOOLBAR_BTN_BASE} ${TOOLBAR_BTN_HOVER} ${
-            editor.isActive("list", { type: "orderedList" }) ? "bg-[#E6DCCB]" : ""
+            editor.isActive("list", { type: "orderedList" }) ? "bg-[#BFDBFE]" : ""
           }`}
 
           >
@@ -709,7 +709,7 @@ const selectionIsHeading = (): boolean => {
                 setTableMenuOpen(v => !v);
               }}
               className={`cursor-pointer ${TOOLBAR_BTN_BASE} ${TOOLBAR_BTN_HOVER} ${
-                editor.isActive("table") ? "bg-[#E6DCCB]" : ""
+                editor.isActive("table") ? "bg-[#BFDBFE]" : ""
               }`}
 
             >
@@ -719,7 +719,7 @@ const selectionIsHeading = (): boolean => {
             {tableMenuOpen && (
               <div
                 onClick={(e) => e.stopPropagation()}
-                className="absolute z-50 mt-1 w-48 rounded border bg-white shadow"
+                className="absolute z-50 mt-1 w-48  border bg-white shadow"
                 style={{ borderColor: "#D8CDBE" }}
               >
                 <TableMenu editor={editor} close={() => setTableMenuOpen(false)} />
@@ -731,7 +731,7 @@ const selectionIsHeading = (): boolean => {
             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
            className={`cursor-pointer ${TOOLBAR_BTN_BASE} ${TOOLBAR_BTN_HOVER} ${
               editor.isActive("codeBlock")
-            ? "bg-[#E6DCCB]" : ""
+            ? "bg-[#BFDBFE]" : ""
             }`}
 
           >
@@ -792,7 +792,7 @@ const selectionIsHeading = (): boolean => {
           onClick={handleExportDocx}
           disabled={isExporting}
           className={`
-            relative px-3 py-1 rounded border border-[#004265]
+            relative px-3 py-1  border border-[#004265]
             text-[#004265] bg-white shadow font-sans!
             ${isExporting ? "cursor-not-allowed opacity-70" : "hover:bg-[#f9f9f9]"}
           `}
@@ -810,7 +810,6 @@ const selectionIsHeading = (): boolean => {
                 h-4 w-4
                 border-2 border-[#004265]/30
                 border-t-[#004265]
-                rounded-full
                 animate-spin
               " />
             </span>
@@ -822,7 +821,7 @@ const selectionIsHeading = (): boolean => {
 
       {linkModalOpen && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white p-4 rounded w-80 space-y-3">
+          <div className="bg-white p-4  w-80 space-y-3">
             <h3 className="font-semibold font-sans!">Insert link</h3>
             <input
               value={linkUrl}
@@ -839,7 +838,7 @@ const selectionIsHeading = (): boolean => {
                 }
               }}
               placeholder="https://example.com"
-              className="w-full border px-2 py-1 rounded font-sans!"
+              className="w-full border px-2 py-1  font-sans!"
             />
             <div className="flex justify-end gap-2">
               <button
@@ -853,7 +852,7 @@ const selectionIsHeading = (): boolean => {
               </button>
               <button
                 onClick={applyLink}
-                className="px-3 py-1 bg-[#E6DCCB] rounded font-sans!"
+                className="px-3 py-1 bg-[#BFDBFE]  font-sans!"
               >
                 Apply
               </button>
@@ -864,7 +863,7 @@ const selectionIsHeading = (): boolean => {
 
       {youtubeModalOpen && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white p-4 rounded w-80 space-y-3">
+          <div className="bg-white p-4  w-80 space-y-3">
             <h3 className="font-semibold font-sans!">Insert YouTube Video</h3>
             <input
               value={youtubeUrl}
@@ -881,7 +880,7 @@ const selectionIsHeading = (): boolean => {
                 }
               }}
               placeholder="https://youtube.com/watch?v=VIDEO_ID"
-              className="w-full border px-2 py-1 rounded font-sans!"
+              className="w-full border px-2 py-1  font-sans!"
             />
             <div className="flex justify-end gap-2">
               <button
@@ -892,7 +891,7 @@ const selectionIsHeading = (): boolean => {
               </button>
               <button
                 onClick={applyYouTube}
-                className="px-3 py-1 bg-[#E6DCCB] rounded font-sans!"
+                className="px-3 py-1 bg-[#BFDBFE]  font-sans!"
               >
                 Insert
               </button>
@@ -901,7 +900,7 @@ const selectionIsHeading = (): boolean => {
         </div>
       )}
 
-      <div className="relative border rounded bg-white p-4 min-h-75 editor-content max-w-none" style={{ borderColor: "#D8CDBE" }}>
+      <div className="relative border  bg-white p-4 min-h-75 editor-content max-w-none" style={{ borderColor: "#D8CDBE" }}>
         <div className="tiptap-editor-wrapper py-8 scrollable-description overflow-x-auto">
        
           <EditorContent editor={editor} />

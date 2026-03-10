@@ -160,21 +160,21 @@ export default function ProfilePage() {
         <h1 className="text-3xl font-extrabold mb-6  text-center font-sans!">
           My Profile
         </h1>
-        <div className="border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8">
+        <div className="border border-[#D8CDBE] shadow-md p-6 sm:p-8">
           <h1 className={`text-2xl font-sans! font-medium mb-6 text-[#004265]`}>
             Profile Information
           </h1>
           
           {/* Success Message */}
           {successMessage && (
-            <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+            <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700">
               <p className="font-medium">{successMessage}</p>
             </div>
           )}
 
           {/* Error Message */}
           {errorMessage && (
-            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700">
               <p className="font-medium">{errorMessage}</p>
             </div>
           )}
@@ -182,7 +182,7 @@ export default function ProfilePage() {
           <form onSubmit={handleSave} className="space-y-6">
             {/* Email - Can't be changed */}
             <div>
-              <div className="rounded-full border-4 shadow-md px-4 py-2 border-[#004265] w-full">
+              <div className="border-4 shadow-md px-4 py-2 border-[#004265] w-full">
                 <div className="flex items-center">
                   {/* Email Icon */}
                   <div className="mr-2 shrink-0">
@@ -208,7 +208,7 @@ export default function ProfilePage() {
 
             {/* FIRST NAME */}
             <div>
-              <div className={`rounded-full border-4 shadow-md px-4 py-2 w-full ${
+              <div className={`border-4 shadow-md px-4 py-2 w-full ${
                 validationErrors.firstName 
                   ? "border-red-500" 
                   : "border-[#004265]"
@@ -242,7 +242,7 @@ export default function ProfilePage() {
 
             {/* LAST NAME */}
             <div>
-              <div className={`rounded-full border-4 shadow-md px-4 py-2 w-full ${
+              <div className={`border-4 shadow-md px-4 py-2 w-full ${
                 validationErrors.lastName 
                   ? "border-red-500" 
                   : "border-[#004265]"
@@ -279,7 +279,7 @@ export default function ProfilePage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="py-3 px-8 font-sans! bg-[#004265] text-[#FFFFFF] rounded-[30px] hover:bg-[#003254] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base md:text-lg w-auto"
+                className="py-3 px-8 font-sans! bg-[#004265] text-[#FFFFFF] hover:bg-[#003254] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base md:text-lg w-auto"
               >
                 <span className="text-[#FFFFFF] font-medium">
                   {loading ? "Saving..." : "Save Changes"}

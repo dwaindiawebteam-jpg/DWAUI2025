@@ -198,7 +198,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister, forceForgot }: LoginM
         </button>
 
         {/* Modal Content */}
-        <div className="bg-white rounded-3xl md:rounded-4xl overflow-hidden shadow-2xl border-2 border-[#EDE5D8] max-h-[90.5vh] overflow-y-auto">
+        <div className="bg-white overflow-hidden shadow-2xl border-2 border-[#EDE5D8] max-h-[90.5vh] overflow-y-auto">
           <div className="flex flex-col md:flex-row">
             {/* Form Section - Scrollable on desktop (same as RegisterModal) */}
             <div className="flex-1 p-6 md:p-8 flex flex-col order-2 md:order-1 overflow-y-auto scrollable-description max-h-[90vh]">
@@ -214,7 +214,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister, forceForgot }: LoginM
                   <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
                     {/* Email Field */}
                     <div className="flex items-center gap-2">
-                      <div className="flex-1 rounded-full border-4 shadow-md px-4 py-2 border-[#004265]">
+                      <div className="flex-1 border-4 shadow-md px-4 py-2 border-[#004265]">
                         <div className="flex items-center">
                           {/* Email Icon */}
                           <div className="mr-2 shrink-0">
@@ -239,7 +239,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister, forceForgot }: LoginM
 
                     {/* Password Field */}
                     <div className="flex items-center gap-2">
-                      <div className="flex-1 rounded-full border-4 shadow-md px-4 py-2 border-[#004265]">
+                      <div className="flex-1 border-4 shadow-md px-4 py-2 border-[#004265]">
                         <div className="flex items-center">
                           {/* Password Icon */}
                           <div className="mr-2 shrink-0">
@@ -313,7 +313,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister, forceForgot }: LoginM
                     <button 
                       type="submit"
                       disabled={isLoading || isGoogleLoading} // Disable when either is loading
-                      className="w-full py-3 font-inter bg-[#004265] text-[#FFFFFF] rounded-[30px] hover:bg-[#00344d] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base md:text-lg"
+                      className="w-full py-3 font-inter bg-[#004265] text-[#FFFFFF]  hover:bg-[#00344d] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base md:text-lg"
                     >
                       <span className="text-[#FFFFFF] font-medium">
                         {isLoading ? "Logging in..." : "Login"}
@@ -329,7 +329,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister, forceForgot }: LoginM
 
                     {/* Email Field */}
                     <div className="flex items-center gap-2">
-                      <div className="flex-1 rounded-full border-4 shadow-md px-4 py-2 border-[#004265]">
+                      <div className="flex-1  border-4 shadow-md px-4 py-2 border-[#004265]">
                         <div className="flex items-center">
                           {/* Email Icon */}
                           <div className="mr-2 shrink-0">
@@ -373,7 +373,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister, forceForgot }: LoginM
                     <button 
                       type="submit"
                       disabled={isLoading || isGoogleLoading} // Disable when either is loading
-                      className="w-full py-3 font-inter bg-[#004265] text-[#FFFFFF] rounded-[30px] hover:bg-[#00344d] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base md:text-lg"
+                      className="w-full py-3 font-inter bg-[#004265] text-[#FFFFFF] hover:bg-[#00344d] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base md:text-lg"
                     >
                       <span className="text-[#FFFFFF] font-medium">
                         {isLoading ? "Sending..." : "Send Reset Link"}
@@ -408,7 +408,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister, forceForgot }: LoginM
                       type="button"
                       onClick={handleGoogleLogin}
                       disabled={isLoading || isGoogleLoading} // Disable when either is loading
-                      className="w-full py-3 border-[#004265] rounded-[30px] flex items-center justify-center gap-3 bg-[#004265] hover:bg-[#00344d] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base md:text-lg font-inter"
+                      className="w-full py-3 border-[#004265] flex items-center justify-center gap-3 bg-[#004265] hover:bg-[#00344d] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base md:text-lg font-inter"
                     >
                       <svg width="18" height="18" className="md:w-5 md:h-5" viewBox="0 0 24 24">
                         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -452,7 +452,7 @@ const LoginModal = ({ isOpen, onClose, onSwitchToRegister, forceForgot }: LoginM
                     alt="Young writer working with mentor"
                     width={400}
                     height={280}
-                    className="rounded-lg object-cover h-auto w-full max-w-75 md:max-w-full"
+                    className="object-cover h-auto w-full max-w-75 md:max-w-full"
                     priority
                   />
                 </div>

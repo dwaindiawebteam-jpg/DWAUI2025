@@ -944,14 +944,14 @@ try {
         </h1>
 
         {successMessage && (
-          <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+          <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 ">
             {successMessage}
           </div>
         )}
 
         {showSuccessPanel && (
           <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
-            <div className="bg-white rounded-xl shadow-lg p-6 w-[90%] max-w-md text-center">
+            <div className="bg-white shadow-lg p-6 w-[90%] max-w-md text-center">
               <h2 className="text-2xl font-bold  mb-4 font-sans!">
                 Saved Successfully
               </h2>
@@ -967,7 +967,7 @@ try {
                     ? "/admin/articles"
                     : "/author/articles";
                 }}
-                className="w-full py-3 bg-[#4A3820] text-white rounded-lg hover:bg-[#3A2D18] transition font-sans!"
+                className="w-full py-3 bg-[#4A3820] text-white  hover:bg-[#3A2D18] transition font-sans!"
               >
                 {isAdminOversight ? "Go to All Articles" : "Go to My Articles"}
               </button>
@@ -975,7 +975,7 @@ try {
 
                 <button
                   onClick={() => setShowSuccessPanel(false)}
-                  className="w-full py-3 border border-[#4A3820]  rounded-lg hover:bg-[#F0E8DB] transition font-sans!"
+                  className="w-full py-3 border border-[#4A3820]   hover:bg-[#F0E8DB] transition font-sans!"
                 >
                   Keep Editing
                 </button>
@@ -985,25 +985,25 @@ try {
         )}
 
         {errors.general && (
-          <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+          <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 ">
             {errors.general}
           </div>
         )}
 
-        <div className="border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8 mb-4">
+        <div className="border border-[#D8CDBE]  shadow-md p-6 sm:p-8 mb-4">
           <h2 className="text-2xl font-medium mb-4 font-sans!">
             Article Details
           </h2>
 
           <div className="space-y-8">
             {/* Title */}
-            <div className="bg-white rounded-lg border border-[#D8CDBE] p-5 shadow-md">
+            <div className="bg-white  border border-[#D8CDBE] p-5 shadow-md">
               <label className="block text-lg font-bold mb-3 font-sans!">
                 Title
               </label>
               <input
                 type="text"
-                className="w-full px-4 py-3 rounded-lg border-2 border-[#004265]"
+                className="w-full px-4 py-3  border-2 border-[#004265]"
                 value={title}
                 onChange={(e) => updateArticleData({ title: e.target.value })}
                 placeholder="Enter article title"
@@ -1012,13 +1012,13 @@ try {
             </div>
 
             {/* Slug */}
-            <div className="bg-white rounded-lg border border-[#D8CDBE] p-5 shadow-md">
+            <div className="bg-white  border border-[#D8CDBE] p-5 shadow-md">
               <label className="block text-lg font-bold  mb-3 font-sans!">
                 Slug (URL)
               </label>
               <input
                 type="text"
-                className="w-full px-4 py-3 rounded-lg border-2 border-[#004265]"
+                className="w-full px-4 py-3  border-2 border-[#004265]"
                 value={slug}
                 onChange={(e) => {
                     slugManuallyEditedRef.current = true;
@@ -1033,7 +1033,7 @@ try {
             </div>
 
             {/* Meta Description */}
-            <div className="bg-white rounded-lg border border-[#D8CDBE] p-5 shadow-md">
+            <div className="bg-white  border border-[#D8CDBE] p-5 shadow-md">
               <label className="block text-lg font-bold  mb-3 font-sans!">
                 Meta Description
               </label>
@@ -1043,7 +1043,7 @@ try {
                 maxLength={160}
                 rows={3}
                 placeholder="Short summary shown in search results (150–160 chars)"
-                className="w-full px-4 py-3 rounded-lg border-2 border-[#004265] scrollable-description"
+                className="w-full px-4 py-3  border-2 border-[#004265] scrollable-description"
                 style={{ resize: "none" }} // optional but recommended
               />
 
@@ -1056,7 +1056,7 @@ try {
             </div>
 
             {/* Cover Image */}
-            <div className="bg-white rounded-lg border border-[#D8CDBE] p-5 shadow-md">
+            <div className="bg-white  border border-[#D8CDBE] p-5 shadow-md">
               <label className="block text-lg font-bold  mb-3 font-sans!">
                 Cover Image
               </label>
@@ -1088,7 +1088,7 @@ try {
                   onChange={(e) => updateArticleData({ coverImageAlt: e.target.value })}
                   placeholder="Describe the image for accessibility & SEO"
                   disabled={!coverImage}
-                  className={`w-full px-4 py-2 rounded-lg border-2 ${
+                  className={`w-full px-4 py-2  border-2 ${
                     coverImage
                       ? "border-[#004265]"
                       : "border-gray-300 bg-gray-100 cursor-not-allowed"
@@ -1101,7 +1101,7 @@ try {
             </div>
 
             {/* Body Editor */}
-            <div className="bg-white rounded-lg border border-[#D8CDBE] p-5 shadow-md">
+            <div className="bg-white  border border-[#D8CDBE] p-5 shadow-md">
               <div className="flex items-center justify-between mb-3">
                 <label className="text-lg font-bold  font-sans!">
                   Article Content
@@ -1110,7 +1110,7 @@ try {
                   type="button"
                   disabled={autosaving}
                   onClick={handlePreview}
-                  className="flex items-center gap-2 px-3 py-1.5 text-sm bg-[#004265] text-white rounded-md cursor-pointer transition font-sans!"
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm bg-[#004265] text-white cursor-pointer transition font-sans!"
                   title="Preview article"
                 >
                   {autosaving ? "Saving…" : "Preview"}
@@ -1136,7 +1136,7 @@ try {
             </div>
 
             {/* Tags */}
-        <div className="bg-white rounded-lg border border-[#BFDBFE] p-5 shadow-md">
+        <div className="bg-white  border border-[#BFDBFE] p-5 shadow-md">
         <label className="block text-lg font-bold mb-3 font-sans!">
           Tags
         </label>
@@ -1144,18 +1144,18 @@ try {
           type="text"
           placeholder="Type a tag and press Enter"
           onKeyDown={handleAddTag}
-          className="w-full px-4 py-3 rounded-lg border-2 border-[#004265]"
+          className="w-full px-4 py-3  border-2 border-[#004265]"
         />
         <div className="flex gap-2 flex-wrap mt-3">
           {tags.map((t) => (
             <span
               key={t}
-              className="px-4 py-1.5 bg-[#BFDBFE] border border-[#BFDBFE] rounded-full flex items-center gap-2"
+              className="px-4 py-1.5 bg-[#BFDBFE] border border-[#BFDBFE]  flex items-center gap-2"
             >
               {t}
               <button
                 onClick={() => handleRemoveTag(t)}
-                className="p-1 rounded-full hover:bg-[#BFDBFE]"
+                className="p-1  hover:bg-[#BFDBFE]"
               >
                 <X size={14} />
               </button>
@@ -1166,14 +1166,14 @@ try {
           {errors.tags && <p className="mt-2 text-red-600 font-medium">{errors.tags}</p>}
         </div>
             {/* Status */}
-            <div className="bg-white rounded-lg border border-[#D8CDBE] p-5 shadow-md">
+            <div className="bg-white  border border-[#D8CDBE] p-5 shadow-md">
               <label className="block text-lg font-bold  mb-3 font-sans!">
                 Publish Status
               </label>
               <select
                 value={status}
                 onChange={(e) => updateArticleData({ status: e.target.value as "draft" | "published" })}
-                className="w-full px-4 py-3 rounded-lg border-2 border-[#004265]"
+                className="w-full px-4 py-3  border-2 border-[#004265]"
               >
                 <option value="draft">Draft</option>
                 <option value="published">Published</option>

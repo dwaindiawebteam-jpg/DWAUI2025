@@ -12,7 +12,7 @@ export default function ArticleCard({ article, onDelete }: ArticleCardProps) {
   const views = article.readCount ?? 0;
  
   return (
-    <div className="bg-white border border-[#BFDBFE] rounded-lg shadow-md p-5 flex flex-col hover:shadow-lg transition font-sans">
+    <div className="bg-white border border-[#BFDBFE] shadow-md p-5 flex flex-col hover:shadow-lg transition font-sans">
       
       {/* COVER IMAGE */}
      {article.coverImage && (
@@ -20,12 +20,12 @@ export default function ArticleCard({ article, onDelete }: ArticleCardProps) {
           href={`/author/articles/preview/${article.id}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="relative w-full h-48 mb-5 rounded-lg overflow-hidden border border-[#BFDBFE] block cursor-pointer"
+          className="relative w-full h-48 mb-5 overflow-hidden border border-[#BFDBFE] block cursor-pointer"
           title="Open preview in new tab"
         >
           {/* Views badge */}
           {article.status === "published" && (
-           <div className="absolute bottom-2 right-2 z-10 flex items-center gap-1 bg-black/60 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm">
+           <div className="absolute bottom-2 right-2 z-10 flex items-center gap-1 bg-black/60 text-white text-xs px-2 py-1 backdrop-blur-sm">
 
               <Eye size={14} />
               {views.toLocaleString()}
@@ -37,7 +37,7 @@ export default function ArticleCard({ article, onDelete }: ArticleCardProps) {
             alt={article.coverImageAlt || article.title || "Article cover"}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="rounded-lg transition-transform duration-300 hover:scale-[1.03]"
+            className="transition-transform duration-300 hover:scale-[1.03]"
             style={{
               objectFit: "cover",
               objectPosition: article.coverImagePosition
@@ -59,7 +59,7 @@ export default function ArticleCard({ article, onDelete }: ArticleCardProps) {
         {article.tags?.slice(0, 4).map((t) => (
           <span
             key={t}
-            className="bg-[#BFDBFE] border border-[#BFDBFE] text-base px-3 py-1.5 rounded-full font-medium font-sans!"
+            className="bg-[#BFDBFE] border border-[#BFDBFE] text-base px-3 py-1.5 font-medium font-sans!"
           >
             #{t}
           </span>
@@ -108,7 +108,7 @@ export default function ArticleCard({ article, onDelete }: ArticleCardProps) {
         <div className="flex gap-2">
             <a
             href={`/author/articles/edit/${article.id}`}
-            className="px-4 py-2.5 bg-[#004265] text-white font-semibold rounded-lg hover:bg-[#3A4F63] text-base transition-colors font-sans!"
+            className="px-4 py-2.5 bg-[#004265] text-white font-semibold hover:bg-[#3A4F63] text-base transition-colors font-sans!"
             >
             Edit
             </a>
@@ -117,7 +117,7 @@ export default function ArticleCard({ article, onDelete }: ArticleCardProps) {
             href={`/author/articles/preview/${article.id}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2.5 bg-[#BFDBFE] border border-[#BFDBFE] text-[#2C3E50] font-semibold rounded-lg hover:bg-[#A6CBE7] transition-colors font-sans!"
+            className="px-4 py-2.5 bg-[#BFDBFE] border border-[#BFDBFE] text-[#2C3E50] font-semibold hover:bg-[#A6CBE7] transition-colors font-sans!"
             >
             Preview
             </a>
@@ -125,7 +125,7 @@ export default function ArticleCard({ article, onDelete }: ArticleCardProps) {
 
         <button
             onClick={onDelete}
-            className="px-4 py-2.5 bg-white border-2 border-red-300 text-red-600 font-semibold rounded-lg hover:bg-red-50 transition-colors font-sans!"
+            className="px-4 py-2.5 bg-white border-2 border-red-300 text-red-600 font-semibold hover:bg-red-50 transition-colors font-sans!"
         >
             Delete
         </button>

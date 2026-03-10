@@ -295,7 +295,6 @@ textarea.scrollable-description::-webkit-scrollbar-thumb:hover {
   width: 100%;
   max-width: 800px;
   aspect-ratio: 16 / 9;
-  border-radius: 12px;
 }
 
 .article-content > div {
@@ -304,7 +303,7 @@ textarea.scrollable-description::-webkit-scrollbar-thumb:hover {
 }
 
 /* You can also use the value directly if needed */
-span {
+span, p {
   font-size: 1.125rem; /* This is typically what lg equals in Tailwind */
 }
 

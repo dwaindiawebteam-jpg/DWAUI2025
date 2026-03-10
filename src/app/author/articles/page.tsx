@@ -149,7 +149,7 @@ export default function AuthorArticlesPage() {
         <h1 className="text-2xl sm:text-3xl font-extrabold mb-6 text-center font-sans!">
           My Articles
         </h1>
-        <div className=" border border-[#D8CDBE] rounded-lg shadow-md p-4 sm:p-6 md:p-8">
+        <div className=" border border-[#BFDBFE] shadow-md p-4 sm:p-6 md:p-8">
           {/* PAGE HEADER */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <h2 className="text-xl sm:text-2xl font-medium font-sans!">
@@ -157,13 +157,13 @@ export default function AuthorArticlesPage() {
             </h2>
             <a
               href="/author/articles/new"
-              className="px-4 py-2 rounded-lg bg-[#004265] text-white font-semibold text-base transition font-sans! text-center w-full sm:w-auto"
+              className="px-4 py-2  bg-[#004265] text-white font-semibold text-base transition font-sans! text-center w-full sm:w-auto"
             >
               + New Article
             </a>
           </div>
 
-          <hr className="border-[#D8CDBE] mb-6 sm:mb-8" />
+          <hr className="border-[#BFDBFE] mb-6 sm:mb-8" />
 
           {/* SEARCH */}
           <input
@@ -171,7 +171,7 @@ export default function AuthorArticlesPage() {
             placeholder="Search articles..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full p-3 mb-4 sm:mb-6 rounded-lg border border-[#D8CDBE] bg-white focus:outline-none focus:ring-2 focus:ring-[#CABAA2] text-base sm:text-lg font-sans!"
+            className="w-full p-3 mb-4 sm:mb-6 border border-[#BFDBFE] bg-white focus:outline-none focus:ring-2  text-base sm:text-lg font-sans!"
           />
           
           {/* FILTERS */}
@@ -180,7 +180,7 @@ export default function AuthorArticlesPage() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as any)}
-              className="p-3 rounded-lg border border-[#D8CDBE] bg-white focus:outline-none focus:ring-2 focus:ring-[#CABAA2] text-base sm:text-lg font-sans!"
+              className="p-3 border border-[#BFDBFE] bg-white focus:outline-none focus:ring-2  text-base sm:text-lg font-sans!"
             >
               <option value="all">All statuses</option>
               <option value="published">Published</option>
@@ -191,7 +191,7 @@ export default function AuthorArticlesPage() {
             <select
               value={dateSort}
               onChange={(e) => setDateSort(e.target.value as any)}
-              className="p-3 rounded-lg border border-[#D8CDBE] bg-white focus:outline-none focus:ring-2 focus:ring-[#CABAA2] text-base sm:text-lg font-sans!"
+              className="p-3 border border-[#BFDBFE] bg-white focus:outline-none focus:ring-2  text-base sm:text-lg font-sans!"
             >
               <option value="newest">Newest first</option>
               <option value="oldest">Oldest first</option>

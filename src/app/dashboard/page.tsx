@@ -59,7 +59,7 @@ export default function DashboardHome() {
         <div
           key={option.label}
           onClick={() => openLoginModal(true)}
-          className="flex flex-col items-center justify-center py-6 px-8 border border-[#D8CDBE] hover:border-[#004265] rounded-md bg-white/40 transition-colors duration-200 text-lg font-medium group text-center cursor-pointer"
+          className="flex flex-col items-center justify-center py-6 px-8 border border-[#D8CDBE] hover:border-[#004265] bg-white/40 transition-colors duration-200 text-lg font-medium group text-center cursor-pointer"
           style={{ minWidth: "200px", minHeight: "120px" }}
         >
           <Icon size={28} className="mb-2 stroke-current transition-colors duration-300 group-hover:text-[#004265]" />
@@ -72,7 +72,7 @@ export default function DashboardHome() {
       <Link
         key={option.label}
         href={option.href!}
-        className="flex flex-col items-center justify-center py-6 px-8 border border-[#D8CDBE] hover:border-[#004265] rounded-md bg-white/40 transition-colors duration-200 text-lg font-medium group text-center"
+        className="flex flex-col items-center justify-center py-6 px-8 border border-[#D8CDBE] hover:border-[#004265] bg-white/40 transition-colors duration-200 text-lg font-medium group text-center"
         style={{ minWidth: "200px", minHeight: "120px" }}
       >
         <Icon size={28} className="mb-2 stroke-current transition-colors duration-300 group-hover:text-[#004265]" />
@@ -90,7 +90,7 @@ export default function DashboardHome() {
   if (!authReady) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="w-48 h-2 rounded-full overflow-hidden bg-gray-200">
+        <div className="w-48 h-2 overflow-hidden bg-gray-200">
           <div className="h-full w-full bg-[#004265] animate-pulse"></div>
         </div>
         <p className="mt-4 font-medium text-lg font-sans!">Loading dashboard…</p>
@@ -122,7 +122,7 @@ export default function DashboardHome() {
           <div className="space-y-8">
             {role === "admin" && (
               <div className="space-y-6">
-                <div className="border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8">
+                <div className="border border-[#D8CDBE]  shadow-md p-6 sm:p-8">
                   <h2 className="text-2xl font-extrabold mb-6 text-center font-sans!">Admin Tools</h2>
                   <div className="flex flex-wrap justify-center gap-4">{adminOptions.map(renderOptionCard)}</div>
                 </div>
@@ -131,7 +131,7 @@ export default function DashboardHome() {
 
             {(role === "author" || role === "admin") && (
               <div className="space-y-6">
-                <div className="border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8">
+                <div className="border border-[#D8CDBE] shadow-md p-6 sm:p-8">
                   <h2 className="text-2xl font-extrabold mb-6 text-center font-sans!">Author Tools</h2>
                   <div className="flex flex-wrap justify-center gap-4">{authorOptions.map(renderOptionCard)}</div>
                 </div>
@@ -139,7 +139,7 @@ export default function DashboardHome() {
             )}
 
             <div className="space-y-6">
-              <div className="bg-gray-50 border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8">
+              <div className="bg-gray-50 border border-[#D8CDBE] shadow-md p-6 sm:p-8">
                 <h2 className="text-2xl font-extrabold mb-6 text-center font-sans!">My Account</h2>
                 <div className="flex flex-wrap justify-center gap-4">{profileOptions.map(renderOptionCard)}</div>
               </div>

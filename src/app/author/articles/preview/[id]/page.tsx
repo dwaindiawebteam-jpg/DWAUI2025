@@ -144,7 +144,7 @@ export default function PreviewArticlePage() {
           <p className="mt-2 text-gray-600 font-sans!">{errorMsg || "No article data could be loaded."}</p>
           <button
             onClick={() => router.back()}
-            className="mt-4 px-6 py-2 bg-[#004265] text-white rounded-lg cursor-pointer transition font-sans!"
+            className="mt-4 px-6 py-2 bg-[#004265] text-white cursor-pointer transition font-sans!"
           >
             Go back
           </button>
@@ -178,7 +178,7 @@ export default function PreviewArticlePage() {
         </button>
 
         {/* Article Card - exact design from blog page */}
-        <div className="rounded-[30px] shadow-xl p-6 sm:p-8 border border-gray-200">
+        <div className="shadow-xl p-6 sm:p-8 border border-gray-200">
           {/* Article Header */}
           <h1 className="font-cinzel text-[22px] sm:text-[26px] lg:text-[30px] font-bold min-w-0 wrap-break-word text-center mb-4">
             {post.title || "Untitled draft"}
@@ -196,7 +196,7 @@ export default function PreviewArticlePage() {
               }) : "Draft"}
             </span>
             <span className="hidden sm:inline">•</span>
-            <span className="bg-blue-100 px-3 py-1 rounded-full text-base font-medium">
+            <span className="bg-blue-100 px-3 py-1 text-base font-medium">
               Draft Preview
             </span>
           </div>
@@ -210,7 +210,7 @@ export default function PreviewArticlePage() {
                 width={1200}
                 height={600}
                 priority
-                className="w-full h-62.5 sm:h-87.5 lg:h-112.5 rounded-[20px]"
+                className="w-full h-62.5 sm:h-87.5 lg:h-112.5"
                 style={{
                   objectFit: "cover",
                   objectPosition: post.coverImagePosition

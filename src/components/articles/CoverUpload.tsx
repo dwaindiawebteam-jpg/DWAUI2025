@@ -182,7 +182,6 @@ const stopClick = (e: React.MouseEvent | React.PointerEvent) => {
             flex items-center justify-center
             w-full px-4 py-6
             border-2 border-dashed border-[#004265]
-            rounded-lg
             font-medium
             cursor-pointer
             transition-colors
@@ -206,7 +205,6 @@ const stopClick = (e: React.MouseEvent | React.PointerEvent) => {
               relative w-full
               h-62.5 sm:h-87.5 lg:h-112.5
               overflow-hidden
-              rounded-[20px]
               bg-black
             "
           >
@@ -264,9 +262,9 @@ const stopClick = (e: React.MouseEvent | React.PointerEvent) => {
     />
 
     {uploading && (
-      <div className="w-full bg-gray-200 rounded h-2">
+      <div className="w-full bg-gray-200 h-2">
         <div
-          className="bg-[#805C2C] h-2 rounded"
+          className="bg-[#805C2C] h-2"
           style={{ width: `${progress}%` }}
         ></div>
       </div>

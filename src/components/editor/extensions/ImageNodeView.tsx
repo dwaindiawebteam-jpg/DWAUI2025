@@ -29,7 +29,6 @@ export default function ImageNodeView({ node, editor, getPos, updateAttributes }
    <img
     src={src}
     alt={alt || ""}
-    className="rounded-lg"
     style={{
       maxWidth: "600px",
       maxHeight: "400px", // ✅ safe
@@ -49,7 +48,7 @@ export default function ImageNodeView({ node, editor, getPos, updateAttributes }
         onChange={(e) => setAlt(e.target.value)}
         onBlur={() => updateAttributes({ alt })}
         placeholder="Alt text (describe this image)"
-        className="mt-2 w-full max-w-75 text-xs border rounded px-2 py-1 
+        className="mt-2 w-full max-w-75 text-xs border px-2 py-1 
                   text-gray-600 focus:outline-none focus:ring-1 focus:ring-gray-400"
       />
     )}
@@ -59,7 +58,7 @@ export default function ImageNodeView({ node, editor, getPos, updateAttributes }
   <button
     type="button"
     onClick={handleRemove}
-    className="absolute top-1 right-1 text-white bg-black/70 text-xs px-1 py-0.5 rounded 
+    className="absolute top-1 right-1 text-white bg-black/70 text-xs px-1 py-0.5 
                opacity-0 group-hover:opacity-100 transition-opacity"
   >
     ✕

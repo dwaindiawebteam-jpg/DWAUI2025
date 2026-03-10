@@ -433,7 +433,7 @@ const handleChangeEmail = async (e: React.FormEvent) => {
         </h1>
         
         {/* Information Card */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        <div className="bg-blue-50 border border-blue-200 p-4 mb-6">
           <div className="flex items-start">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-500 mr-2 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
@@ -444,21 +444,21 @@ const handleChangeEmail = async (e: React.FormEvent) => {
           </div>
         </div>
 
-        <div className="border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8">
+        <div className="border border-[#D8CDBE] shadow-md p-6 sm:p-8">
           <h1 className={`text-2xl font-sans! font-medium text-[#004265] mb-6`}>
             Update Email Address
           </h1>
           
           {/* Success Message */}
           {successMessage && (
-            <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+            <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700">
               <p className="font-medium">{successMessage}</p>
             </div>
           )}
 
           {/* Error Message */}
           {errorMessage && (
-            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700">
               <p className="font-medium">{errorMessage}</p>
             </div>
           )}
@@ -468,7 +468,7 @@ const handleChangeEmail = async (e: React.FormEvent) => {
             <div className="space-y-6">
               {/* Current Email - Always visible */}
               <div>
-                <div className="rounded-full border-4 shadow-md px-4 py-2 border-[#004265] w-full">
+                <div className="border-4 shadow-md px-4 py-2 border-[#004265] w-full">
                   <div className="flex items-center">
                     {/* Email Icon */}
                     <div className="mr-2 shrink-0">
@@ -491,7 +491,7 @@ const handleChangeEmail = async (e: React.FormEvent) => {
                     Your current email address
                   </p>
                   {isProviderUser && (
-                    <span className="text-xs! text-gray-600 bg-gray-100 px-2 py-1 rounded-full">
+                    <span className="text-xs! text-gray-600 bg-gray-100 px-2 py-1">
                       {providerName} account
                     </span>
                   )}
@@ -502,7 +502,7 @@ const handleChangeEmail = async (e: React.FormEvent) => {
               {!isProviderUser && (
                 <div>
                   <div className="flex items-center gap-2">
-                    <div className={`flex-1 rounded-full border-4 shadow-md px-4 py-2 ${
+                    <div className={`flex-1 border-4 shadow-md px-4 py-2 ${
                       validationErrors.password 
                         ? "border-red-500" 
                         : "border-[#004265]"
@@ -587,7 +587,7 @@ const handleChangeEmail = async (e: React.FormEvent) => {
                 type="button"
                 onClick={handleReauthentication}
                 disabled={loading || (!isProviderUser && !password) || reauthenticationAttempts >= MAX_REAUTH_ATTEMPTS}
-                className="py-3 px-8  font-sans! bg-[#004265] text-[#FFFFFF] rounded-[30px] hover:bg-[#003254] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base md:text-lg w-full sm:w-auto"
+                className="py-3 px-8  font-sans! bg-[#004265] text-[#FFFFFF] hover:bg-[#003254] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base md:text-lg w-full sm:w-auto"
               >
 
                   <span className="text-[#FFFFFF] font-medium flex items-center justify-center gap-2">
@@ -625,7 +625,7 @@ const handleChangeEmail = async (e: React.FormEvent) => {
 
               {/* Current Email Display */}
               <div>
-                <div className="rounded-full border-4 shadow-md px-4 py-2 border-[#004265] w-full">
+                <div className="border-4 shadow-md px-4 py-2 border-[#004265] w-full">
                   <div className="flex items-center">
                     {/* Email Icon */}
                     <div className="mr-2 shrink-0">
@@ -648,7 +648,7 @@ const handleChangeEmail = async (e: React.FormEvent) => {
                     Your current email address
                   </p>
                   {isProviderUser && (
-                    <span className="text-xs! text-gray-600 bg-gray-100 px-2 py-1 rounded-full">
+                    <span className="text-xs! text-gray-600 bg-gray-100 px-2 py-1">
                       {providerName} account
                     </span>
                   )}
@@ -657,7 +657,7 @@ const handleChangeEmail = async (e: React.FormEvent) => {
 
               {/* NEW EMAIL */}
               <div>
-                <div className={`rounded-full border-4 shadow-md px-4 py-2 w-full ${
+                <div className={`border-4 shadow-md px-4 py-2 w-full ${
                   validationErrors.newEmail 
                     ? "border-red-500" 
                     : "border-[#004265]"
@@ -692,7 +692,7 @@ const handleChangeEmail = async (e: React.FormEvent) => {
 
               {/* CONFIRM EMAIL */}
               <div>
-                <div className={`rounded-full border-4 shadow-md px-4 py-2 w-full ${
+                <div className={`border-4 shadow-md px-4 py-2 w-full ${
                   validationErrors.confirmEmail 
                     ? "border-red-500" 
                     : "border-[#004265]"
@@ -730,7 +730,7 @@ const handleChangeEmail = async (e: React.FormEvent) => {
                 <button
                   type="submit"
                   disabled={loading || !newEmail || !confirmEmail}
-                  className="py-3 px-8 font-sans! bg-[#004265] text-[#FFFFFF] rounded-[30px] hover:bg-[#003254] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base md:text-lg"
+                  className="py-3 px-8 font-sans! bg-[#004265] text-[#FFFFFF] hover:bg-[#003254] disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base md:text-lg"
                 >
                   <span className="text-[#FFFFFF] font-medium">
                     {loading ? (
@@ -748,7 +748,7 @@ const handleChangeEmail = async (e: React.FormEvent) => {
                   type="button"
                   onClick={resetForm}
                   disabled={loading}
-                  className="py-3 px-8 font-sans! bg-gray-500 text-[#FFFFFF] rounded-[30px] hover:bg-gray-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base md:text-lg"
+                  className="py-3 px-8 font-sans! bg-gray-500 text-[#FFFFFF] hover:bg-gray-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors text-base md:text-lg"
                 >
                   <span className="text-[#FFFFFF] font-medium">
                     Cancel

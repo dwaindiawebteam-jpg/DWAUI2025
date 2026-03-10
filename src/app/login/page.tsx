@@ -22,7 +22,7 @@ const [showRegister, setShowRegister] = useState(false);
 return (
   <div className="min-h-screen w-full flex flex-col items-center py-12 bg-gray-50 px-4">
 
-    <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-10 text-center space-y-6">
+    <div className="w-full max-w-md bg-white shadow-xl p-10 text-center space-y-6">
 
       {/* Header */}
       <div className="space-y-2">
@@ -41,14 +41,14 @@ return (
       <div className="flex flex-col gap-4">
         <button
           onClick={() => setShowLogin(true)}
-          className="w-full py-3 bg-[#004265] text-white rounded-lg hover:opacity-90 transition font-medium"
+          className="w-full py-3 bg-[#004265] text-white hover:opacity-90 transition font-medium"
         >
           Login
         </button>
 
         <button
           onClick={() => setShowRegister(true)}
-          className="w-full py-3 border border-[#004265] text-[#004265] rounded-lg hover:bg-[#004265] hover:text-white transition font-medium"
+          className="w-full py-3 border border-[#004265] text-[#004265] hover:bg-[#004265] hover:text-white transition font-medium"
         >
           Register
         </button>
