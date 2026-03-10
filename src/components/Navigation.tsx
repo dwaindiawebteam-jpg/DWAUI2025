@@ -10,7 +10,7 @@ import Avatar from "@/components/Avatar";
 
 const Navigation: FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const { user, logout,authReady } = useAuth();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -82,13 +82,21 @@ const Navigation: FC = () => {
               <Link href="/donate">Donate Now</Link>
             </Button>
 
-            {/* Desktop Profile (only when logged in) */}
-            {user && (
-              <div className="hidden lg:flex items-center ml-12">
+            {/* Desktop Profile */}
+            <div className="hidden lg:flex items-center ml-12">
+
+              {/* Show skeleton while auth is loading */}
+              {!authReady && (
+                <div className="relative w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
+                <div className="absolute inset-0 animate-pulse bg-gray-200" />
+                <div className="absolute inset-0 -translate-x-full animate-[shine_1.2s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/60 to-transparent" />
+              </div>
+              )}
+
+              {/* Show profile only once auth is ready AND user exists */}
+              {authReady && user && (
                 <ul className="flex gap-3">
                   <li className="relative group">
-                    
-                    {/* Avatar */}
                     <div className="cursor-pointer flex items-center justify-center">
                       <Avatar
                         firstName={user?.firstName}
@@ -98,21 +106,17 @@ const Navigation: FC = () => {
                       />
                     </div>
 
-                    {/* Dropdown */}
                     <ul
                       className="absolute right-0 mt-4 w-52 bg-white border border-gray-200 text-gray-900 rounded-md shadow-lg py-1
-                      opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50
-                      text-sm font-medium"
+                                opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50
+                                text-sm font-medium"
                     >
                       <li className="px-4 py-2 border-b border-gray-200 select-none cursor-default">
                         Hello, {user?.firstName || "User"}
                       </li>
 
                       <li className="px-4 py-2 hover:bg-gray-100 transition-colors">
-                        <Link
-                          href="/dashboard"
-                          className="block w-full h-full"
-                        >
+                        <Link href="/dashboard" className="block w-full h-full">
                           Dashboard
                         </Link>
                       </li>
@@ -124,12 +128,11 @@ const Navigation: FC = () => {
                         Log Out
                       </li>
                     </ul>
-
                   </li>
                 </ul>
-              </div>
-            )}
+              )}
 
+            </div>
             {/* Mobile Menu Toggle */}
             <button
               onClick={toggleMobileMenu}
@@ -197,16 +200,7 @@ const Navigation: FC = () => {
 
               </div>
             )}
-            <div className="pt-2">
-              <Button
-                asChild
-                className="w-full bg-[#FF9DF0] hover:bg-[#FF9DF0]/80 text-black font-semibold"
-              >
-                <Link href="/donate" onClick={closeMobileMenu}>
-                  Donate Now
-                </Link>
-              </Button>
-            </div>
+           
           </div>
         </div>
       )}

@@ -307,3 +307,8 @@ textarea.scrollable-description::-webkit-scrollbar-thumb:hover {
 span {
   font-size: 1.125rem; /* This is typically what lg equals in Tailwind */
 }
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
