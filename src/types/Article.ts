@@ -3,10 +3,14 @@ export type Article = {
   title: string;
   slug: string;
   tags: string[];
-  coverImage: string;
-  coverImageAlt: string;
-  status: string;
-  updatedAt: any;
+
+  coverImage?: string | { url: string; fileId: string } | null;
+  coverImageAlt?: string;
+
+  status: "draft" | "published" | string;
+
+  updatedAt?: any;
+  readCount?: number;
+
   [key: string]: any;
-  readCount: number; 
 };

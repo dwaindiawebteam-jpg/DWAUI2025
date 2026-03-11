@@ -610,8 +610,8 @@ const selectionIsHeading = (): boolean => {
             >
               <span
                 style={{
-                  width: 20,
-                  height: 20,
+                  width: 18,
+                  height: 18,
                   backgroundColor: activeColor,
                   borderRadius: 0,
                   border: "1px solid #999",

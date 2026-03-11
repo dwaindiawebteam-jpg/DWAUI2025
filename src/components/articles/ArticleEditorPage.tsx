@@ -16,6 +16,7 @@ import FloatingAutosaveIndicator from "@/components/editor/FloatingAutosaveIndic
 import FloatingSaveBar from "@/components/editor/FloatingSaveBar";
 import { useRouter } from "next/navigation";
 import { sanitizeSlug } from "@/lib/articles/sanitizeSlug";
+import { debugFirestoreError } from "@/lib/firebase/debugFirestoreError";
 
 type ArticleEditorPageProps = {
   articleId?: string;
@@ -99,7 +100,7 @@ const slugManuallyEditedRef = useRef(false);
   }, []);
 
 const resolveAuthorId = () => {
-  // Admin editing someone else’s article → preserve original author
+  // Admin editing someone else's article → preserve original author
   if (isAdmin && articleAuthorIdRef.current) {
     return articleAuthorIdRef.current;
   }
@@ -493,24 +494,53 @@ const getAuthorPayload = () => {
   const autosaveToServer = useCallback(
     async (force = false, awaitConfirm = false) => {
 
-      console.log("Autosave triggered", {
-      force,
-      articleId: articleIdRef.current,
-      data: articleDataRef.current
-    });
+      console.log("🔍 AUTOSAVE TRIGGERED", {
+        force,
+        articleId: articleIdRef.current,
+        hasRestored: hasRestoredRef.current,
+        hasUser: !!currentAuthUser,
+        articleReady,
+        timestamp: new Date().toISOString()
+      });
+      
+      console.log("📦 AUTOSAVE DATA SNAPSHOT:", {
+        title: articleDataRef.current.title,
+        hasBody: !!articleDataRef.current.body,
+        hasCover: !!articleDataRef.current.coverImage,
+        status: articleDataRef.current.status
+      });
 
       if (!hasRestoredRef.current || !currentAuthUser || !articleReady) {
+        console.log("⏭️ Autosave skipped - prerequisites not met:", {
+          hasRestored: hasRestoredRef.current,
+          hasUser: !!currentAuthUser,
+          articleReady
+        });
         return;
       }
 
       const articleId = articleIdRef.current;
       if (!articleId) {
+        console.log("⏭️ Autosave skipped - no article ID");
         return;
       }
 
       const data = articleDataRef.current;
 
+      console.log("📤 AUTOSAVE PAYLOAD:", {
+        title: data.title,
+        slug: data.slug,
+        hasBody: !!data.body,
+        coverImage: data.coverImage?.url,
+        tags: data.tags,
+        status: data.status
+      });
+
+      console.log("🔑 AUTOSAVE AUTHOR ID:", resolveAuthorId());
+      console.log("👤 CURRENT USER UID:", currentAuthUser.uid);
+
       if (!force && !data.title && !data.body && !data.coverImage) {
+        console.log("⏭️ Autosave skipped - empty content (not forced)");
         return;
       }
 
@@ -521,40 +551,83 @@ const getAuthorPayload = () => {
       const cleanSlug = sanitizeSlug(articleData.slug);
 
       // 🔒 Prevent resurrection
+      console.log("🔍 Checking if article exists in Firestore...");
       const existingSnap = await getDoc(articleRef);
+      
+      console.log("🔥 DOES DOC EXIST:", existingSnap.exists());
+console.log("🔥 EXISTING SNAP DATA:", existingSnap.data());
+      console.log("📄 Article exists in Firestore:", existingSnap.exists());
+
       if (!existingSnap.exists()) {
-      console.warn("Autosave skipped: article doc does not exist yet");
-      return;
-    }
+  console.log("🆕 Creating article before first autosave...");
+
+  await setDoc(articleRef, {
+    authorId: resolveAuthorId(),
+    title: data.title || "",
+    slug: data.slug || "",
+    status: data.status || "draft",
+    createdAt: new Date(),
+    ...getAuthorPayload(),
+  });
+
+  console.log("✅ Article created. Autosave can proceed.");
+}
         
-    console.log("Autosave write success");
+      console.log("✅ Article exists, proceeding with autosave...");
 
       try {
-        await setDoc(
-        articleRef,
-        {
-          ...data,
-          authorId: resolveAuthorId(),
-          ...getAuthorPayload(),
-          updatedAt: new Date(),
-          autosaved: true,
-        },
-        { merge: true }
-      );
+        console.log("📝 Writing to Firestore...");
 
-      const key = getAutosaveKey(currentAuthUser.uid, articleId);
-      localStorage.removeItem(key);
+        const token = await currentAuthUser.getIdTokenResult();
+
+        console.log("🔑 AUTOSAVE TOKEN", {
+          uid: currentAuthUser.uid,
+          role: token.claims.role,
+          claims: token.claims
+        });
+
+        console.log("📄 FIRESTORE PATH:", articleRef.path);
+
+        console.log("📦 FIRESTORE PAYLOAD:", {
+        title: data.title,
+        slug: cleanSlug,
+        status: data.status,
+        authorId: resolveAuthorId(),
+        autosaved: true
+      });
+        await setDoc(
+          articleRef,
+          {
+            ...data,
+            authorId: resolveAuthorId(),
+            ...getAuthorPayload(),
+            updatedAt: new Date(),
+            autosaved: true,
+          },
+          { merge: true }
+        );
+
+        console.log("✅ Autosave write successful");
+
+        const key = getAutosaveKey(currentAuthUser.uid, articleId);
+        localStorage.removeItem(key);
+        console.log("🗑️ Local draft cleared");
 
         // Optional confirmation read (used by preview)
         if (awaitConfirm) {
+          console.log("🔍 Performing confirmation read...");
           await getDoc(articleRef);
+          console.log("✅ Confirmation read complete");
         }
 
         setLastServerSave(Date.now());
+        console.log("💾 Last server save timestamp updated");
       } catch (err: any) {
-      throw err;
-    } finally {
+       debugFirestoreError(err, "AUTOSAVE");
+        throw err;
+      } finally {
         setAutosaving(false);
+        console.log("🏁 Autosave completed (with potential error)");
       }
     },
     [currentAuthUser, articleReady]
@@ -705,29 +778,44 @@ useEffect(() => {
   
   
   const handleSave = async () => {
-      console.log("SAVE CLICKED", {
+    console.log("=".repeat(80));
+    console.log("🚀 SAVE BUTTON CLICKED", {
       articleId: articleIdRef.current,
       uid: currentAuthUser?.uid,
       role,
-      articleData,
+      mode,
+      timestamp: new Date().toISOString()
     });
+    console.log("=".repeat(80));
+    
     if (!articleIdRef.current) {
+      console.error("❌ Save failed: No article ID");
       setErrors({ general: "Article ID not ready yet." });
       return;
     }
 
     if (!currentAuthUser) {
+      console.error("❌ Save failed: No authenticated user");
       setErrors({ general: "Please log in to save changes." });
       return;
     }
 
+    console.log("📋 Current article data:", {
+      title: articleData.title,
+      slug: articleData.slug,
+      hasBody: !!articleData.body,
+      coverImage: articleData.coverImage?.url,
+      tags: articleData.tags,
+      status: articleData.status
+    });
+
     // 🔁 Force latest autosave before final commit (same behavior as preview)
-   try {
-      console.log("Running forced autosave...");
+    try {
+      console.log("🔄 Running forced autosave before final save...");
       await autosaveToServer(true, true);
-      console.log("Autosave completed");
+      console.log("✅ Autosave completed successfully");
     } catch (err) {
-      console.error("Autosave failed:", err);
+      console.error("❌ Autosave failed:", err);
       setErrors({ general: "Could not prepare article for save." });
       return;
     }
@@ -737,171 +825,270 @@ useEffect(() => {
     setSuccessMessage("");
 
     const validation = validateArticle(articleData);
-    console.log("Validation result:", validation);
+    console.log("🔍 Validation result:", validation);
 
     if (validation) {
+      console.log("❌ Validation failed:", validation);
       setErrors(validation);
       setSaving(false);
       return;
     }
 
-try {
-  /**
-   * Ensure latest custom claims are loaded.
-   */
-  const ensureFreshRoleClaim = async () => {
+    console.log("✅ Validation passed");
+
     try {
-      await currentAuthUser.reload();
-    } catch (e) {
-    }
+      /**
+       * Ensure latest custom claims are loaded.
+       */
+      const ensureFreshRoleClaim = async () => {
+        try {
+          await currentAuthUser.reload();
+        } catch (e) {
+          console.warn("⚠️ Failed to reload user:", e);
+        }
 
-    const idResult = await currentAuthUser.getIdTokenResult(true);
-    return idResult?.claims?.role;
-  };
+        const idResult = await currentAuthUser.getIdTokenResult(true);
+        return idResult?.claims?.role;
+      };
 
-  let roleClaim = await ensureFreshRoleClaim();
-  console.log("Role claim from token:", roleClaim);
+      console.log("🔑 Checking user permissions...");
+      let roleClaim = await ensureFreshRoleClaim();
+      console.log("📜 Role claim from token:", roleClaim);
+      
+      const fullToken = await currentAuthUser.getIdTokenResult(true);
+      console.log("📜 FULL TOKEN CLAIMS:", fullToken.claims);
+      console.log("👤 AUTH UID:", currentAuthUser.uid);
+      console.log("👤 ROLE FROM CONTEXT:", role);
 
-  if (roleClaim !== "admin" && roleClaim !== "author") {
-    roleClaim = await ensureFreshRoleClaim();
-    if (roleClaim !== "admin" && roleClaim !== "author") {
-      throw new Error("Insufficient permissions. Admin or author role required.");
-    }
-  }
+      if (roleClaim !== "admin" && roleClaim !== "author") {
+        roleClaim = await ensureFreshRoleClaim();
+        if (roleClaim !== "admin" && roleClaim !== "author") {
+          throw new Error("Insufficient permissions. Admin or author role required.");
+        }
+      }
 
-  // ---------- PREPARE SAVE DATA ----------
-  let unusedAssets: string[] = [];
+      console.log("✅ Permission check passed");
 
-  if (body && typeof body === "object") {
-    const usedAssets = extractArticleAssets(
-      { coverImage, body },
-      uploadedAssets
-    );
-    unusedAssets = findUnusedAssets(uploadedAssets, usedAssets);
-  }
+      // ---------- PREPARE SAVE DATA ----------
+      let unusedAssets: string[] = [];
 
-  const articleRef = doc(db, "articles", articleIdRef.current!);
-  const snap = await getDoc(articleRef);
-  const existing = snap.exists() ? snap.data() : null;
+      if (body && typeof body === "object") {
+        const usedAssets = extractArticleAssets(
+          { coverImage, body },
+          uploadedAssets
+        );
+        unusedAssets = findUnusedAssets(uploadedAssets, usedAssets);
+        console.log("📦 Asset analysis:", {
+          uploaded: uploadedAssets.length,
+          used: usedAssets.length,
+          unused: unusedAssets.length
+        });
+      }
 
+      const articleRef = doc(db, "articles", articleIdRef.current!);
+      console.log("📄 Article Firestore path:", articleRef.path);
+      
+      console.log("🔍 Fetching existing article...");
+      const snap = await getDoc(articleRef);
+      const existing = snap.exists() ? snap.data() : null;
+      
+      console.log("📄 Existing article:", existing ? {
+        id: articleIdRef.current,
+        hasData: true,
+        authorId: existing.authorId,
+        createdAt: existing.createdAt
+      } : "No existing document");
 
- const writePayload = async () => {
-  const snap = await getDoc(articleRef);
+      const writePayload = async () => {
+        const snap = await getDoc(articleRef);
 
-   const payload = {
-    title: articleData.title,
-    slug: sanitizeSlug(articleData.slug),
-    metaDescription: articleData.metaDescription,
-    coverImage: articleData.coverImage,
-    coverImageAlt: articleData.coverImageAlt,
-    coverImagePosition: articleData.coverImagePosition,
-    body: articleData.body,
-    tags: articleData.tags,
-    status: articleData.status,
-    authorId: resolveAuthorId(),
-    ...getAuthorPayload(),
-    updatedAt: serverTimestamp(),
-    ...(articleData.status === "published" && !snap.data()?.publishedAt && {
-      publishedAt: serverTimestamp(),
-    }),
-  };
+        const payload = {
+          title: articleData.title,
+          slug: sanitizeSlug(articleData.slug),
+          metaDescription: articleData.metaDescription,
+          coverImage: articleData.coverImage,
+          coverImageAlt: articleData.coverImageAlt,
+          coverImagePosition: articleData.coverImagePosition,
+          body: articleData.body,
+          tags: articleData.tags,
+          status: articleData.status,
+          authorId: resolveAuthorId(),
+          ...getAuthorPayload(),
+          updatedAt: serverTimestamp(),
+          ...(articleData.status === "published" && !snap.data()?.publishedAt && {
+            publishedAt: serverTimestamp(),
+          }),
+        };
 
+        console.log("📦 Final save payload:", {
+          title: payload.title,
+          slug: payload.slug,
+          metaDescription: payload.metaDescription?.substring(0, 50) + "...",
+          hasCoverImage: !!payload.coverImage,
+          coverImageAlt: payload.coverImageAlt,
+          coverImagePosition: payload.coverImagePosition,
+          hasBody: !!payload.body,
+          tags: payload.tags,
+          status: payload.status,
+          authorId: payload.authorId,
+          authorName: payload.authorName,
+          hasAuthorInitials: !!payload.authorInitials,
+          hasUpdatedAt: !!payload.updatedAt,
+          hasPublishedAt: !!payload.publishedAt
+        });
 
-  console.log("Writing article payload:", payload);
-  console.log("Article ref:", articleRef.path);
+        console.log("🔑 Resolved authorId:", resolveAuthorId());
+        console.log("👤 Current user UID:", currentAuthUser.uid);
+        console.log("📄 Existing article:", snap.data());
 
-   if (!snap.exists()) {
-    // FIRST SAVE → CREATE DOC
-    await setDoc(articleRef, {
-      ...payload,
-      createdAt: serverTimestamp(),
-    });
-  } else {
-    // SUBSEQUENT SAVES → UPDATE DOC
-    await updateDoc(articleRef, payload);
-    console.log("Firestore updateDoc success");
-  }
-  
+        const allowedKeys = [
+          "title",
+          "slug",
+          "metaDescription",
+          "coverImage",
+          "coverImageAlt",
+          "coverImagePosition",
+          "body",
+          "tags",
+          "status",
+          "authorId",
+          "authorName",
+          "authorInitials",
+          "updatedAt",
+          "createdAt",
+          "publishedAt",
+          "autosaved"
+        ];
 
-};
+        const payloadKeys = Object.keys(payload);
+        const invalidKeys = payloadKeys.filter(k => !allowedKeys.includes(k));
 
+        if (invalidKeys.length > 0) {
+          console.warn("⚠️ Payload contains potentially invalid keys:", invalidKeys);
+        }
 
-  // ---------- ATTEMPT SAVE ----------
-  try {
-    await writePayload();
-  } catch (err: any) {
-  console.error("Firestore write failed:", err);
+        if (!snap.exists()) {
+          // FIRST SAVE → CREATE DOC
+          console.log("📝 Creating new article document...");
 
-  if (err?.code === "permission-denied") {
-      await currentAuthUser.reload();
-      await ensureFreshRoleClaim();
-      await writePayload(); // retry once
-    } else {
-      throw err;
-    }
-  }
+          const token = await currentAuthUser.getIdTokenResult();
 
-  // ---------- USER CLEANUP ----------
-  await setDoc(
-    doc(db, "users", currentAuthUser.uid),
-    { lastActiveArticleId: null },
-    { merge: true }
-  );
+          console.log("🔑 TOKEN DEBUG", {
+            uid: currentAuthUser.uid,
+            role: token.claims.role,
+            claims: token.claims
+          });
+          await setDoc(articleRef, {
+            ...payload,
+            createdAt: serverTimestamp(),
+          });
+          console.log("✅ Article created successfully");
+        } else {
+          // SUBSEQUENT SAVES → UPDATE DOC
+          console.log("📝 Updating existing article document...");
+          await updateDoc(articleRef, payload);
+          console.log("✅ Article updated successfully");
+        }
+      };
+      
+      // ---------- ATTEMPT SAVE ----------
+      try {
+        console.log("📤 Attempting Firestore write...");
+        await writePayload();
+        console.log("✅ Firestore write succeeded");
+      } catch (err: any) {
+        console.error("❌ Firestore write failed:", err);
+        console.error("❌ Error code:", err?.code);
+        console.error("❌ Error message:", err?.message);
+        console.error("❌ Error stack:", err?.stack);
+        
+        if (err?.code === "permission-denied") {
+          console.log("🔄 Permission denied - refreshing token and retrying...");
+          await currentAuthUser.reload();
+          await ensureFreshRoleClaim();
+          console.log("🔄 Retrying write...");
+          await writePayload(); // retry once
+          console.log("✅ Retry succeeded");
+        } else {
+          throw err;
+        }
+      }
 
-  const shouldCleanup = hasSavedOnceRef.current;
-  if (!hasSavedOnceRef.current) {
-    hasSavedOnceRef.current = true;
-  }
+      console.log("✅ Save completed successfully");
 
-  if (shouldCleanup && uploadedAssets.length > 0 && unusedAssets.length > 0) {
-    if (unusedAssets.length !== uploadedAssets.length) {
-      await Promise.all(
-        unusedAssets.map(async (url) => {
-          try {
-            await fetch("/api/delete-asset", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ url }),
-            });
-          } catch {}
-        })
+      // ---------- USER CLEANUP ----------
+      await setDoc(
+        doc(db, "users", currentAuthUser.uid),
+        { lastActiveArticleId: null },
+        { merge: true }
       );
-    }
-  }
 
-  setSuccessMessage(
-    hasSavedOnceRef.current
-      ? "Article updated successfully!"
-      : "Article created successfully!"
-  );
+      const shouldCleanup = hasSavedOnceRef.current;
+      if (!hasSavedOnceRef.current) {
+        hasSavedOnceRef.current = true;
+      }
 
-  setShowSuccessPanel(true);
+      if (shouldCleanup && uploadedAssets.length > 0 && unusedAssets.length > 0) {
+        if (unusedAssets.length !== uploadedAssets.length) {
+          console.log("🧹 Cleaning up unused assets:", unusedAssets.length);
+          await Promise.all(
+            unusedAssets.map(async (url) => {
+              try {
+                await fetch("/api/delete-asset", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ url }),
+                });
+                console.log(`✅ Deleted unused asset: ${url}`);
+              } catch (err) {
+                console.error(`❌ Failed to delete asset ${url}:`, err);
+              }
+            })
+          );
+        }
+      }
 
-  if (currentAuthUser && articleIdRef.current) {
-    localStorage.removeItem(
-      getAutosaveKey(currentAuthUser.uid, articleIdRef.current)
-    );
-    localStorage.removeItem(
-      getActiveArticleIdKey(currentAuthUser.uid)
-    );
-  }
+      setSuccessMessage(
+        hasSavedOnceRef.current
+          ? "Article updated successfully!"
+          : "Article created successfully!"
+      );
 
-  if (serverSaveTimeoutRef.current) {
-    clearTimeout(serverSaveTimeoutRef.current);
-    serverSaveTimeoutRef.current = null;
-  }
+      setShowSuccessPanel(true);
 
-  resetForm();
-  setAutosaving(false);
-  setLastLocalSave(null);
-  setLastServerSave(null);
+      if (currentAuthUser && articleIdRef.current) {
+        localStorage.removeItem(
+          getAutosaveKey(currentAuthUser.uid, articleIdRef.current)
+        );
+        localStorage.removeItem(
+          getActiveArticleIdKey(currentAuthUser.uid)
+        );
+        console.log("🗑️ Local storage cleared");
+      }
 
-  setTimeout(() => setSuccessMessage(""), 2500);
+      if (serverSaveTimeoutRef.current) {
+        clearTimeout(serverSaveTimeoutRef.current);
+        serverSaveTimeoutRef.current = null;
+      }
 
-} catch (err: any) {
-  setErrors({ general: err.message || "Failed to save article." });
-} finally {
+      resetForm();
+      setAutosaving(false);
+      setLastLocalSave(null);
+      setLastServerSave(null);
+
+      setTimeout(() => setSuccessMessage(""), 2500);
+
+    } catch (err: any) {
+      console.error("❌ Save process failed catastrophically:", {
+        error: err,
+        code: err?.code,
+        message: err?.message,
+        stack: err?.stack
+      });
+      setErrors({ general: err.message || "Failed to save article." });
+    } finally {
       setSaving(false);
+      console.log("🏁 Save process completed (with potential error)");
     }
   };
 
@@ -967,7 +1154,7 @@ try {
                     ? "/admin/articles"
                     : "/author/articles";
                 }}
-                className="w-full py-3 bg-[#4A3820] text-white  hover:bg-[#3A2D18] transition font-sans!"
+                className="w-full py-3 bg-[#004265] text-white cursor-pointer transition font-sans!"
               >
                 {isAdminOversight ? "Go to All Articles" : "Go to My Articles"}
               </button>
@@ -975,7 +1162,7 @@ try {
 
                 <button
                   onClick={() => setShowSuccessPanel(false)}
-                  className="w-full py-3 border border-[#4A3820]   hover:bg-[#F0E8DB] transition font-sans!"
+                  className="w-full py-3 border cursor-pointer hover:bg-[#BFDBFE] transition font-sans!"
                 >
                   Keep Editing
                 </button>

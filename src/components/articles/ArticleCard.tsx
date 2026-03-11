@@ -10,44 +10,33 @@ interface ArticleCardProps {
 
 export default function ArticleCard({ article, onDelete }: ArticleCardProps) {
   const views = article.readCount ?? 0;
- 
+   // Normalize cover image (supports old string format + new ImageKit object)
+  const coverUrl =
+    typeof article.coverImage === "string"
+      ? article.coverImage.trim()
+      : article.coverImage?.url?.trim() || "";
+
   return (
     <div className="bg-white border border-[#BFDBFE] shadow-md p-5 flex flex-col hover:shadow-lg transition font-sans">
       
-      {/* COVER IMAGE */}
-     {article.coverImage && (
-        <a
-          href={`/author/articles/preview/${article.id}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="relative w-full h-48 mb-5 overflow-hidden border border-[#BFDBFE] block cursor-pointer"
-          title="Open preview in new tab"
-        >
-          {/* Views badge */}
-          {article.status === "published" && (
-           <div className="absolute bottom-2 right-2 z-10 flex items-center gap-1 bg-black/60 text-white text-xs px-2 py-1 backdrop-blur-sm">
-
-              <Eye size={14} />
-              {views.toLocaleString()}
-            </div>
-          )}
-
-          <Image
-            src={article.coverImage}
-            alt={article.coverImageAlt || article.title || "Article cover"}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="transition-transform duration-300 hover:scale-[1.03]"
-            style={{
-              objectFit: "cover",
-              objectPosition: article.coverImagePosition
-                ? `${article.coverImagePosition.x}% ${article.coverImagePosition.y}%`
-                : "50% 50%",
-            }}
-          />
-        </a>
-      )}
-
+   
+    {/* Featured Image */}
+      {coverUrl && (
+    <div className="relative w-full h-48 mb-5 overflow-hidden border border-[#BFDBFE]">
+      <Image
+        src={coverUrl}
+        alt={article.coverImageAlt || article.title || "Article cover"}
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        className="object-cover transition-transform duration-300 hover:scale-[1.03]"
+        style={{
+          objectPosition: article.coverImagePosition
+            ? `${article.coverImagePosition.x}% ${article.coverImagePosition.y}%`
+            : "50% 50%",
+        }}
+      />
+    </div>
+  )}
 
       {/* TITLE */}
       <h3 className="text-xl font-bold line-clamp-2 mb-3 font-sans">

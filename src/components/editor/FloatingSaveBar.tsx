@@ -72,7 +72,7 @@ export default function FloatingSaveBar({
               <button
                 onClick={onClick}
                 disabled={saving}
-                className="px-8 py-3 rounded-lg bg-[#805C2C] text-white font-bold text-lg hover:bg-[#6B4C24] transition-colors disabled:opacity-60 disabled:cursor-not-allowed font-sans!"
+                className="px-4 py-2  bg-[#004265] text-white font-bold text-base cursor-pointer transition-colors disabled:opacity-60 disabled:cursor-not-allowed font-sans!"
               >
                 {saving ? "Saving..." : label}
               </button>
@@ -98,7 +98,7 @@ export default function FloatingSaveBar({
           <button
             onClick={onClick}
             disabled={saving}
-            className="px-4 py-2 rounded-lg bg-[#004265] text-white font-bold text-base cursor-pointer transition-colors disabled:opacity-60 disabled:cursor-not-allowed font-sans!"
+            className="px-4 py-2 bg-[#004265] text-white font-bold text-base cursor-pointer transition-colors disabled:opacity-60 disabled:cursor-not-allowed font-sans!"
           >
             {saving ? "Saving..." : label}
           </button>

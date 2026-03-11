@@ -153,6 +153,11 @@ export default function PreviewArticlePage() {
     );
   }
 
+  const coverUrl =
+  typeof post.coverImage === "string"
+    ? post.coverImage.trim()
+    : post.coverImage?.url?.trim() || null;
+
   return (
     <div className="min-h-screen py-12 ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -202,21 +207,20 @@ export default function PreviewArticlePage() {
           </div>
 
           {/* Featured Image */}
-          {post.coverImage && (
-            <div className="mb-8 flex justify-center">
+          {coverUrl && (
+            <div className="relative w-full h-48 sm:h-72 lg:h-96 mb-8 overflow-hidden border border-[#BFDBFE]">
               <Image
-                src={post.coverImage}
+                src={coverUrl}
                 alt={post.coverImageAlt || post.title || "Article cover"}
-                width={1200}
-                height={600}
-                priority
-                className="w-full h-62.5 sm:h-87.5 lg:h-112.5"
+                fill
+                sizes="100vw"
+                className="object-cover"
                 style={{
-                  objectFit: "cover",
                   objectPosition: post.coverImagePosition
                     ? `${post.coverImagePosition.x}% ${post.coverImagePosition.y}%`
                     : "50% 50%",
                 }}
+                priority
               />
             </div>
           )}

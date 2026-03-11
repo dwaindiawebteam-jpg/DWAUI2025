@@ -512,19 +512,19 @@ useEffect(() => {
           </h3>
           <p className=" mb-6 font-sans text-xl!">
             Are you sure you want to change <strong>{userToUpdate.userName}</strong>'s role from{" "}
-            <span className="font-bold text-[#805C2C] text-xl! font-sans!">{userToUpdate.currentRole}</span> to{" "}
-            <span className="font-bold text-[#805C2C] text-xl! font-sans!">{userToUpdate.newRole}</span>?
+            <span className="font-bold text-xl! font-sans!">{userToUpdate.currentRole}</span> to{" "}
+            <span className="font-bold  text-xl! font-sans!">{userToUpdate.newRole}</span>?
           </p>
           <div className="flex justify-end gap-3">
             <button
               onClick={cancelUpdate}
-              className="px-4 py-2 border-2 border-[#D8CDBE]  font-sans! hover:bg-[#F0E8DB] transition-colors"
+              className="px-4 py-2 border-2  font-sans! hover:bg-[#BFDBFE] transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={confirmUpdateRole}
-              className="px-4 py-2  bg-[#805C2C] text-white font-sans! hover:bg-[#6B4C24] transition-colors"
+              className="px-4 py-2  bg-[#004265] text-white font-sans! transition-colors"
             >
               Confirm Change
             </button>

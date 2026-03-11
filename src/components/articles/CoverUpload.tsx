@@ -159,15 +159,15 @@ const stopClick = (e: React.MouseEvent | React.PointerEvent) => {
       onDragOver={(e) => e.preventDefault()}
       onDragEnter={(e) => {
         e.preventDefault();
-        e.currentTarget.classList.add("ring-2", "ring-[#805C2C]");
+        e.currentTarget.classList.add("ring-2", "ring-blue-600");
       }}
       onDragLeave={(e) => {
         e.preventDefault();
-        e.currentTarget.classList.remove("ring-2", "ring-[#805C2C]");
+        e.currentTarget.classList.remove("ring-2", "ring-blue-600");
       }}
       onDrop={(e) => {
         e.preventDefault();
-        e.currentTarget.classList.remove("ring-2", "ring-[#805C2C]");
+        e.currentTarget.classList.remove("ring-2", "ring-blue-600");
         handleDrop(e);
       }}
       onClick={() => {
@@ -181,7 +181,7 @@ const stopClick = (e: React.MouseEvent | React.PointerEvent) => {
           className="
             flex items-center justify-center
             w-full px-4 py-6
-            border-2 border-dashed border-[#004265]
+            border-2 border-dashed border-blue-600
             font-medium
             cursor-pointer
             transition-colors
@@ -228,7 +228,7 @@ const stopClick = (e: React.MouseEvent | React.PointerEvent) => {
               <button
                 type="button"
                 onClick={handleBrowse}
-                className="text-sm text-[#4A3820]/70 underline cursor-pointer font-sans!"
+                className="text-sm underline cursor-pointer font-sans!"
               >
                 Click to replace image
               </button>
@@ -264,7 +264,7 @@ const stopClick = (e: React.MouseEvent | React.PointerEvent) => {
     {uploading && (
       <div className="w-full bg-gray-200 h-2">
         <div
-          className="bg-[#805C2C] h-2"
+          className="h-2 bg-blue-600"
           style={{ width: `${progress}%` }}
         ></div>
       </div>
