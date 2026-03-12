@@ -203,7 +203,7 @@ const stopClick = (e: React.MouseEvent | React.PointerEvent) => {
             onPointerLeave={onPointerUp}
             className="
               relative w-full
-              h-62.5 sm:h-87.5 lg:h-112.5
+              h-48 sm:h-72 lg:h-96
               overflow-hidden
               bg-black
             "

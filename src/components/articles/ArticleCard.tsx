@@ -48,7 +48,7 @@ export default function ArticleCard({ article, onDelete }: ArticleCardProps) {
         {article.tags?.slice(0, 4).map((t) => (
           <span
             key={t}
-            className="bg-[#BFDBFE] border border-[#BFDBFE] text-base px-3 py-1.5 font-medium font-sans!"
+           className="bg-[#BFDBFE] border border-[#BFDBFE] text-base px-3 py-1.5 font-medium rounded-full font-sans!"
           >
             #{t}
           </span>

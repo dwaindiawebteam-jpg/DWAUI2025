@@ -1331,15 +1331,15 @@ useEffect(() => {
           type="text"
           placeholder="Type a tag and press Enter"
           onKeyDown={handleAddTag}
-          className="w-full px-4 py-3  border-2 border-[#004265]"
+          className="w-full px-4 py-3 border-2 border-[#004265]"
         />
         <div className="flex gap-2 flex-wrap mt-3">
           {tags.map((t) => (
             <span
               key={t}
-              className="px-4 py-1.5 bg-[#BFDBFE] border border-[#BFDBFE]  flex items-center gap-2"
+              className="px-4 py-1.5 bg-[#BFDBFE] border rounded-full border-[#BFDBFE]  flex items-center gap-2"
             >
-              {t}
+              #{t}
               <button
                 onClick={() => handleRemoveTag(t)}
                 className="p-1  hover:bg-[#BFDBFE]"

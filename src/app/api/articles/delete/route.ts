@@ -34,20 +34,11 @@ export async function POST(req: Request) {
      * [{ url: string, fileId: string }]
      */
 
-    const assetFileIds = uploadedAssets
-      .filter((a: any) => a.fileId)
-      .map((a: any) => a.fileId);
-
-    // 🔥 Delete files from ImageKit
-    await Promise.all(
-      assetFileIds.map(async (fileId: string) => {
-        try {
-          await imagekit.deleteFile(fileId);
-        } catch (err) {
-          console.error("ImageKit delete failed:", fileId, err);
-        }
-      })
-    );
+    try {
+  await imagekit.deleteFolder(`articles/${articleId}`);
+} catch (err) {
+  console.error("ImageKit folder delete failed:", err);
+}
 
     // 🔥 Delete article and subcollections
     await adminDb.recursiveDelete(ref);
