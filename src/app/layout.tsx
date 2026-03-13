@@ -5,6 +5,7 @@ import { AuthProvider } from "../context/AuthContext";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({
         className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col overflow-x-hidden`}
       >
         <AuthProvider>
+          <ScrollToTop />
           <Navigation />
           <main className="flex-grow">{children}</main>
           <Footer />
