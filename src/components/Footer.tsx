@@ -5,7 +5,7 @@ const Footer: FC = () => {
   return (
     <section className="">
       {/* donation */}
-      <div className="relative flex flex-row editor-content gap-8 font-bold justify-end items-center bg-pink/41">
+      <div className="relative flex flex-row font-inter gap-8 font-bold justify-end items-center bg-pink/41">
         <span className="justify-center text-purple">
           Ready to get involved?
         </span>

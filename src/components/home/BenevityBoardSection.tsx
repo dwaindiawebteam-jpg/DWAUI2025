@@ -46,7 +46,7 @@ const BenevityBoardSection: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             Benevity & Goodstack
           </h2>
-          <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+          <p className="font-body text-gray-700 mb-8 leading-relaxed">
             Donate today through Benevity or Goodstack—your contribution directly transforms lives of children in our orphanage and elders in our old age home, creating care, security, and a brighter tomorrow.&rdquo;
           </p>
           
@@ -70,7 +70,7 @@ const BenevityBoardSection: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             Board Members
           </h2>
-          <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+          <p className="font-body text-gray-700 mb-8 leading-relaxed">
             Our board comprises passionate leaders with diverse expertise in social development, finance, and community service. They guide our vision with integrity, accountability, and a deep commitment to Dalit empowerment.
           </p>
           

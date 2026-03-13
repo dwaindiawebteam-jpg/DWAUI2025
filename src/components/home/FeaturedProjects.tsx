@@ -54,7 +54,7 @@ const weightMap: Record<ContentSegment["weight"], string> = {
         <div className="max-w-md mx-auto flex flex-col justify-start space-y-8">
           {leftProjects.map((project: LeftProject, idx: number) => (
             <div key={idx}>
-              <h3 className="text-3xl font-bold mb-4">{project.title}</h3>
+              <h3 className="font-heading-2-bold mb-4">{project.title}</h3>
               <p className="text-lg leading-relaxed">
                 {project.content.map((seg: ContentSegment, sidx: number) => (
                   <span key={sidx} style={{ fontWeight: weightMap[seg.weight] }}>
@@ -68,19 +68,19 @@ const weightMap: Record<ContentSegment["weight"], string> = {
       </div>
 
       {/* Right Column */}
-      <div className="flex p-12" style={{ backgroundColor: "#9FDFFC", color: "#000000" }}>
+      <div className="flex p-12 bg-blue/50">
         <div className="mx-auto flex flex-col justify-start space-y-6">
-          <h2 className="text-5xl font-bold flex items-center mb-16">
+          <h2 className="font-heading-1 font-bold flex items-center mb-16">
             <img src="/icons/homepage/arrow-left.svg" alt="Arrow Left" className="h-8 w-8 mr-4" />
             Featured Projects
           </h2>
 
-          <h3 className="text-3xl font-bold mb-4">Verification Numbers</h3>
+          <h3 className="font-heading-2-bold mb-4">Verification Numbers</h3>
           <ol className="list-decimal list-inside text-lg space-y-2">
             {rightNumbers.map((item: RightNumber, idx: number) => (
               <li key={idx} className="flex justify-between">
                 <span>{item.label}</span>
-                <span className="font-medium"> {item.value}</span>
+                <span className="font-body"> {item.value}</span>
               </li>
             ))}
           </ol>

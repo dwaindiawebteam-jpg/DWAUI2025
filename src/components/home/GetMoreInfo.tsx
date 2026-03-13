@@ -30,7 +30,7 @@ const GetMoreInfo: React.FC = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Get More Info
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="font-body text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Let&apos;s get acquainted! Tell us a little bit about yourself and we&apos;ll send you information on how to get involved.
           </p>
         </div>
@@ -141,7 +141,7 @@ const GetMoreInfo: React.FC = () => {
                 <h3 className="text-2xl md:text-3xl font-bold mb-2">
                   Ready to make a difference?
                 </h3>
-                <p className="text-lg opacity-90">
+                <p className="font-body opacity-90">
                   Join thousands of supporters creating lasting change
                 </p>
               </div>

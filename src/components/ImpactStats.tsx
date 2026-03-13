@@ -27,16 +27,13 @@ const ImpactStats: React.FC<ImpactStatsProps> = ({
 
   return (
     <section 
-      className={`${!bgColor.startsWith("#") ? bgColor : ""} py-16`} 
-      style={bgStyle}
+      className={"bg-blue/50 py-16"} 
+      
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-left mb-12">
           <h2
-            className={`text-2xl md:text-3xl font-semibold ${
-              !textColor.startsWith("#") ? textColor : ""
-            } mb-4`}
-            style={textStyle}
+            className="text-2xl md:text-3xl text-navy-blue font-semibold mb-4"
           >
             Our impact in numbers
           </h2>
@@ -89,20 +86,14 @@ const StatCard: React.FC<StatCardProps> = ({
   return (
     <div className="text-center py-8">
       <div
-        className={`text-4xl md:text-5xl font-bold mb-2 ${
-          !textColor.startsWith("#") ? textColor : ""
-        }`}
-        style={textStyle}
+        className="text-4xl md:text-5xl font-bold mb-2 text-navy-blue"
       >
         {prefix}
         {currentValue.toLocaleString()}
         {suffix}
       </div>
       <div
-        className={`text-lg md:text-xl font-medium ${
-          !textColor.startsWith("#") ? textColor : ""
-        }`}
-        style={textStyle}
+        className="text-lg md:text-xl font-medium text-navy-blue"
       >
         {label}
       </div>

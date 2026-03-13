@@ -11,10 +11,10 @@ const WhyTrustUs: React.FC = () => {
         </div>
         
         <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
-          <p className="text-xl md:text-2xl text-gray-700 leading-relaxed text-center">
+          <p className="font-body text-gray-700 leading-relaxed text-center">
             We ensure complete transparency and accountability in every project. From the very 
             start, our team coordinates closely with donors, providing{' '}
-            <span className="font-bold text-blue-600">monthly newsletters, 
+            <span className="font-body-bold text-blue-600">monthly newsletters, 
             digital reports, and real-time updates</span> through trusted tools like Salesforce. With 
             clear communication, measurable outcomes, and dedicated support, donors can be 
             confident their contributions are making a lasting impact.

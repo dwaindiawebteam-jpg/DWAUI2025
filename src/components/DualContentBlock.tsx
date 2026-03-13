@@ -86,7 +86,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
 
     if (sectionType === "list") {
       return (
-        <ul className="list-none text-left space-y-2 text-lg leading-relaxed">
+        <ul className="list-none text-left space-y-2 font-body leading-relaxed">
           {sectionContent.map((itemSegments: TextSegment[], idx: number) => (
             <li key={idx}>
               {itemSegments.map((segment: TextSegment, sidx: number) => (
@@ -94,8 +94,6 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
                   key={sidx}
                   style={{
                     color: segment.color || "#000",
-                    fontWeight:
-                      weightMap[segment.weight || "medium"],
                   }}
                 >
                   {segment.text}
@@ -134,8 +132,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
     <section className="grid grid-cols-1 md:grid-cols-2">
       {/* Left Column */}
       <div
-        className="flex p-12 text-left"
-        style={{ backgroundColor: finalLeft.bgColor }}
+        className="flex p-12 text-left bg-navy-blue"
       >
         <div className="max-w-md mx-auto flex flex-col justify-start">
           <h2
@@ -150,8 +147,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
 
       {/* Right Column */}
       <div
-        className="flex p-12 text-left"
-        style={{ backgroundColor: finalRight.bgColor }}
+        className="flex p-12 text-left bg-blue/50"
       >
         <div className="max-w-md mx-auto flex flex-col justify-start">
           <h2

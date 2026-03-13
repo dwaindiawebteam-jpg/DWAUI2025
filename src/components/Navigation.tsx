@@ -72,12 +72,12 @@ const Navigation: FC = () => {
           </div>
 
           {/* Right Section */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center ">
             
             {/* Donate Button */}
             <Button
               asChild
-              className="bg-[#E6A4F9] hover:bg-[#E6A4F9]/80 text-black px-4 py-6 rounded-none font-semibold"
+              className="bg-pink/67 hover:bg-pink/80 text-black px-4 py-6 rounded-none font-semibold"
             >
               <Link href="/donate">Donate Now</Link>
             </Button>

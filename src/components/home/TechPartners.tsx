@@ -12,7 +12,7 @@ const TechPartners: React.FC = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Tech Partners
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="font-body text-gray-600 max-w-3xl mx-auto">
             Trusted by leading technology companies who support our mission
           </p>
         </div>
@@ -24,7 +24,7 @@ const TechPartners: React.FC = () => {
               key={index} 
               className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center group"
             >
-              <span className="text-lg font-semibold text-gray-700 group-hover:text-blue-600 transition-colors text-center">
+              <span className="font-body-semi-bold font-semibold text-gray-700 group-hover:text-blue-600 transition-colors text-center">
                 {partner}
               </span>
             </div>

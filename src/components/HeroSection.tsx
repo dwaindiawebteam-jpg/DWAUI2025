@@ -83,7 +83,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Single Paragraph with Colored Segments */}
           {mergedBelowText.content && mergedBelowText.content.length > 0 && (
-            <p className="text-lg leading-relaxed">
+            <p className="font-body leading-relaxed">
               {mergedBelowText.content.map((segment: TextSegment, index: number) => (
                 <span
                   key={index}

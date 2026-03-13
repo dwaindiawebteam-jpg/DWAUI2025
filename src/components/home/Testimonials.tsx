@@ -65,7 +65,7 @@ function TestimonialCard({ testimonial }: TestimonialCardProps): React.JSX.Eleme
       
       {/* Content */}
       <div className="p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-1">
+        <h3 className="font-body font-bold text-gray-900 mb-1">
           {testimonial.name}
         </h3>
         <p className="text-sm text-gray-600 mb-4">

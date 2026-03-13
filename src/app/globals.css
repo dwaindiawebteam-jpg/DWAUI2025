@@ -26,6 +26,46 @@ body {
   font-family: var(--font-sans);
 }
 
+/* ===== MAIN STYLES ===== */
+.font-inter {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 18px;
+  line-height: 1.7;
+}
+.font-heading-1 {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 48px;
+  font-weight: bold;
+}
+.font-heading-2 {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 30px;
+  font-weight:500;
+}
+.font-heading-2-bold {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+}
+.font-body {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 18px;
+  line-height: 1.7;
+}
+.font-body-bold {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 18px;
+  line-height: 1.7;
+  font-weight: bold;
+}
+.font-body-semi-bold {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 18px;
+  line-height: 1.7;
+  font-weight: 600;
+}
+
+
 /* Custom scrollbar */
 .scrollable-description::-webkit-scrollbar,
 textarea.scrollable-description::-webkit-scrollbar {
