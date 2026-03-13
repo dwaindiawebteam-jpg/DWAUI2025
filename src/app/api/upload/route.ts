@@ -60,7 +60,10 @@ export async function POST(req: Request) {
   // GIF → animated WebP
   //-------------------------------------
   } else if (isGif) {
-    let transformer = sharp(originalBuffer, { animated: true }).rotate();
+    let transformer = sharp(originalBuffer, {
+    animated: true,
+    pages: -1, // process all frames
+  }).rotate();
 
     if (tooLarge) {
       transformer = transformer.resize({
@@ -71,13 +74,13 @@ export async function POST(req: Request) {
       });
     }
 
-    body = await transformer
-      .webp({
-        quality: 80,
-        effort: 4,
-        loop: 0, // preserve infinite loop
-      })
-      .toBuffer();
+   body = await transformer
+  .webp({
+    quality: 80,
+    effort: 4,
+    loop: 0,
+  })
+  .toBuffer();
 
     contentType = "image/webp";
     extension = "webp";
@@ -141,8 +144,19 @@ const upload = await imagekit.upload({
   folder: folderPath,
 });
 
+const optimizedUrl = imagekit.url({
+  src: upload.url,
+  transformation: [
+    {
+      format: "auto",   // webp/avif/jpg depending on browser
+      quality: "auto",  // browser+device smart quality
+    }
+  ]
+});
+
 return NextResponse.json({
-  url: upload.url,
+  url: optimizedUrl,
+  rawUrl: upload.url,  // optional: keep if you still want original
   fileId: upload.fileId,
 });
 }

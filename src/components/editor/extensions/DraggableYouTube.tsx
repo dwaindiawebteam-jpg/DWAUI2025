@@ -62,7 +62,7 @@ export const DraggableYouTube = YouTube.extend({
                 allowFullScreen={node.attrs.allowFullscreen}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 frameBorder="0"
-                className="absolute inset-0 w-full h-full rounded-lg"
+                className="absolute inset-0 w-full h-full"
               />
             </div>
 
@@ -72,7 +72,7 @@ export const DraggableYouTube = YouTube.extend({
               onClick={handleRemove}
               className="
                 absolute top-1 right-1 z-10
-                text-white bg-black/70 text-xs px-1 py-0.5 rounded
+                text-white bg-black/70 text-xs px-1 py-0.5 
                 opacity-0 group-hover:opacity-100 transition-opacity
               "
             >
