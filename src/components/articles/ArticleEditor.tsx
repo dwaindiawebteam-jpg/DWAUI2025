@@ -570,10 +570,19 @@ const selectionIsHeading = (): boolean => {
             I
           </button>
           <button
+            onClick={() => editor.chain().focus().toggleUnderline().run()}
+            className={`cursor-pointer ${TOOLBAR_BTN_BASE} ${TOOLBAR_BTN_HOVER} ${
+              editor.isActive("underline") ? "bg-[#BFDBFE]" : ""
+            }`}
+          >
+            U
+          </button>
+          <button
             onClick={setLink}
             disabled={!hasSelection}
             className={`cursor-pointer ${TOOLBAR_BTN_BASE} ${TOOLBAR_BTN_HOVER}`}
           >
+            
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24px"
