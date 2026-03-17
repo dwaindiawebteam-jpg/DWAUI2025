@@ -2,7 +2,7 @@ import projectPosts from "@/data/projectPosts";
 import PostHeader from "@/components/projects/PostHeader";
 import PostImage from "@/components/projects/PostImage";
 import PostContent from "@/components/projects/PostContent";
-import GetMoreInfo from "@/components/home/GetMoreInfo";
+import InfoForm from "@/components/InfoForm";
 
 interface ProjectPostParams {
   params: {
@@ -31,7 +31,7 @@ export default async function ProjectsPost({ params }: ProjectPostParams) {
         <PostImage src={ongoingProjectPosts.splatterImage} alt={ongoingProjectPosts.title} />
         <PostContent content={ongoingProjectPosts.content} />
       </div>
-      <GetMoreInfo />
+      <InfoForm />
     </>
   );
 }
