@@ -136,7 +136,7 @@ export default function ProfilePage() {
   if (fetching) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="w-48 h-2 rounded-full overflow-hidden bg-gray-200">
+        <div className="w-48 h-2 bg-[#E0D6C7] overflow-hidden">
           <div className="h-full w-full bg-[#004265] animate-pulse"></div>
         </div>
         <p className="mt-4 text-[#004265] font-medium text-lg font-sans!">

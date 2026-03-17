@@ -107,7 +107,7 @@ const Navigation: FC = () => {
                     </div>
 
                     <ul
-                      className="absolute right-0 mt-4 w-52 bg-white border border-gray-200 text-gray-900 rounded-md shadow-lg py-1
+                      className="absolute right-0 mt-4 w-52 bg-white border border-gray-200 text-gray-900 shadow-lg py-1
                                 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50
                                 text-sm font-medium"
                     >

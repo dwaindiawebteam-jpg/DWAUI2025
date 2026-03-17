@@ -90,7 +90,7 @@ export default function DashboardHome() {
   if (!authReady) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="w-48 h-2 overflow-hidden bg-gray-200">
+        <div className="w-48 h-2 bg-[#E0D6C7] overflow-hidden">
           <div className="h-full w-full bg-[#004265] animate-pulse"></div>
         </div>
         <p className="mt-4 font-medium text-lg font-sans!">Loading dashboard…</p>

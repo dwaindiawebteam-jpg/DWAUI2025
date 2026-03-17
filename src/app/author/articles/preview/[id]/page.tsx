@@ -127,8 +127,8 @@ export default function PreviewArticlePage() {
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="w-48 h-2 bg-[#E0D6C7] rounded-full overflow-hidden">
-          <div className="h-full w-full animate-pulse bg-[#004265]" />
+        <div className="w-48 h-2 bg-[#E0D6C7] overflow-hidden">
+          <div className="h-full w-full bg-[#004265] animate-pulse"></div>
         </div>
         <p className="mt-4 font-medium text-lg font-sans!">
           Loading preview…
