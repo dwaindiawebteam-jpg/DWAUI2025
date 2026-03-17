@@ -1,7 +1,6 @@
 import React from 'react';
 import Causes from '@/components/support/Causes';
 import EntireWorld from '@/components/support/EntireWorld';
-import GetInvolved from '@/components/support/GetInvolved';
 import HeroSection from '@/components/HeroSection';
 import InfoForm from '@/components/InfoForm';
 
