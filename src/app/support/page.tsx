@@ -3,7 +3,7 @@ import Causes from '@/components/support/Causes';
 import EntireWorld from '@/components/support/EntireWorld';
 import GetInvolved from '@/components/support/GetInvolved';
 import HeroSection from '@/components/HeroSection';
-import InfoForm from '@/components/support/InfoForm';
+import InfoForm from '@/components/InfoForm';
 
 const SupportPage: React.FC = () => {
   return (
@@ -25,7 +25,6 @@ const SupportPage: React.FC = () => {
       <Causes />
       <EntireWorld />
       <InfoForm />
-      <GetInvolved />
     </main>
   );
 };

@@ -3,8 +3,7 @@ import FeaturedStories from "@/components/resources/FeaturedStories"
 import ProjectsGallery from "@/components/resources/ProjectsGallery"
 import OrphanageOldageHome from "@/components/resources/OrphanageOldageHome"
 import AnnualReports from "@/components/resources/AnnualReports"
-import GetMoreInfo from "@/components/home/GetMoreInfo"
-import GetInvolved from "@/components/support/GetInvolved"
+import InfoForm from "@/components/InfoForm"
 
 export default function ResourcesPage() {
   return (
@@ -29,8 +28,7 @@ export default function ResourcesPage() {
       <ProjectsGallery />
       <OrphanageOldageHome />
       <AnnualReports />
-      <GetMoreInfo />
-      <GetInvolved />
+      <InfoForm />
     </main>
   )
 }

@@ -7,7 +7,7 @@ import FeaturedProjects from "@/components/home/FeaturedProjects";
 import BenevityBoardSection from "@/components/home/BenevityBoardSection";
 import WhyTrustUs from "@/components/home/WhyTrustUs";
 import TechPartners from "@/components/home/TechPartners";
-import GetMoreInfo from "@/components/home/GetMoreInfo";
+import InfoForm from "@/components/InfoForm";
 
 // Define types for the content structure
 interface TextContent {
@@ -141,7 +141,7 @@ export default function Home(): React.JSX.Element {
       <BenevityBoardSection />
       <WhyTrustUs />
       <TechPartners />
-      <GetMoreInfo />
+      <InfoForm />
     </main>
   );
 }

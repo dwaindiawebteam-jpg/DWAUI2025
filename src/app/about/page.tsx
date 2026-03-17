@@ -2,11 +2,11 @@ import DualContentBlock from "@/components/DualContentBlock";
 import HeroSection from "@/components/HeroSection";
 import AboutAccreditations from "@/components/about/AboutAccreditations";
 import ImpactStats from "@/components/ImpactStats";
-import GetMoreInfo from "@/components/home/GetMoreInfo";
 import AboutTeam from "@/components/about/AboutTeam";
 import Volunteers from "@/components/about/Volunteers";
 import WorkAreas from "@/components/about/WorkAreas";
 import PresidentMessage from "@/components/about/PresidentMessage";
+import InfoForm from "@/components/InfoForm";
 
 export default function AboutPage() {
   return (
@@ -37,7 +37,7 @@ export default function AboutPage() {
       <Volunteers />
       <WorkAreas />
       <PresidentMessage />
-      <GetMoreInfo />
+      <InfoForm />
     </main>
   );
 }

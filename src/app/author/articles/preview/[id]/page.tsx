@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import ArticleRenderer from "@/components/articles/ArticleRenderer";
 import { useAuth } from "@/context/AuthContext";
+import { getCoverUrl } from "@/utils/getCoverUrl";
 
 export default function PreviewArticlePage() {
   const { id } = useParams();
@@ -153,10 +154,7 @@ export default function PreviewArticlePage() {
     );
   }
 
-  const coverUrl =
-  typeof post.coverImage === "string"
-    ? post.coverImage.trim()
-    : post.coverImage?.url?.trim() || null;
+const coverUrl = getCoverUrl(post.coverImage);
 
   return (
     <div className="min-h-screen py-12 ">

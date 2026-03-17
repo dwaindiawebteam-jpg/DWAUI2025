@@ -35,6 +35,11 @@ export default function ArticleCard({ article, onDelete }: ArticleCardProps) {
             : "50% 50%",
         }}
       />
+      {/* Views overlay */}
+      <div className="absolute bottom-2 right-2 flex items-center gap-1 bg-black/60 text-white px-2 py-1 text-sm rounded">
+        <Eye className="w-4 h-4" />
+        <span className="text-sm!">{views}</span>
+      </div>
     </div>
   )}
 

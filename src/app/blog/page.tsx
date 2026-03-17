@@ -1,10 +1,8 @@
 import { collection, getDocs, orderBy, query, where, limit } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import GetMoreInfo from "@/components/home/GetMoreInfo";
-import HeroSection from "@/components/blog/HeroSection";
-import CardGrid from "@/components/blog/CardGrid";
 import { extractExcerptFromBody } from "@/lib/articles/extractExcerpt";
 import ArticleFiltersSuspense from "@/components/blog/ArticleFiltersSuspense";
+import InfoForm from "@/components/InfoForm";
 
 export const revalidate = 300;
 
@@ -49,9 +47,7 @@ export default async function BlogPage() {
       <ArticleFiltersSuspense
         articles={articles}
       />
-      {/* <HeroSection /> */}
-      <CardGrid />
-      <GetMoreInfo />
+      <InfoForm />
     </main>
   );
 }

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState, ChangeEvent, FormEvent } from "react";
 import AllArticles from "./AllArticles";
 import { useSearchParams } from "next/navigation";
 
-const ITEMS_PER_PAGE = 9;
+const ITEMS_PER_PAGE = 4;
 
 interface Article {
   id: string;
@@ -162,7 +162,7 @@ export default function ArticleFilters({ articles }: { articles: Article[] }) {
             setSortOrder(e.target.value as "newest" | "oldest" | "popular")
           }
           className="px-4 py-2 rounded-full border border-gray-300 bg-white
-          focus:outline-none focus:ring-2 focus:ring-[#CF822A]"
+          focus:outline-none focus:ring-2 focus:ring-[#004265]"
         >
           <option value="newest">Newest first</option>
           <option value="oldest">Oldest first</option>
@@ -179,6 +179,8 @@ export default function ArticleFilters({ articles }: { articles: Article[] }) {
         <p className="text-center mt-12">No articles match your search 🤷‍♂️</p>
       )}
 
+    </section>
+    
     {/* Pagination */}
     {totalPages > 1 && (
     <div className="w-full bg-[#E8E7E7] py-12 flex flex-col items-center gap-4 mt-10">
@@ -209,7 +211,6 @@ export default function ArticleFilters({ articles }: { articles: Article[] }) {
 
     </div>
     )}
-    </section>
     </>
   );
 }

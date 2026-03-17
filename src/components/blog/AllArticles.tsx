@@ -18,7 +18,7 @@ export default function AllArticles({
 }) {
   return (
     <div className="w-full mt-10">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
 
         {articles.map((article) => {
           const coverUrl =
@@ -28,7 +28,7 @@ export default function AllArticles({
 
           return (
             <ArticleCardClient key={article.id} href={`/blog/${article.slug}`}>
-             <article className="flex flex-col lg:flex-row items-stretch bg-white shadow-md overflow-hidden w-full max-w-2xl mx-auto hover:shadow-lg transition cursor-pointer">
+             <article className="flex flex-col lg:flex-row items-stretch bg-white shadow-md overflow-hidden w-full h-full max-w-2xl mx-auto hover:shadow-lg transition cursor-pointer">
 
                 {/* Image */}
                 <div className="relative lg:w-1/2 w-full min-h-[200px] lg:min-h-0">

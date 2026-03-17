@@ -2,8 +2,8 @@ import HeroSection from "@/components/HeroSection";
 import BenificiaryTestimonials from "@/components/projects/BenificiaryTestimonials";
 import OngoingProjects from "@/components/projects/OngoingProjects";
 import OurPartners from "@/components/projects/OurPartners";
-import GetMoreInfo from "@/components/home/GetMoreInfo";
 import DualContentBlock from "@/components/DualContentBlock";
+import InfoForm from "@/components/InfoForm";
 
 export default function ProjectsPage() {
   return (
@@ -93,7 +93,7 @@ export default function ProjectsPage() {
       <BenificiaryTestimonials />
       <OngoingProjects />
       <OurPartners />
-      <GetMoreInfo />
+      <InfoForm />
     </main>
   );
 }
