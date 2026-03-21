@@ -19,6 +19,9 @@
   --color-pink: #FF9DF0;
 }
 
+h1,h2 {
+  font-family: var(--font-inter), sans-serif;
+}
 
 body {
   background: var(--background);

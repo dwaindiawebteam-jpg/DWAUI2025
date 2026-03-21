@@ -35,12 +35,155 @@ interface DualContentBlockProps {
   right: ContentBlock;
 }
 
-interface ImpactStatsProps {
-  bgColor: string;
-  textColor: string;
+// Import or define the types for FeaturedProjects
+interface ContentSegment {
+  text: string
+  weight: "normal" | "bold"
+}
+
+interface LeftProject {
+  title: string
+  content: ContentSegment[]
+}
+
+interface RightNumber {
+  label: string
+  value: string
 }
 
 export default function Home(): React.JSX.Element {
+
+  const programsData = [
+    {
+      id: 1,
+      title: "NO POVERTY",
+      description: "Livelihoods, micro-credit, and economic empowerment for Dalit and rural families",
+      image: "/images/homepage/OurPrograms/No Poverty.jpg",
+      bgColor: "bg-red-500"
+    },
+    {
+      id: 2,
+      title: "ZERO HUNGER",
+      description: "Nutrition support, food security, and sustainable farming practices",
+      image: "/images/homepage/OurPrograms/Zero Hunger.jpg",
+      bgColor: "bg-yellow-500"
+    },
+    {
+      id: 3,
+      title: "GOOD HEALTH AND WELL-BEING",
+      description: "Healthcare, sanitation, elderly care, and child well-being",
+      image: "/images/homepage/OurPrograms/Good Health And Well Being.jpg",
+      bgColor: "bg-green-500"
+    },
+    {
+      id: 4,
+      title: "QUALITY EDUCATION",
+      description: "Access to education for rural children & marginalized groups",
+      image: "/images/homepage/OurPrograms/Quality Education.jpg",
+      bgColor: "bg-red-600"
+    },
+    {
+      id: 5,
+      title: "GENDER EQUALITY",
+      description: "Women's empowerment, self-help groups, and financial inclusion",
+      image: "/images/homepage/OurPrograms/Gender Equality.jpg",
+      bgColor: "bg-red-500"
+    },
+    {
+      id: 6,
+      title: "CLEAN WATER AND SANITATION",
+      description: "Promoting hygiene, sanitation, and access to safe drinking water",
+      image: "/images/homepage/OurPrograms/Clean Water And Sanitation.jpg",
+      bgColor: "bg-cyan-500"
+    }
+  ];
+
+  const testimonials = [
+    {
+      name: "John Romnes",
+      title: "CEO – Minnesota Elevators Inc., USA",
+      text: "Supporting the sheep rearing project with Dalit Welfare Association has been truly rewarding. The impact on rural families is visible, and I'm very happy with the results achieved.",
+      splatterImage: "/images/SplatterImages/orange splatter.png"
+    },
+    {
+      name: "Gerardo Betancourt",
+      title: "Executive Team uch-arqsj., USA",
+      text: "I deeply appreciate the transparency and timely reports provided. Their professionalism and commitment gave us confidence that our support is making a real difference on the ground.",
+      splatterImage: "/images/SplatterImages/purple splatter.png"
+    },
+    {
+      name: "Indira Oskvarek",
+      title: "Secretary - Global Compassion INC., USA",
+      text: "The dairy project we supported delivered outstanding results. We were so impressed with their project management that we are now considering funding the second phase as well.",
+      splatterImage: "/images/SplatterImages/red splatter.png"
+    }
+  ];
+
+  // Define data for FeaturedProjects with explicit typing
+  const featuredProjectsData: { leftProjects: LeftProject[]; rightNumbers: RightNumber[] } = {
+    leftProjects: [
+      {
+        title: "Digital Education Project",
+        content: [
+          { text: "Bridging the digital divide for rural Dalit children by providing access to technology, e-learning resources, and training, ensuring equal education opportunities and ", weight: "normal" as const },
+          { text: "brighter futures", weight: "bold" as const },
+          { text: ".", weight: "normal" as const },
+        ],
+      },
+      {
+        title: "Women Entrepreneurship Project",
+        content: [
+          { text: "Empowering rural women through micro-credit, skill-building, and enterprise support in sheep rearing and small businesses, fostering financial independence and ", weight: "normal" as const },
+          { text: "community leadership", weight: "bold" as const },
+          { text: ".", weight: "normal" as const },
+        ],
+      },
+    ],
+    rightNumbers: [
+      { label: "1. Registration Number:", value: "384/1993" },
+      { label: "2. FCRA Number:", value: "010270166" },
+      { label: "3. Guide Star:", value: "9683" },
+      { label: "4. NGO Darpan:", value: "AP/2021/0276162" },
+      { label: "5. TAX Exemption: ", value: "AAKFD2353BE20214" },
+    ]
+  };
+
+  const benevityBoardData = {
+  benevityTitle: "Benevity & Goodstack",
+  benevityText: "Donate today through Benevity or Goodstack—your contribution directly transforms lives of children in our orphanage and elders in our old age home, creating care, security, and a brighter tomorrow.",
+  splatterImages: [
+    "/images/SplatterImages/red splatter.png",
+    "/images/SplatterImages/purple splatter.png", 
+    "/images/SplatterImages/orange splatter.png",
+    "/images/SplatterImages/green splatter.png"
+  ],
+  boardTitle: "Board Members",
+  boardText: "Our board comprises passionate leaders with diverse expertise in social development, finance, and community service. They guide our vision with integrity, accountability, and a deep commitment to Dalit empowerment.",
+  boardMembers: [
+    {
+      name: "S. Samuel",
+      role: "President",
+      image: "/images/SplatterImages/red splatter.png"
+    },
+    {
+      name: "J. Nirmala",
+      role: "V.President",
+      image: "/images/SplatterImages/purple splatter.png"
+    },
+    {
+      name: "B. Lakshmi",
+      role: "Secretary",
+      image: "/images/SplatterImages/orange splatter.png"
+    },
+    {
+      name: "S. Sarojamma",
+      role: "Treasurer",
+      image: "/images/SplatterImages/green splatter.png"
+    }
+  ]
+};
+
+
   return (
     <main>
       <HeroSection 
@@ -131,14 +274,35 @@ export default function Home(): React.JSX.Element {
         }}
       />
       
-      <ProgramsGrid />
+      <ProgramsGrid 
+        programs={programsData}
+        title="Our Programs"
+      />
+      
       <ImpactStats
         bgColor="#9FDFFC"
         textColor="#004265"
+        people={5000}
+        villages={140}
+        programs={30}
       />
-      <Testimonials />
-      <FeaturedProjects />
-      <BenevityBoardSection />
+      
+      <Testimonials testimonials={testimonials} />
+      
+      {/* Pass data to FeaturedProjects */}
+      <FeaturedProjects 
+        leftProjects={featuredProjectsData.leftProjects}
+        rightNumbers={featuredProjectsData.rightNumbers}
+      />
+      
+      <BenevityBoardSection
+        benevityTitle={benevityBoardData.benevityTitle}
+        benevityText={benevityBoardData.benevityText}
+        splatterImages={benevityBoardData.splatterImages}
+        boardTitle={benevityBoardData.boardTitle}
+        boardText={benevityBoardData.boardText}
+        boardMembers={benevityBoardData.boardMembers}
+      />
       <WhyTrustUs />
       <TechPartners />
       <InfoForm />

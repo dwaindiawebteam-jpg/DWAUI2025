@@ -9,36 +9,19 @@ interface Testimonial {
   splatterImage: string;
 }
 
+interface TestimonialsProps {
+  testimonials: Testimonial[];
+}
+
 interface TestimonialCardProps {
   testimonial: Testimonial;
 }
 
-const testimonials: Testimonial[] = [
-  {
-    name: "John Romnes",
-    title: "CEO – Minnesota Elevators Inc., USA",
-    text: "Supporting the sheep rearing project with Dalit Welfare Association has been truly rewarding. The impact on rural families is visible, and I'm very happy with the results achieved.",
-    splatterImage: "/images/SplatterImages/orange splatter.png"
-  },
-  {
-    name: "Gerardo Betancourt",
-    title: "Executive Team uch-arqsj., USA",
-    text: "I deeply appreciate the transparency and timely reports provided. Their professionalism and commitment gave us confidence that our support is making a real difference on the ground.",
-    splatterImage: "/images/SplatterImages/purple splatter.png"
-  },
-  {
-    name: "Indira Oskvarek",
-    title: "Secretary - Global Compassion INC., USA",
-    text: "The dairy project we supported delivered outstanding results. We were so impressed with their project management that we are now considering funding the second phase as well.",
-    splatterImage: "/images/SplatterImages/red splatter.png"
-  }
-];
-
-export default function Testimonials(): React.JSX.Element {
+export default function Testimonials({ testimonials }: TestimonialsProps): React.JSX.Element {
   return (
     <section className="bg-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
           {testimonials.map((testimonial: Testimonial, index: number) => (
             <TestimonialCard key={index} testimonial={testimonial} />
           ))}
@@ -51,15 +34,14 @@ export default function Testimonials(): React.JSX.Element {
 // Testimonial card component
 function TestimonialCard({ testimonial }: TestimonialCardProps): React.JSX.Element {
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div className="bg-white shadow-lg overflow-hidden w-80">
       {/* Splatter Image */}
-      <div className="h-48 relative">
+      <div className="h-60 relative">
         <Image
           src={testimonial.splatterImage}
           alt="Decorative splatter"
           fill
           className="object-cover"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
       
@@ -68,10 +50,10 @@ function TestimonialCard({ testimonial }: TestimonialCardProps): React.JSX.Eleme
         <h3 className="text-lg font-bold text-gray-900 mb-1">
           {testimonial.name}
         </h3>
-        <p className="text-sm text-gray-600 mb-4">
+        <p className="mb-4">
           {testimonial.title}
         </p>
-        <p className="text-sm text-gray-700 leading-relaxed">
+        <p className="text-sm! leading-relaxed">
           {testimonial.text}
         </p>
       </div>

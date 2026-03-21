@@ -1,6 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import { StaticImageData } from 'next/image'
 
 interface Program {
   id: number
@@ -10,83 +9,68 @@ interface Program {
   bgColor: string
 }
 
-const programs: Program[] = [
-  {
-    id: 1,
-    title: "NO POVERTY",
-    description: "Livelihoods, micro-credit, and economic empowerment for Dalit and rural families",
-    image: "/images/homepage/OurPrograms/No Poverty.jpg",
-    bgColor: "bg-red-500"
-  },
-  {
-    id: 2,
-    title: "ZERO HUNGER",
-    description: "Nutrition support, food security, and sustainable farming practices",
-    image: "/images/homepage/OurPrograms/Zero Hunger.jpg",
-    bgColor: "bg-yellow-500"
-  },
-  {
-    id: 3,
-    title: "GOOD HEALTH AND WELL-BEING",
-    description: "Healthcare, sanitation, elderly care, and child well-being",
-    image: "/images/homepage/OurPrograms/Good Health And Well Being.jpg",
-    bgColor: "bg-green-500"
-  },
-  {
-    id: 4,
-    title: "QUALITY EDUCATION",
-    description: "Access to education for rural children & marginalized groups",
-    image: "/images/homepage/OurPrograms/Quality Education.jpg",
-    bgColor: "bg-red-600"
-  },
-  {
-    id: 5,
-    title: "GENDER EQUALITY",
-    description: "Women's empowerment, self-help groups, and financial inclusion",
-    image: "/images/homepage/OurPrograms/Gender Equality.jpg",
-    bgColor: "bg-red-500"
-  },
-  {
-    id: 6,
-    title: "CLEAN WATER AND SANITATION",
-    description: "Promoting hygiene, sanitation, and access to safe drinking water",
-    image: "/images/homepage/OurPrograms/Clean Water And Sanitation.jpg",
-    bgColor: "bg-cyan-500"
-  }
-]
+interface ProgramsGridProps {
+  programs: Program[]
+  title?: string
+  titleClasses?: string
+  containerClasses?: string
+}
 
-const ProgramsGrid: React.FC = () => {
+const ProgramsGrid: React.FC<ProgramsGridProps> = ({ 
+  programs,
+  title = "Our Programs",
+  titleClasses = "text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-12 text-center sm:text-left",
+  containerClasses = "max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
+}) => {
+
+  const isSingle = programs.length === 1
+  
   return (
     <section className="py-16 bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-12">
-          Our Programs
+      <div className="text-center sm:text-left">
+        <h2 className={titleClasses}>
+          {title}
         </h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
           {programs.map((program: Program) => (
-            <div key={program.id} className="bg-white rounded-lg shadow-lg overflow-hidden flex">
-              {/* Left image section */}
-              <div className="w-32 relative">
-                <Image
-                  src={program.image}
-                  alt={program.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 128px, 128px"
-                />
-              </div>
+            <React.Fragment key={program.id}>
               
-              {/* Right white section */}
-              <div className="flex-1 p-4">
-                <h3 className="text-sm font-bold text-gray-900 mb-2 leading-tight">
-                  {program.title}
-                </h3>
-                <p className="text-xs text-gray-600 leading-relaxed">
-                  {program.description}
-                </p>
+              {/* MOBILE CARD */}
+              <div className="block sm:hidden bg-white shadow-lg overflow-hidden">
+                <div className="relative w-full h-48 bg-gray-100">
+                  <Image
+                    src={program.image}
+                    alt={program.title}
+                    fill
+                    className="object-contain"
+                    sizes="100vw"
+                  />
+                </div>
+
+                <div className="p-4">
+                  <p className="text-center sm:text-left">{program.description}</p>
+                </div>
               </div>
-            </div>
+
+              {/* DESKTOP CARD */}
+              <div className="hidden sm:flex bg-white shadow-lg overflow-hidden w-88 h-44">
+                <div className="w-1/2 relative aspect-square bg-gray-100">
+                  <Image
+                    src={program.image}
+                    alt={program.title}
+                    fill
+                    className="object-contain"
+                    sizes="50vw"
+                  />
+                </div>
+
+                <div className="flex-1 p-4">
+                  <p>{program.description}</p>
+                </div>
+              </div>
+
+            </React.Fragment>
           ))}
         </div>
       </div>

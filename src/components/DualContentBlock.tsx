@@ -39,7 +39,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
   const defaultLeft: ContentBlock = {
     title: "Vision",
     titleColor: "#000000",
-    titleSize: "text-4xl md:text-5xl",
+    titleSize: "text-2xl sm:text-3xl md:text-4xl",
     bgColor: "#FEA128",
     type: "paragraph",
     content: [
@@ -58,7 +58,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
   const defaultRight: ContentBlock = {
     title: "Mission",
     titleColor: "#000000",
-    titleSize: "text-4xl md:text-5xl",
+    titleSize: "text-2xl sm:text-3xl md:text-4xl",
     bgColor: "#FFD446",
     type: "paragraph",
     content: [
@@ -86,7 +86,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
 
     if (sectionType === "list") {
       return (
-        <ul className="list-none text-left space-y-2 text-lg leading-relaxed">
+       <ul className="list-none text-center md:text-left space-y-2 text-lg leading-relaxed">
           {sectionContent.map((itemSegments: TextSegment[], idx: number) => (
             <li key={idx}>
               {itemSegments.map((segment: TextSegment, sidx: number) => (
@@ -109,7 +109,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
 
     // Default to paragraph
     return (
-      <p className="text-lg leading-relaxed">
+      <p className="text-lg leading-relaxed text-center md:text-left">
         {sectionContent.map((itemSegments: TextSegment[], idx: number) => (
           <span key={idx}>
             {itemSegments.map((segment: TextSegment, sidx: number) => (
@@ -139,9 +139,9 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
       >
         <div className="max-w-md mx-auto flex flex-col justify-start">
           <h2
-            className={`font-bold mb-8 ${finalLeft.titleSize || "text-4xl md:text-5xl"}`}
-            style={{ color: finalLeft.titleColor }}
-          >
+              className={`font-bold mb-4 text-center md:text-left ${finalLeft.titleSize}`}
+              style={{ color: finalLeft.titleColor }}
+            >
             {finalLeft.title}
           </h2>
           {renderContent(finalLeft)}
@@ -154,10 +154,10 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
         style={{ backgroundColor: finalRight.bgColor }}
       >
         <div className="max-w-md mx-auto flex flex-col justify-start">
-          <h2
-            className={`font-bold mb-8 ${finalRight.titleSize || "text-4xl md:text-5xl"}`}
-            style={{ color: finalRight.titleColor }}
-          >
+        <h2
+          className={`font-bold mb-4 text-center md:text-left ${finalRight.titleSize}`}
+          style={{ color: finalRight.titleColor }}
+        >
             {finalRight.title}
           </h2>
           {renderContent(finalRight)}

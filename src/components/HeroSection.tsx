@@ -75,7 +75,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Title */}
           <h1
-            className="text-4xl md:text-5xl font-bold mb-8"
+            className="font-bold text-2xl sm:text-3xl md:text-4xl mb-8 leading-tight text-center md:text-left"
             style={{ color: mergedBelowText.titleColor }}
           >
             {mergedBelowText.title}
@@ -83,7 +83,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
 
           {/* Single Paragraph with Colored Segments */}
           {mergedBelowText.content && mergedBelowText.content.length > 0 && (
-            <p className="text-lg leading-relaxed">
+           <p className="text-lg leading-relaxed text-center md:text-left">
               {mergedBelowText.content.map((segment: TextSegment, index: number) => (
                 <span
                   key={index}

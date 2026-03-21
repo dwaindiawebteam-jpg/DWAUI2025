@@ -6,6 +6,9 @@ import React, { useState, useEffect } from "react";
 interface ImpactStatsProps {
   bgColor?: string;    // can be Tailwind class OR hex code
   textColor?: string; // can be Tailwind class OR hex code
+  people: number;      // Required prop - no fallback
+  villages: number;    // Required prop - no fallback
+  programs: number;    // Required prop - no fallback
 }
 
 // Define props interface for the StatCard component
@@ -18,8 +21,11 @@ interface StatCardProps {
 }
 
 const ImpactStats: React.FC<ImpactStatsProps> = ({
-  bgColor = "#FFD446",    // can be Tailwind class OR hex code
-  textColor = "#000000" // can be Tailwind class OR hex code
+  bgColor = "#FFD446",    // can be Tailwind class OR hex color
+  textColor = "#000000", // can be Tailwind class OR hex color
+  people,                 // Added from props
+  villages,               // Added from props
+  programs                // Added from props
 }) => {
   // detect Tailwind vs raw color
   const bgStyle = bgColor.startsWith("#") ? { backgroundColor: bgColor } : {};
@@ -31,9 +37,9 @@ const ImpactStats: React.FC<ImpactStatsProps> = ({
       style={bgStyle}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-left mb-12">
+        <div className="text-center md:text-left mb-12">
           <h2
-            className={`text-2xl md:text-3xl font-semibold ${
+            className={`text-2xl sm:text-3xl md:text-4xl font-semibold ${
               !textColor.startsWith("#") ? textColor : ""
             } mb-4`}
             style={textStyle}
@@ -43,9 +49,9 @@ const ImpactStats: React.FC<ImpactStatsProps> = ({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-black">
-          <StatCard endValue={5000} label="People" suffix="+" textColor={textColor} />
-          <StatCard endValue={140} label="Villages" suffix="+" textColor={textColor} />
-          <StatCard endValue={30} label="Programs" suffix="+" textColor={textColor} />
+          <StatCard endValue={people} label="People" suffix="+" textColor={textColor} />
+          <StatCard endValue={villages} label="Villages" suffix="+" textColor={textColor} />
+          <StatCard endValue={programs} label="Programs" suffix="+" textColor={textColor} />
         </div>
       </div>
     </section>
