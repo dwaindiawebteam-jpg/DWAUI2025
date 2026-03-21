@@ -183,6 +183,15 @@ export default function Home(): React.JSX.Element {
   ]
 };
 
+const whyTrustUsData = {
+  title: "Why Trust Us",
+  content: [
+    { text: "We ensure complete transparency and accountability in every project. From the very start, our team coordinates closely with donors, providing ", weight: "normal" as const },
+    { text: "monthly newsletters, digital reports, and real-time updates", weight: "bold" as const },
+    { text: " through trusted tools like Salesforce. With clear communication, measurable outcomes, and dedicated support, donors can be confident their contributions are making a lasting impact.", weight: "normal" as const },
+  ],
+  bgColor: "#9FDFFC"
+};
 
   return (
     <main>
@@ -303,7 +312,11 @@ export default function Home(): React.JSX.Element {
         boardText={benevityBoardData.boardText}
         boardMembers={benevityBoardData.boardMembers}
       />
-      <WhyTrustUs />
+     <WhyTrustUs 
+      title={whyTrustUsData.title}
+      content={whyTrustUsData.content}
+      bgColor={whyTrustUsData.bgColor}
+    />
       <TechPartners />
       <InfoForm />
     </main>
