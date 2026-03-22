@@ -28,9 +28,13 @@ const WhyTrustUs: React.FC<WhyTrustUsProps> = ({
           {title}
         </h2>
 
-        <p className="text-center md:text-left text-xl!  leading-relaxed">
+        <p className="text-center md:text-left leading-relaxed">
           {content.map((seg: ContentSegment, idx: number) => (
-            <span key={idx} style={{ fontWeight: weightMap[seg.weight] }}>
+            <span
+              key={idx}
+              className="text-xl!"
+              style={{ fontWeight: weightMap[seg.weight] }}
+            >
               {seg.text}
             </span>
           ))}
