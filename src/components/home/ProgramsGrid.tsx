@@ -19,7 +19,7 @@ interface ProgramsGridProps {
 const ProgramsGrid: React.FC<ProgramsGridProps> = ({ 
   programs,
   title = "Our Programs",
-  titleClasses = "text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center sm:text-left",
+  titleClasses = "heading-responsive font-bold text-gray-900 mb-10 text-center sm:text-left",
   containerClasses = "max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
 }) => {
 

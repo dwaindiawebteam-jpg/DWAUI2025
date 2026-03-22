@@ -19,6 +19,12 @@
   --color-pink: #FF9DF0;
 }
 
+@layer utilities {
+  .heading-responsive {
+    @apply text-2xl sm:text-3xl md:text-4xl;
+  }
+}
+
 h1,h2 {
   font-family: var(--font-inter), sans-serif;
 }

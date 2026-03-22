@@ -58,7 +58,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
   const defaultRight: ContentBlock = {
     title: "Mission",
     titleColor: "#000000",
-    titleSize: "text-2xl sm:text-3xl md:text-4xl",
+    titleSize: "heading-responsive",
     bgColor: "#FFD446",
     type: "paragraph",
     content: [
