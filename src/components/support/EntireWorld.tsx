@@ -9,7 +9,7 @@ interface EntireWorldProps {
 const EntireWorld: React.FC<EntireWorldProps> = ({ 
   quote, 
   backgroundColor = "bg-[#E8E7E780]", 
-  textClasses = "text-2xl font-semibold italic sm:text-3xl md:text-3xl" 
+  textClasses = "heading-responsive" 
 }) => {
   return (
     <section className={`p-12 ${backgroundColor} text-center`}>

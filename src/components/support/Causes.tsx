@@ -43,7 +43,7 @@ export default function Causes({ causesDetails }: CausesProps) {
             <div className="w-3/5 max-md:w-full flex">
                 <div className="pl-40 pr-40 max-2xl:p-18 max-lg:p-8 flex flex-col justify-center">
                 <h1
-                    className={`font-bold text-2xl sm:text-3xl md:text-4xl mb-6 ${styles.title}`}
+                    className={`font-bold heading-responsive mb-6 ${styles.title}`}
                 >
                     {cause.title}
                 </h1>
