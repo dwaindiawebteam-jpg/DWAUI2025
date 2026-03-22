@@ -32,7 +32,13 @@ export default function AboutPage() {
       />
       <DualContentBlock />
       <AboutAccreditations />
-      <ImpactStats/>
+      <ImpactStats
+        bgColor="#9FDFFC"
+        textColor="#004265"
+        people={5000}
+        villages={140}
+        programs={30}
+      />
       <AboutTeam />
       <Volunteers />
       <WorkAreas />
