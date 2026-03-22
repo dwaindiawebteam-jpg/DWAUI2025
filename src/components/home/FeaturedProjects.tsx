@@ -49,8 +49,15 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ leftProjects, right
       {/* Right Column */}
       <div className="flex p-12" style={{ backgroundColor: "#9FDFFC", color: "#000000" }}>
         <div className="mx-auto flex flex-col justify-start space-y-6">
-          <h2 className="text-center md:text-left text-2xl sm:text-3xl md:text-4xl font-bold flex items-center mb-10">
-            <img src="/icons/homepage/arrow-left.svg" alt="Arrow Left" className="h-8 w-8 mr-4" />
+          <h2 className="text-center md:text-left text-2xl sm:text-3xl md:text-4xl font-bold flex items-center mb-12">
+          <img
+            src="/icons/homepage/arrow-left.svg"
+            alt="Arrow Left"
+            className="mr-4
+              h-6 w-6
+              sm:h-8 sm:w-8
+              md:h-10 md:w-10"
+          />
             Featured Projects
           </h2>
 

@@ -139,7 +139,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
       >
         <div className="max-w-md mx-auto flex flex-col justify-start">
           <h2
-              className={`font-bold mb-4 text-center md:text-left ${finalLeft.titleSize}`}
+              className={`font-bold mb-6 text-center md:text-left ${finalLeft.titleSize}`}
               style={{ color: finalLeft.titleColor }}
             >
             {finalLeft.title}
@@ -155,7 +155,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
       >
         <div className="max-w-md mx-auto flex flex-col justify-start">
         <h2
-          className={`font-bold mb-4 text-center md:text-left ${finalRight.titleSize}`}
+          className={`font-bold mb-6 text-center md:text-left ${finalRight.titleSize}`}
           style={{ color: finalRight.titleColor }}
         >
             {finalRight.title}

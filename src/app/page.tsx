@@ -317,7 +317,11 @@ const whyTrustUsData = {
       content={whyTrustUsData.content}
       bgColor={whyTrustUsData.bgColor}
     />
-      <TechPartners />
+      <TechPartners partners={[
+        "Google", "Microsoft", "Salesforce", "Slack", "Canva", 
+        "Github", "BOX", "Linktree", "NewRelic", "ChatBot"
+      ]} />
+      
       <InfoForm />
     </main>
   );

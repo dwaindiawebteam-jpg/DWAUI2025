@@ -75,7 +75,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Title */}
           <h1
-            className="font-bold text-2xl sm:text-3xl md:text-4xl mb-8 leading-tight text-center md:text-left"
+            className="font-bold text-2xl sm:text-3xl md:text-4xl mb-6 leading-tight text-center md:text-left"
             style={{ color: mergedBelowText.titleColor }}
           >
             {mergedBelowText.title}

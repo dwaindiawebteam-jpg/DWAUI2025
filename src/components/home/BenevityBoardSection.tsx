@@ -35,7 +35,7 @@ const BenevityBoardSection: React.FC<BenevityBoardSectionProps> = ({
           <h2 className="text-center md:text-left text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             {benevityTitle}
           </h2>
-          <p className="text-center md:text-left text-lg mb-8 leading-relaxed">
+          <p className="text-center md:text-left  mb-8 text-xl! leading-relaxed font-semibold">
             {benevityText}
           </p>
           
@@ -59,7 +59,7 @@ const BenevityBoardSection: React.FC<BenevityBoardSectionProps> = ({
           <h2 className="text-center md:text-left text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             {boardTitle}
           </h2>
-          <p className="text-center md:text-left text-lg mb-8 leading-relaxed">
+          <p className="text-center md:text-left text-xl! mb-8 leading-relaxed font-semibold">
             {boardText}
           </p>
           

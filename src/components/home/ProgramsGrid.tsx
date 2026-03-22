@@ -19,15 +19,15 @@ interface ProgramsGridProps {
 const ProgramsGrid: React.FC<ProgramsGridProps> = ({ 
   programs,
   title = "Our Programs",
-  titleClasses = "text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-12 text-center sm:text-left",
+  titleClasses = "text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-10 text-center sm:text-left",
   containerClasses = "max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
 }) => {
 
   const isSingle = programs.length === 1
   
   return (
-    <section className="py-16 bg-white">
-      <div className="text-center sm:text-left">
+    <section className="py-16  bg-white">
+      <div className="text-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sm:text-left">
         <h2 className={titleClasses}>
           {title}
         </h2>

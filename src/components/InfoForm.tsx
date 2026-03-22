@@ -5,7 +5,7 @@ const InfoForm: React.FC = () => {
 <section className="px-6 sm:px-12 md:px-20 lg:px-32 xl:px-48 pt-20 sm:pt-20 md:pt-16 pb-6">
   <div className="flex justify-center items-center gap-10 max-md:flex-col">
     <div className="w-1/2 max-md:w-full max-md:text-center">
-      <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl mb-10 -mt-10 md:-mt-20 lg:-mt-32">
+      <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl mb-8 -mt-10 md:-mt-20 lg:-mt-32">
         Get More Info
       </h1>
 
