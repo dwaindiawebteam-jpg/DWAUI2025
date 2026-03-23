@@ -2,7 +2,7 @@ import React from 'react';
 
 const InfoForm: React.FC = () => {
   return (
-<section className="px-6 sm:px-12 md:px-20 lg:px-32 xl:px-48 pt-20 sm:pt-20 md:pt-16 pb-6">
+<section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-20 md:pt-16 pb-6">
   <div className="flex justify-center items-center gap-10 max-md:flex-col">
     <div className="w-1/2 max-md:w-full max-md:text-center">
       <h1 className="font-bold heading-responsive mb-8 -mt-10 md:-mt-20 lg:-mt-32">

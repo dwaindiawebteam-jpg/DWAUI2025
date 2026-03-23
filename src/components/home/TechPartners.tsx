@@ -7,8 +7,8 @@ interface TechPartnersProps {
 const TechPartners: React.FC<TechPartnersProps> = ({ partners }) => {
   return (
     <section className="py-20 bg-[#F4F4F4]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center md:text-left mb-16">
           <h2 className="heading-responsive font-bold mb-4">
             Tech Partners
           </h2>
