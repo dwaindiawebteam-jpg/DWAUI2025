@@ -33,7 +33,7 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ leftProjects, right
         <div className="max-w-md mx-auto flex flex-col justify-start space-y-8">
           {leftProjects.map((project: LeftProject, idx: number) => (
             <div key={idx}>
-              <h3 className="text-center heading-responsive font-bold mb-4">{project.title}</h3>
+              <h3 className="text-center md:text-left heading-responsive font-bold mb-4">{project.title}</h3>
               <p className="text-center md:text-left text-lg leading-relaxed">
                 {project.content.map((seg: ContentSegment, sidx: number) => (
                   <span key={sidx} style={{ fontWeight: weightMap[seg.weight] }}>
