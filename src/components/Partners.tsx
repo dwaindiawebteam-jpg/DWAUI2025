@@ -12,7 +12,7 @@ const Partners: React.FC<PartnersProps> = ({
   className = ""
 }) => {
   return (
-    <section className={`py-20 bg-[#F4F4F4] ${className}`}>
+    <section className={`py-12 bg-[#F4F4F4] ${className}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center md:text-left mb-16">
           <h2 className="heading-responsive font-bold mb-4">

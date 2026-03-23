@@ -6,33 +6,19 @@ interface Story {
   image: string;
 }
 
-const FeaturedStories: React.FC = () => {
-  const stories: Story[] = [
-    {
-      id: 1,
-      title: "Livelihoods, micro-credit and economic empowerment for Dalit and rural families",
-      image: "/images/resourcespage/Feature Stories Card Component Image.png"
-    },
-    {
-      id: 2,
-      title: "Livelihoods, micro-credit and economic empowerment for Dalit and rural families",
-      image: "/images/resourcespage/Feature Stories Card Component Image.png"
-    },
-    {
-      id: 3,
-      title: "Livelihoods, micro-credit and economic empowerment for Dalit and rural families",
-      image: "/images/resourcespage/Feature Stories Card Component Image.png"
-    }
-  ];
+interface FeaturedStoriesProps {
+  stories: Story[];
+}
 
+const FeaturedStories: React.FC<FeaturedStoriesProps> = ({ stories }) => {
   return (
-    <section className="w-full py-16 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-12 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-black mb-2">
+          <h2 className="text-4xl md:text-5xl font-bold text-black mb-2 heading-responsive">
             Featured Stories
           </h2>
-          <p className="text-xl text-gray-700">
+          <p className="text-xl! font-semibold">
             Stories of Hope & Resilience
           </p>
         </div>
@@ -40,7 +26,7 @@ const FeaturedStories: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {stories.map((story: Story) => (
             <div key={story.id} className="bg-white overflow-hidden shadow-md border border-gray-200 flex flex-row">
-              <div className="relative w-32 h-32 flex-shrink-0">
+              <div className="relative w-32 flex-shrink-0 self-stretch">
                 <Image
                   src={story.image}
                   alt={story.title}

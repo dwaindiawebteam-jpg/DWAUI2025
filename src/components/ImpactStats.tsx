@@ -33,7 +33,7 @@ const ImpactStats: React.FC<ImpactStatsProps> = ({
 
   return (
     <section 
-      className={`${!bgColor.startsWith("#") ? bgColor : ""} py-16`} 
+      className={`${!bgColor.startsWith("#") ? bgColor : ""} py-12`} 
       style={bgStyle}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

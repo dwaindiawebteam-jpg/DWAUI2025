@@ -1,59 +1,34 @@
 import Image from "next/image";
+import GalleryLightbox from "./GalleryLightbox";
 
-const OrphanageOldageHome: React.FC = () => {
-  const galleryImages: string[] = [
-    "/images/resourcespage/1st image middle section.jpg",
-    "/images/resourcespage/2nd image middle section.jpg",
-    "/images/resourcespage/3rd image middle section.jpg",
-    "/images/resourcespage/4th image middle section.jpg"
-  ];
+interface FacilitySection {
+  title: string;
+  images: string[];
+}
 
+interface OrphanageOldageHomeProps {
+  sections: FacilitySection[];
+}
+
+const OrphanageOldageHome: React.FC<OrphanageOldageHomeProps> = ({ sections }) => {
   return (
-    <section className="w-full py-16 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold text-black mb-12">
+    <section className="py-12 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="heading-responsive font-bold text-black mb-6">
           Orphanage & Oldage Home
         </h2>
 
-        {/* Budaga Jangal Hostel (Orphanage) */}
-        <div className="mb-12">
-          <h3 className="text-2xl font-semibold text-black mb-6">
-            Budaga Jangal Hostel (Orphanage)
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {galleryImages.map((image: string, index: number) => (
-              <div key={`orphanage-${index}`} className="relative aspect-[4/3] overflow-hidden">
-                <Image
-                  src={image}
-                  alt={`Orphanage image ${index + 1}`}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
-              </div>
-            ))}
+        {sections.map((section, sectionIndex) => (
+          <div key={sectionIndex} className={sectionIndex === 0 ? "mb-12" : ""}>
+            <h3 className="text-2xl font-semibold text-black mb-6">
+              {section.title}
+            </h3>
+            <GalleryLightbox 
+              images={section.images} 
+              title={section.title} 
+            />
           </div>
-        </div>
-
-        {/* Old Age Home */}
-        <div>
-          <h3 className="text-2xl font-semibold text-black mb-6">
-            Old Age Home
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {galleryImages.map((image: string, index: number) => (
-              <div key={`oldage-${index}`} className="relative aspect-[4/3] overflow-hidden">
-                <Image
-                  src={image}
-                  alt={`Old age home image ${index + 1}`}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+        ))}
       </div>
     </section>
   );
