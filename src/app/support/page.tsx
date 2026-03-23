@@ -34,9 +34,7 @@ const SupportPage: React.FC = () => {
       {/* Pass the data as props */}
       <Causes causesDetails={supportCauses} />
       <EntireWorld 
-        quote="Whoever saves one life, saves the entire world."
-        backgroundColor="bg-[#E8E7E780]"
-        textClasses="text-2xl font-semibold italic sm:text-3xl md:text-3xl"
+        text="Whoever saves one life, saves the entire world."
       />
       <InfoForm />
     </main>
