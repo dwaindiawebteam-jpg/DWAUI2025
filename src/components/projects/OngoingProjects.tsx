@@ -26,12 +26,12 @@ export default function ImpactStats() {
 
       {/* Ongoing projects Statement */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 pt-10">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
+        <h1 className="heading-responsive font-bold text-gray-900 mb-8">
           Ongoing Projects
         </h1>
 
         <div className="prose prose-lg max-w-none">
-          <p className="text-lg text-gray-700 leading-relaxed">
+          <p className="text-lg  leading-relaxed">
             Our ongoing projects include <span className="font-bold">Digital Literacy</span> and <span className="font-bold">Menstrual Health</span> Awareness,
             directly advancing <span className="font-bold">SDG 4 (Quality Education), SDG 3 (Good Health), and SDG 5 (Gender Equality)</span> in rural Dalit communities.
           </p>
@@ -74,10 +74,10 @@ function ProjectCardLeft({
       {/* Card content */}
       <div className="p-6 flex flex-col justify-between">
         <div>
-          <h3 className="text-lg font-bold text-gray-900 mb-5">
+          <h3 className="text-2xl! font-bold mb-5">
             {title}
           </h3>
-          <p className="text-sm text-gray-700 leading-relaxed">
+          <p className="text-sm leading-relaxed">
             {description}
           </p>
         </div>
@@ -100,7 +100,7 @@ function ProjectCardRight({
       {/* Card content */}
       <div className="p-6 flex flex-col justify-between">
         <div>
-          <h3 className="text-lg font-bold text-gray-900 mb-5">
+          <h3 className="text-2xl! font-bold mb-5">
             {title}
           </h3>
           <p className="text-sm text-gray-700 leading-relaxed">

@@ -1,13 +1,13 @@
 import HeroSection from "@/components/HeroSection";
 import DualContentBlock from "@/components/DualContentBlock";
 import ProgramsGrid from "@/components/home/ProgramsGrid";
-import Testimonials from "@/components/home/Testimonials";
+import Testimonials from "@/components/Testimonials";
 import ImpactStats from "@/components/ImpactStats";
 import FeaturedProjects from "@/components/home/FeaturedProjects";
 import BenevityBoardSection from "@/components/home/BenevityBoardSection";
 import WhyTrustUs from "@/components/home/WhyTrustUs";
-import TechPartners from "@/components/home/TechPartners";
 import InfoForm from "@/components/InfoForm";
+import Partners from "@/components/Partners";
 
 // Define types for the content structure
 interface TextContent {
@@ -317,10 +317,12 @@ const whyTrustUsData = {
       content={whyTrustUsData.content}
       bgColor={whyTrustUsData.bgColor}
     />
-      <TechPartners partners={[
-        "Google", "Microsoft", "Salesforce", "Slack", "Canva", 
-        "Github", "BOX", "Linktree", "NewRelic", "ChatBot"
-      ]} />
+      <Partners 
+        title="Tech Partners"
+        partners={[
+          "Google", "Microsoft", "Salesforce", "Slack", "Canva", 
+          "Github", "BOX", "Linktree", "NewRelic", "ChatBot"
+        ]} />
       
       <InfoForm />
     </main>

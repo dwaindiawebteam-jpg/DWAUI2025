@@ -1,11 +1,35 @@
 import HeroSection from "@/components/HeroSection";
-import BenificiaryTestimonials from "@/components/projects/BenificiaryTestimonials";
 import OngoingProjects from "@/components/projects/OngoingProjects";
-import OurPartners from "@/components/projects/OurPartners";
 import DualContentBlock from "@/components/DualContentBlock";
 import InfoForm from "@/components/InfoForm";
+import Testimonials from "@/components/Testimonials";
+import ImageDivider from "@/components/projects/ImageDivider";
+import Partners from "@/components/Partners";
+
 
 export default function ProjectsPage() {
+
+  const testimonials = [
+  {
+    name: "Y. Saramma",
+    title: "Govindapalle",
+    text: "With the support of Dalit Welfare Association, I started an income-generating activity that helps feed my family. This opportunity has given me confidence, stability, and hope for a better future.",
+    splatterImage: "/images/SplatterImages/green splatter.png"
+  },
+  {
+    name: "Y. Saramma",
+    title: "Govindapalle",
+    text: "With the support of Dalit Welfare Association, I started an income-generating activity that helps feed my family. This opportunity has given me confidence, stability, and hope for a better future.",
+    splatterImage: "/images/SplatterImages/red splatter.png"
+  },
+  {
+    name: "Y. Saramma",
+    title: "Govindapalle",
+    text: "With the support of Dalit Welfare Association, I started an income-generating activity that helps feed my family. This opportunity has given me confidence, stability, and hope for a better future.",
+    splatterImage: "/images/SplatterImages/purple splatter.png"
+  }
+];
+
   return (
     <main>
       <HeroSection
@@ -90,9 +114,19 @@ export default function ProjectsPage() {
         }}
       />
 
-      <BenificiaryTestimonials />
+      <Testimonials testimonials={testimonials} />
+      <ImageDivider
+          src="/images/projectspage/childern-in-class.png"
+          alt="children in class"
+        />
       <OngoingProjects />
-      <OurPartners />
+
+       <Partners 
+        title="Our Partners"
+        partners={[
+          "1% Fund", "Presbityerian Church", "Global Compassion", "Jiv Daya Fund", "Basaid", "UCH", "Grace Fund"
+        ]} />
+
       <InfoForm />
     </main>
   );
