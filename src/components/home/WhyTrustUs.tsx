@@ -22,7 +22,7 @@ const WhyTrustUs: React.FC<WhyTrustUsProps> = ({
   };
 
   return (
-    <section className="py-12" style={{ backgroundColor: bgColor }}>
+    <section className={`py-12 ${bgColor}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center md:items-start">
         <h2 className="text-center md:text-left heading-responsive font-bold mb-12">
           {title}

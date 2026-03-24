@@ -55,7 +55,7 @@ export default function ProjectsPage() {
           title: "Dairy Project – Govindapalle",
           titleSize: "text-2xl md:text-3xl",
           type: "list",
-          bgColor: "#622676",
+          bgColor: "bg-purple",
           titleColor: "#FFFFFF",
           content: [
             [
@@ -86,7 +86,7 @@ export default function ProjectsPage() {
           title: "Finance Awareness – Sirivella",
           titleSize: "text-2xl md:text-3xl",
           type: "list",
-          bgColor: "#FFCEF8",
+          bgColor: "bg-pink/50",
           content: [
             [
               { text: "Location", weight: "bold", color: "#000000" },

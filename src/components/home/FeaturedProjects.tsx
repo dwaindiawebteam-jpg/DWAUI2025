@@ -29,7 +29,7 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ leftProjects, right
   return (
     <section className="grid grid-cols-1 md:grid-cols-2">
       {/* Left Column */}
-      <div className="flex p-12" style={{ backgroundColor: "#004265", color: "#FFFFFF" }}>
+      <div className="flex p-12 bg-navy-blue" style={{ color: "#FFFFFF" }}>
         <div className="max-w-md mx-auto flex flex-col justify-start space-y-8">
           {leftProjects.map((project: LeftProject, idx: number) => (
             <div key={idx}>
@@ -47,7 +47,7 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ leftProjects, right
       </div>
 
       {/* Right Column */}
-      <div className="flex p-12" style={{ backgroundColor: "#9FDFFC", color: "#000000" }}>
+      <div className="flex p-12 bg-blue/50" style={{ color: "#000000" }}>
         <div className="mx-auto flex flex-col justify-start space-y-6">
           <h2 className="text-center heading-responsive font-bold flex items-center mb-12">
           <img

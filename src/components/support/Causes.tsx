@@ -15,12 +15,12 @@ const STYLE_MAP: Record<
   number,
   { bg: string; title: string; text: string }
 > = {
-  1: { bg: "bg-[#004265]", title: "text-white", text: "text-white" },
-  2: { bg: "bg-[#3EBFF980]", title: "text-[#004265]", text: "text-black" },
+  1: { bg: "bg-navy-blue", title: "text-white", text: "text-white" },
+  2: { bg: "bg-blue/50", title: "text-[#004265]", text: "text-black" },
   3: { bg: "bg-[#622676]", title: "text-white", text: "text-white" },
-  4: { bg: "bg-[#FF9DF080]", title: "text-[#622676D1]", text: "text-black" },
-  5: { bg: "bg-[#FCCE37]", title: "text-black", text: "text-black" },
-  6: { bg: "bg-[#FFD44699]", title: "text-[#004265]", text: "text-black" }
+  4: { bg: "bg-pink/50", title: "text-[#622676D1]", text: "text-black" },
+  5: { bg: "bg-yellow", title: "text-black", text: "text-black" },
+  6: { bg: "bg-yellow/50", title: "text-[#004265]", text: "text-black" }
 };
 
 export default function Causes({ causesDetails }: CausesProps) {
