@@ -134,8 +134,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
     <section className="grid grid-cols-1 md:grid-cols-2">
       {/* Left Column */}
       <div
-        className="flex p-12 text-left"
-        style={{ backgroundColor: finalLeft.bgColor }}
+        className={`${finalLeft.bgColor} flex p-12 text-left`}
       >
         <div className="max-w-md mx-auto flex flex-col justify-start">
           <h2
@@ -150,8 +149,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
 
       {/* Right Column */}
       <div
-        className="flex p-12 text-left"
-        style={{ backgroundColor: finalRight.bgColor }}
+        className={`${finalRight.bgColor} flex p-12 text-left`}
       >
         <div className="max-w-md mx-auto flex flex-col justify-start">
         <h2

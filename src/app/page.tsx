@@ -226,7 +226,7 @@ const whyTrustUsData = {
         left={{
           title: "Goals",
           titleColor: "#FFFFFF",
-          bgColor: "#004265",
+          bgColor: "bg-navy-blue",
           type: "list",
           content: [
             [
@@ -255,7 +255,7 @@ const whyTrustUsData = {
         right={{
           title: "Objectives",
           titleColor: "#000000",
-          bgColor: "#9FDFFC",
+          bgColor: "bg-blue/50",
           type: "list",
           content: [
             [
@@ -289,7 +289,7 @@ const whyTrustUsData = {
       />
       
       <ImpactStats
-        bgColor="#9FDFFC"
+        bgColor="bg-blue/50"
         textColor="#004265"
         people={5000}
         villages={140}
@@ -315,7 +315,7 @@ const whyTrustUsData = {
      <WhyTrustUs 
       title={whyTrustUsData.title}
       content={whyTrustUsData.content}
-      bgColor={whyTrustUsData.bgColor}
+      bgColor="bg-blue/50"
     />
       <Partners 
         title="Tech Partners"
