@@ -22,7 +22,7 @@ interface ProjectCardProps {
 
 export default function ImpactStats() {
   return (
-    <section className="pb-16 bg-[#FFCCF7]">
+    <section className="pb-16 bg-pink/50">
 
       {/* Ongoing projects Statement */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 pt-10">
@@ -81,7 +81,7 @@ function ProjectCardLeft({
             {description}
           </p>
         </div>
-        <a href={`/projects/${slug}`} className="px-6 py-1 text-white mt-4 sm:mt-6 self-start bg-[#622676] font-semibold hover:bg-[#7F4592] transition cursor-pointer">
+        <a href={`/projects/${slug}`} className="px-6 py-1 text-white mt-4 sm:mt-6 self-start bg-[#622676] font-semibold hover:bg-purple transition cursor-pointer">
           Read More
         </a>
       </div>
@@ -107,7 +107,7 @@ function ProjectCardRight({
             {description}
           </p>
         </div>
-        <a href={`/projects/${slug}`} className="px-6 py-1 text-white mt-4 sm:mt-6 self-start bg-[#622676] font-semibold hover:bg-[#7F4592] transition cursor-pointer">
+        <a href={`/projects/${slug}`} className="px-6 py-1 text-white mt-4 sm:mt-6 self-start bg-[#622676] font-semibold hover:bg-purple transition cursor-pointer">
           Read More
         </a>
       </div>
