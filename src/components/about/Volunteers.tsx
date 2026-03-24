@@ -68,7 +68,7 @@ const Volunteers: React.FC<VolunteersProps> = () => {
   return (
     <section className="py-12 bg-white px-4 sm:px-6 lg:px-8">
       {/* Heading */}
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 text-black text-left max-w-4xl mx-auto">
+      <h2 className="heading-responsive font-bold mb-8 text-black text-left max-w-4xl mx-auto">
         Volunteers
       </h2>
 

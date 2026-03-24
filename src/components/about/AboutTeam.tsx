@@ -21,21 +21,21 @@ interface AboutTeamProps {
 
 const AboutTeam: React.FC<AboutTeamProps> = () => {
   return (
-    <section className="pt-12 bg-white px-4 sm:px-6 lg:px-8">
+    <section className="pt-12 bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Heading */}
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 text-black text-left max-w-4xl mx-auto">
+      <h2 className="heading-responsive font-bold mb-8 text-black text-left  mx-auto">
         DWA Team
       </h2>
 
       {/* Paragraph */}
-      <p className="text-base sm:text-lg text-black leading-relaxed max-w-4xl mx-auto mb-12 text-left">
+      <p className="text-base sm:text-lg text-black leading-relaxed  mx-auto mb-12 text-left">
         Our dedicated team works tirelessly in the field and office, bringing
         passion, skills, and commitment to empower Dalit communities and drive
         lasting change in rural Nandyal and Kurnool.
       </p>
 
       {/* Team Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-8  mx-auto">
         {teamMembers.map((member, index) => (
           <div key={index} className="text-center">
             <Image

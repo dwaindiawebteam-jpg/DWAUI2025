@@ -30,11 +30,47 @@ export default function AboutPage() {
           ],
         }}
       />
-      <DualContentBlock />
+      <DualContentBlock
+        left={{
+          title: "Vision",
+          titleColor: "#000000",
+          bgColor: "bg-orange",
+          type: "paragraph",
+          content: [
+            [
+              {
+                text: `To build an inclusive society where Dalit women thrive with dignity, equality, 
+            and opportunity—breaking poverty cycles and creating sustainable, 
+            empowered communities for generations to come.`,
+                weight: "medium",
+                color: "#000",
+              },
+            ],
+          ],
+        }}
+        right={{
+          title: "Mission",
+          titleColor: "#000000",
+          bgColor: "bg-yellow",
+          type: "paragraph",
+          content: [
+            [
+              {
+                text: `To empower marginalized women through micro-credit, financial education, 
+            and livelihoods—strengthening families, fostering community resilience, and 
+            ensuring sustainable, grassroots-driven change rooted in dignity, justice, 
+            and equality.`,
+                weight: "medium",
+                color: "#000",
+              },
+            ],
+          ],
+        }}
+      />
       <AboutAccreditations />
       <ImpactStats
-        bgColor="#9FDFFC"
-        textColor="#004265"
+        bgColor="bg-yellow"
+        textColor="#000"
         people={5000}
         villages={140}
         programs={30}
