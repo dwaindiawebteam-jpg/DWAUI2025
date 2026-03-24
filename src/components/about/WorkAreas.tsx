@@ -9,7 +9,7 @@ const WorkAreas: React.FC<WorkAreasProps> = () => {
     <section className="bg-[#FFEAA3] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-black mb-8">
+        <h2 className="heading-responsive font-semibold text-black mb-8">
           We work in 140 villages of Nandyal & Kurnool districts
         </h2>
 

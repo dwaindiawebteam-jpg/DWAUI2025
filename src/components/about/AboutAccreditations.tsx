@@ -13,14 +13,14 @@ const AboutAccreditations: React.FC<AboutAccreditationsProps> = () => {
   ];
 
   return (
-    <section className="py-12 bg-white px-4 sm:px-6 lg:px-8">
+    <section className="py-12 bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Heading */}
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 text-black text-left max-w-4xl mx-auto">
+      <h2 className="heading-responsive font-bold mb-8 text-black text-left max-w-7xl mx-auto">
         Accreditations
       </h2>
 
       {/* Paragraph */}
-      <p className="text-base sm:text-lg text-black leading-relaxed max-w-4xl mx-auto mb-12 text-left">
+      <p className="text-base sm:text-lg text-black leading-relaxed max-w-7xl mx-auto mb-12 text-left">
         Dalit Welfare Association is a legally registered nonprofit organization,
         governed by all statutory requirements under Indian law. We hold valid{" "}
         <span className="font-bold">Registration Certificates</span>,{" "}
@@ -35,14 +35,14 @@ const AboutAccreditations: React.FC<AboutAccreditationsProps> = () => {
       </p>
 
       {/* Logos */}
-      <div className="flex flex-wrap justify-center gap-8">
+      <div className="flex flex-wrap justify-center gap-12">
         {logos.map((logo, index) => (
           <Image
             key={index}
             src={logo}
             alt={`Accreditation Logo ${index + 1}`}
-            width={306}
-            height={306}
+            width={263}
+            height={263}
             className="object-contain"
           />
         ))}

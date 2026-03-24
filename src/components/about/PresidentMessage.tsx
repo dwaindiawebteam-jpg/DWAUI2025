@@ -10,7 +10,7 @@ const PresidentMessage: React.FC<PresidentMessageProps> = () => {
     <section className="bg-[#F4F4F4] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Section Heading */}
-        <h2 className="text-3xl sm:text-4xl text-black mb-8">
+        <h2 className="heading-responsive text-black mb-8">
           Message from Our President
         </h2>
 
@@ -29,7 +29,7 @@ const PresidentMessage: React.FC<PresidentMessageProps> = () => {
 
           {/* Right Content */}
           <div className="flex flex-col flex-1 p-6 md:p-8">
-            <h3 className="text-2xl sm:text-4xl font-bold text-black mb-4">
+            <h3 className="heading-responsive font-bold text-black mb-4">
               Breaking Barriers, <br /> Restoring Dignity
             </h3>
             <p className="text-black mb-4">
