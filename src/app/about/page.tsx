@@ -34,7 +34,7 @@ export default function AboutPage() {
         left={{
           title: "Vision",
           titleColor: "#000000",
-          bgColor: "#FEA128",
+          bgColor: "bg-orange",
           type: "paragraph",
           content: [
             [
@@ -51,7 +51,7 @@ export default function AboutPage() {
         right={{
           title: "Mission",
           titleColor: "#000000",
-          bgColor: "#FFD446",
+          bgColor: "bg-yellow",
           type: "paragraph",
           content: [
             [
