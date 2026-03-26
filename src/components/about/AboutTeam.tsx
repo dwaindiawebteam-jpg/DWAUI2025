@@ -6,36 +6,27 @@ interface TeamMember {
   src: string;
 }
 
-const teamMembers: TeamMember[] = [
-  { name: "S. Moses", role: "Program Manager", src: "/images/SplatterImages/green splatter.png" },
-  { name: "K. Saroja", role: "Field Work", src: "/images/SplatterImages/green splatter.png" },
-  { name: "G. Bhaskar", role: "Office Staff", src: "/images/SplatterImages/green splatter.png" },
-  { name: "P. Danielu", role: "Field Work", src: "/images/SplatterImages/green splatter.png" },
-  { name: "N. Sudha Rani", role: "Field Work", src: "/images/SplatterImages/green splatter.png" },
-  { name: "K. Bujji", role: "Office Work", src: "/images/SplatterImages/green splatter.png" },
-];
-
 interface AboutTeamProps {
-  // Add any props if needed
+  teamMembers: TeamMember[];
+  heading?: string; // Optional with default "DWA Team" if you want, but removed fallback as requested
+  paragraph?: string; // Optional with default paragraph if you want, but removed fallback as requested
 }
 
-const AboutTeam: React.FC<AboutTeamProps> = () => {
+const AboutTeam: React.FC<AboutTeamProps> = ({ teamMembers, heading, paragraph }) => {
   return (
     <section className="pt-12 bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Heading */}
-      <h2 className="heading-responsive font-bold mb-8 text-black leading-tight text-center md:text-left  mx-auto">
-        DWA Team
+      <h2 className="heading-responsive font-bold mb-8 text-black leading-tight mx-auto">
+        {heading}
       </h2>
 
       {/* Paragraph */}
-      <p className="text-base sm:text-lg text-black leading-relaxed  mx-auto mb-12 text-left">
-        Our dedicated team works tirelessly in the field and office, bringing
-        passion, skills, and commitment to empower Dalit communities and drive
-        lasting change in rural Nandyal and Kurnool.
+      <p className="text-base sm:text-lg text-black leading-relaxed mx-auto mb-12 text-center sm:text-left">
+        {paragraph}
       </p>
 
       {/* Team Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-8  mx-auto">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 mx-auto">
         {teamMembers.map((member, index) => (
           <div key={index} className="text-center">
             <Image

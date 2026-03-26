@@ -410,7 +410,7 @@ const handleChangeEmail = async (e: React.FormEvent) => {
       <div className="w-48 h-2 bg-[#E0D6C7] overflow-hidden">
           <div className="h-full w-full bg-[#004265] animate-pulse"></div>
         </div>
-      <p className="mt-4 text-[#004265] font-medium text-lg font-sans!">
+      <p className="mt-4  font-medium text-lg font-sans!">
         Loading email...
       </p>
     </div>
@@ -419,7 +419,7 @@ const handleChangeEmail = async (e: React.FormEvent) => {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-[#004265] text-lg font-sans!">
+      <div className="min-h-screen flex items-center justify-center text-lg font-sans!">
         Please log in to view page
       </div>
     );
@@ -438,14 +438,14 @@ const handleChangeEmail = async (e: React.FormEvent) => {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-500 mr-2 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
             </svg>
-            <p className="text-sm text-blue-800">
+            <p className="text-sm">
               <strong>Note:</strong> Changing your email requires verification. After submitting, you'll receive a confirmation link at your new email address. You may need to sign out and back in after verification.
             </p>
           </div>
         </div>
 
         <div className="border border-[#D8CDBE] shadow-md p-6 sm:p-8">
-          <h1 className={`text-2xl font-sans! font-medium text-[#004265] mb-6`}>
+          <h1 className={`text-2xl font-sans! font-medium mb-6`}>
             Update Email Address
           </h1>
           
@@ -487,7 +487,7 @@ const handleChangeEmail = async (e: React.FormEvent) => {
                   </div>
                 </div>
                 <div className="flex items-center justify-between mt-2 ml-3">
-                  <p className="text-[#004265]">
+                  <p>
                     Your current email address
                   </p>
                   {isProviderUser && (

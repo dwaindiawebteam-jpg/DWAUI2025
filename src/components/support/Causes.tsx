@@ -48,11 +48,11 @@ export default function Causes({ causesDetails }: CausesProps) {
                     {cause.title}
                 </h1>
                 <p
-                    className={`text-lg! md:text-xl! leading-relaxed ${styles.text}`}
+                  className={`text-lg! md:text-xl! leading-relaxed text-center md:text-left ${styles.text}`}
                 >
                     {cause.details}
                 </p>
-                </div>
+             </div>
             </div>
 
             <div className="w-1/2 flex justify-center items-center max-md:w-full">

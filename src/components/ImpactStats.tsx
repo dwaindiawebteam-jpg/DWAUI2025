@@ -37,7 +37,7 @@ const ImpactStats: React.FC<ImpactStatsProps> = ({
       style={bgStyle}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center md:text-left mb-12">
+        <div className=" mb-12">
           <h2
             className={`heading-responsive font-semibold ${
               !textColor.startsWith("#") ? textColor : ""

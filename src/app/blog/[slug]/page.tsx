@@ -133,7 +133,7 @@ const coverUrl = getCoverUrl(post.coverImage);
           {/* Featured Image */}
           {coverUrl && (
             <div className="mb-8">
-              <div className="relative w-full h-48 sm:h-72 lg:h-96 overflow-hidden border border-[#BFDBFE]">
+              <div className="relative w-full h-64 sm:h-96 lg:h-[500px] overflow-hidden border border-[#BFDBFE]">
                <Image
                   src={coverUrl}
                   alt={post.coverImageAlt || post.title || "Article cover"}

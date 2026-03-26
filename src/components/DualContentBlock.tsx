@@ -86,7 +86,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
 
     if (sectionType === "list") {
       return (
-       <ul className="list-none text-center md:text-left space-y-2 text-lg leading-relaxed">
+       <ul className="list-none space-y-2 text-lg text-center sm:text-left leading-relaxed">
           {sectionContent.map((itemSegments: TextSegment[], idx: number) => (
             <li key={idx}>
               {itemSegments.map((segment: TextSegment, sidx: number) => (
@@ -109,7 +109,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
 
     // Default to paragraph
     return (
-      <p className="text-lg leading-relaxed text-center md:text-left">
+      <p className="text-lg text-center sm:text-left leading-relaxed ">
         {sectionContent.map((itemSegments: TextSegment[], idx: number) => (
           <span key={idx}>
             {itemSegments.map((segment: TextSegment, sidx: number) => (
@@ -138,7 +138,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
       >
         <div className="max-w-md mx-auto flex flex-col justify-start">
           <h2
-              className={`font-bold mb-6 text-center md:text-left ${finalLeft.titleSize}`}
+              className={`font-bold mb-6  ${finalLeft.titleSize}`}
               style={{ color: finalLeft.titleColor }}
             >
             {finalLeft.title}
@@ -153,7 +153,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
       >
         <div className="max-w-md mx-auto flex flex-col justify-start">
         <h2
-          className={`font-bold mb-6 text-center md:text-left ${finalRight.titleSize}`}
+          className={`font-bold mb-6  ${finalRight.titleSize}`}
           style={{ color: finalRight.titleColor }}
         >
             {finalRight.title}

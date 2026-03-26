@@ -32,10 +32,10 @@ const BenevityBoardSection: React.FC<BenevityBoardSectionProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Benevity & Goodstack Section */}
         <div className="mb-16">
-          <h2 className="text-center md:text-left heading-responsive font-bold text-gray-900 mb-6">
+          <h2 className=" heading-responsive font-bold text-gray-900 mb-6">
             {benevityTitle}
           </h2>
-          <p className="text-center md:text-left mb-8 text-xl! leading-relaxed font-semibold">
+          <p className=" mb-8 text-xl! leading-relaxed text-center sm:text-left font-semibold">
             {benevityText}
           </p>
           
@@ -56,10 +56,10 @@ const BenevityBoardSection: React.FC<BenevityBoardSectionProps> = ({
 
         {/* Board Members Section */}
         <div>
-          <h2 className="text-center md:text-left heading-responsive font-bold text-gray-900 mb-6">
+          <h2 className=" heading-responsive font-bold text-gray-900 mb-6">
             {boardTitle}
           </h2>
-          <p className="text-center md:text-left text-xl! mb-8 leading-relaxed font-semibold">
+          <p className=" text-xl! mb-8 leading-relaxed font-semibold text-center sm:text-left">
             {boardText}
           </p>
           

@@ -2,25 +2,37 @@ import React from "react";
 import Image from "next/image";
 
 interface PresidentMessageProps {
-  // Add any props if needed
+  imageSrc: string;
+  imageAlt: string;
+  title: string;
+  paragraphs: string[];
+  authorName: string;
+  authorTitle: string;
 }
 
-const PresidentMessage: React.FC<PresidentMessageProps> = () => {
+const PresidentMessage: React.FC<PresidentMessageProps> = ({ 
+  imageSrc,
+  imageAlt,
+  title,
+  paragraphs,
+  authorName,
+  authorTitle,
+}) => {
   return (
     <section className="bg-[#F4F4F4] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Section Heading */}
-        <h2 className="heading-responsive leading-tight text-center md:text-left text-black mb-8">
+        <h2 className="heading-responsive leading-tight text-black mb-8">
           Message from Our President
         </h2>
 
         {/* Card */}
-        <div className="bg-white shadow-lg overflow-hidden flex flex-col md:flex-row max-w-5xl mx-auto">
+        <div className="bg-white shadow-lg overflow-hidden flex flex-col lg:flex-row max-w-5xl mx-auto">
           {/* Left Image */}
-          <div className="flex-shrink-0 mb-4 md:mb-0 md:mr-6 w-full md:w-1/3 max-w-xs h-64 md:h-auto flex justify-center items-center">
+          <div className="w-full h-64 md:h-80 lg:w-1/3 lg:h-auto">
             <Image
-              src="/images/SplatterImages/purple splatter.png"
-              alt="President message"
+              src={imageSrc}
+              alt={imageAlt}
               width={400}
               height={300}
               className="object-cover w-full h-full"
@@ -30,23 +42,18 @@ const PresidentMessage: React.FC<PresidentMessageProps> = () => {
           {/* Right Content */}
           <div className="flex flex-col flex-1 p-6 md:p-8">
             <h3 className="heading-responsive font-bold text-black mb-4">
-              Breaking Barriers, <br /> Restoring Dignity
+              {title}
             </h3>
-            <p className="text-black mb-4">
-              As President of DWA, I have seen how deeply caste discrimination
-              and poverty affect Dalit families. Education, livelihoods, and
-              women&apos;s empowerment are powerful tools we use to confront these
-              injustices.
-            </p>
-            <p className="text-black mb-6">
-              Our efforts in rural Nandyal and Kurnool are small steps toward
-              equality, but with strong partnerships, these steps become
-              transformative. Together, we can dismantle barriers and create a
-              society where Dalits live with dignity and opportunity.
-            </p>
-            <p className="font-semibold text-lg text-black">
-              S. Samuel{" "}
-              <span className="font-normal text-black">- President</span>
+            
+            {paragraphs.map((paragraph, idx) => (
+              <p key={idx} className="text-black mb-4">
+                {paragraph}
+              </p>
+            ))}
+            
+            <p className="font-semibold text-xl text-black">
+              {authorName}{" "}
+              <span className="font-normal text-xl! text-black">- {authorTitle}</span>
             </p>
           </div>
         </div>

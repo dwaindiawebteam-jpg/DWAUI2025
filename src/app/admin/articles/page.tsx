@@ -37,11 +37,11 @@ const StatusBadge = ({ status }: { status: ArticleStatus }) => {
   const getStatusColor = () => {
     switch (status) {
       case "published":
-        return "bg-green-100 text-green-800 border-green-200";
+        return "bg-green-100 text-green-800 border-green-200 text-sm!";
       case "draft":
-        return "bg-red-100 text-red-800 border-red-200";
+        return "bg-red-100 text-red-800 border-red-200 text-sm!";
       default:
-        return "bg-gray-100 text-gray-800 border-gray-200";
+        return "bg-gray-100 text-gray-800 border-gray-200 text-sm!";
     }
   };
 
@@ -248,7 +248,7 @@ const handleHeaderSort = (key: typeof sortKey) => {
   if (loading || !authReady) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="w-48 h-2 bg-[#E0D6C7] overflow-hidden">
+        <div className="w-48 h-2 overflow-hidden">
           <div className="h-full w-full bg-[#004265] animate-pulse"></div>
         </div>
         <p className="mt-4 font-medium text-lg font-sans!">
@@ -263,10 +263,10 @@ const handleHeaderSort = (key: typeof sortKey) => {
     return (
       <div className="min-h-screen flex items-center justify-center font-sans!">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-[#4A3820] mb-4 font-sans!">
+          <h1 className="text-2xl font-bold  mb-4 font-sans!">
             Access Denied
           </h1>
-          <p className="text-[#4A3820]/70 font-sans!">
+          <p className="font-sans!">
             You need administrator privileges to access this page.
           </p>
         </div>
@@ -275,40 +275,40 @@ const handleHeaderSort = (key: typeof sortKey) => {
   }
 
   return (
-    <div className="px-6 min-h-screen pb-32 font-sans!">
+    <div className="px-4 sm:px-6 py-12 min-h-screen pb-32 font-sans">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-extrabold text-[#4A3820] mb-6 text-center font-sans!">
+        <h1 className="text-2xl sm:text-3xl font-extrabold mb-6 text-center font-sans!">
           All Articles
         </h1>
         
-        <div className="bg-[#F0E8DB] border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8 mb-8">
+        <div className="border  shadow-md p-6 sm:p-8 mb-8">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-medium text-[#4A3820] font-sans!">
+            <h2 className="text-xl sm:text-2xl font-medium font-sans!">
               Manage All Articles
             </h2>
 
             <a
               href="/author/articles/new"
-              className="px-4 py-2 rounded-lg bg-[#4A3820] text-white font-semibold text-base! hover:bg-black transition font-sans!"
+             className="px-4 py-2  bg-[#004265] text-white font-semibold text-base transition font-sans! text-center w-full sm:w-auto"
             >
               + New Article
             </a>
           </div>
 
-          <hr className="border-[#D8CDBE] mb-8" />
+          <hr className=" mb-8" />
 
  
           {/* Stats Summary */}
           <div className="flex justify-center mb-8">
            <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
-              <div className="bg-white border border-[#D8CDBE] rounded-lg p-4 text-center">
-                <div className="text-sm text-[#4A3820]/70 font-sans!">Total</div>
-                <div className="mt-1 text-2xl font-bold text-[#4A3820] font-sans!">
+              <div className="bg-white border   p-4 text-center">
+                <div className="text-sm font-sans!">Total</div>
+                <div className="mt-1 text-2xl font-bold font-sans!">
                   {articles.length}
                 </div>
               </div>
 
-              <div className="bg-white border border-[#D8CDBE] rounded-lg p-4 text-center">
+              <div className="bg-white border  p-4 text-center">
                 <div className="text-sm text-green-700 font-sans!">Published</div>
                 <div className="mt-1 text-2xl font-bold text-green-700 font-sans!">
                   {articles.filter(a => a.status === "published").length}
@@ -326,14 +326,14 @@ const handleHeaderSort = (key: typeof sortKey) => {
               placeholder="Search articles by title, tags, or author..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="flex-1 p-3 rounded-lg border border-[#D8CDBE] bg-white focus:outline-none focus:ring-2 focus:ring-[#CABAA2] text-base font-sans!"
+              className="flex-1 p-3  border  bg-white focus:outline-none focus:ring-2  text-base font-sans!"
             />
 
             {/* Status Filter */}
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
-              className="p-3 rounded-lg border border-[#D8CDBE] bg-white focus:outline-none focus:ring-2 focus:ring-[#CABAA2] text-base font-sans!"
+              className="p-3  border  bg-white focus:outline-none focus:ring-2  text-base font-sans!"
             >
               <option value="all">All Statuses</option>
               <option value="published">Published</option>
@@ -344,9 +344,9 @@ const handleHeaderSort = (key: typeof sortKey) => {
         </div>
 
         {/* Articles Container */}
-        <div className="bg-[#F0E8DB] border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8">
+        <div className="border   shadow-md p-6 sm:p-8">
           {filteredArticles.length === 0 ? (
-            <div className="text-center py-10 text-[#4A3820]/60 font-sans!">
+            <div className="text-center py-10 font-sans!">
               {search || statusFilter !== "all" 
                 ? "No articles found matching your criteria." 
                 : "No articles found."}
@@ -356,7 +356,7 @@ const handleHeaderSort = (key: typeof sortKey) => {
                     setSearch("");
                     setStatusFilter("all");
                   }}
-                  className="mt-4 block mx-auto text-[#4A3820] hover:text-[#6B4B2B] font-medium font-sans!"
+                  className="mt-4 block mx-auto font-medium font-sans!"
                 >
                   Clear filters
                 </button>
@@ -364,13 +364,13 @@ const handleHeaderSort = (key: typeof sortKey) => {
             </div>
           ) : (
     <div className="overflow-x-auto scrollable-description">
-  <table className="min-w-full divide-y divide-[#D8CDBE]">
+  <table className="min-w-full divide-y divide-black">
     <thead>
   <tr>
     {/* ARTICLE */}
     <th
       onClick={() => handleHeaderSort("title")}
-      className="px-4 py-3 text-left text-lg font-medium text-[#4A3820]
+      className="px-4 py-3 text-left text-lg font-medium
                  uppercase tracking-wider font-sans! cursor-pointer select-none"
     >
       <span className="inline-flex items-center gap-1 whitespace-nowrap">
@@ -386,7 +386,7 @@ const handleHeaderSort = (key: typeof sortKey) => {
     {/* AUTHOR */}
     <th
       onClick={() => handleHeaderSort("author")}
-      className="px-4 py-3 text-left text-lg font-medium text-[#4A3820]
+      className="px-4 py-3 text-left text-lg font-medium 
                  uppercase tracking-wider font-sans! cursor-pointer select-none"
     >
       <span className="inline-flex items-center gap-1 whitespace-nowrap">
@@ -402,7 +402,7 @@ const handleHeaderSort = (key: typeof sortKey) => {
     {/* STATUS */}
     <th
       onClick={() => handleHeaderSort("status")}
-      className="px-4 py-3 text-left text-lg font-medium text-[#4A3820]
+      className="px-4 py-3 text-left text-lg font-medium 
                  uppercase tracking-wider font-sans! cursor-pointer select-none"
     >
       <span className="inline-flex items-center gap-1 whitespace-nowrap">
@@ -418,7 +418,7 @@ const handleHeaderSort = (key: typeof sortKey) => {
     {/* UPDATED */}
     <th
       onClick={() => handleHeaderSort("updatedAt")}
-      className="px-4 py-3 text-left text-lg font-medium text-[#4A3820]
+      className="px-4 py-3 text-left text-lg font-medium 
                  uppercase tracking-wider font-sans! cursor-pointer select-none"
     >
       <span className="inline-flex items-center gap-1 whitespace-nowrap">
@@ -434,7 +434,7 @@ const handleHeaderSort = (key: typeof sortKey) => {
     {/* VIEWS */}
     <th
       onClick={() => handleHeaderSort("views")}
-      className="px-4 py-3 text-left text-lg font-medium text-[#4A3820]
+      className="px-4 py-3 text-left text-lg font-medium 
                  uppercase tracking-wider font-sans! cursor-pointer select-none"
     >
       <span className="inline-flex items-center gap-1 whitespace-nowrap">
@@ -448,157 +448,150 @@ const handleHeaderSort = (key: typeof sortKey) => {
     </th>
 
     {/* ACTIONS – not sortable, innocent bystander */}
-    <th className="px-4 py-3 text-left text-lg font-medium text-[#4A3820] uppercase tracking-wider font-sans!">
+    <th className="px-4 py-3 text-left text-lg font-medium  uppercase tracking-wider font-sans!">
       Actions
     </th>
   </tr>
 </thead>
 
 
-    <tbody className="divide-y divide-[#D8CDBE]">
+    <tbody className="divide-y divide-black">
       {filteredArticles.map((article) => (
-     <tr
-      key={article.id}
-      onClick={() => {
-        window.open(
-          `/author/articles/preview/${article.id}`,
-          "_blank",
-          "noopener,noreferrer"
-        );
-      }}
-      className="cursor-pointer transition-all hover:shadow-lg hover:-translate-y-px"
-    >
+    <tr
+        key={article.id}
+        onClick={() => {
+          window.open(
+            `/author/articles/preview/${article.id}`,
+            "_blank",
+            "noopener,noreferrer"
+          );
+        }}
+        className="cursor-pointer transition-all hover:shadow-lg hover:-translate-y-px"
+      >
+        <td className="px-4 py-4">
+          <div>
+            <div className="font-medium text-lg font-sans!">
+              {article.title || "Untitled"}
+            </div>
 
+            <div className="text-base font-sans!">
+              {article.metaDescription || "No meta description"}
+            </div>
 
+            {article.tags && article.tags.length > 0 && (
+              <div className="mt-2 flex flex-wrap gap-2">
+                {article.tags.slice(0, 4).map((tag) => (
+                  <span
+                    key={tag}
+                    className="border text-base! px-3 py-1 rounded-full font-medium font-sans!"
+                  >
+                    #{tag}
+                  </span>
+                ))}
 
-          <td className="px-4 py-4">
-            <div>
-              <div className="font-medium text-lg text-[#4A3820] font-sans!">
-                {article.title || "Untitled"}
+                {article.tags.length > 4 && (
+                  <span className="text-xs px-1 font-sans!">
+                    +{article.tags.length - 4}
+                  </span>
+                )}
               </div>
+            )}
+          </div>
+        </td>
 
-              <div className="text-base text-[#4A3820]/70 font-sans!">
-                {article.metaDescription || "No meta description"}
-              </div>
+        <td className="px-4 py-4">
+          <div className="text-base font-sans!">
+            {article.authorName || "Unknown"}
+          </div>
+        </td>
 
-              {article.tags && article.tags.length > 0 && (
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {article.tags.slice(0, 4).map((tag) => (
-                    <span
-                      key={tag}
-                      className="bg-[#F0E8DB] border border-[#D8CDBE] text-[#4A3820] text-base! px-3 py-1 rounded-full font-medium font-sans!"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
+        <td className="px-4 py-4">
+          <StatusBadge status={article.status} />
+        </td>
 
-                  {article.tags.length > 4 && (
-                    <span className="text-xs text-[#4A3820]/50 px-1 font-sans!">
-                      +{article.tags.length - 4}
-                    </span>
-                  )}
-                </div>
-              )}
-            </div>
-          </td>
+        <td className="px-4 py-4">
+          <div className="text-base font-sans!">
+            {formatDate(article.updatedAt)}
+          </div>
+        </td>
 
-          <td className="px-4 py-4">
-            <div className="text-base text-[#4A3820] font-sans!">
-              {article.authorName || "Unknown"}
-            </div>
-          </td>
+        <td className="px-4 py-4 text-center">
+          <div className="text-base font-medium font-sans!">
+            {article.readCount ?? 0}
+          </div>
+        </td>
 
-          <td className="px-4 py-4">
-            <StatusBadge status={article.status} />
-          </td>
-
-          <td className="px-4 py-4">
-            <div className="text-base text-[#4A3820] font-sans!">
-              {formatDate(article.updatedAt)}
-            </div>
-          </td>
-
-         <td className="px-4 py-4 text-center">
-            <div className="text-base font-medium text-[#4A3820] font-sans!">
-              {article.readCount ?? 0}
-            </div>
-          </td>
-
-          <td className="px-4 py-4">
-            <div className="flex items-center gap-2 whitespace-nowrap">
-              <a
+        <td className="px-4 py-4">
+          <div className="flex items-center gap-2 whitespace-nowrap">
+            <a
               onClick={(e) => e.stopPropagation()}
               href={`/author/articles/preview/${article.id}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-[#D8CDBE] text-[#4A3820] hover:bg-[#EFE6D8] text-sm font-bold transition font-sans!"
+              className="inline-flex items-center gap-1 px-2 py-1 border transition font-sans!"
               title="Preview article (opens in new tab)"
             >
               <Eye size={18} />
-              <span className="hidden lg:inline">Preview</span>
+              <span className="hidden lg:inline text-sm!">Preview</span>
             </a>
 
-
-       <button
-          disabled={pendingEditArticleId === article.id}
-          onClick={async (e) => {
-            e.stopPropagation();
-            setPendingEditArticleId(article.id);
-
-            try {
-              const conflicts = await checkPendingDraftConflict(article.id);
-
-              if (conflicts.length > 0) {
-                setDraftConflictUsers(conflicts);
-                setShowDraftWarning(true);
-                return;
-              }
-
-              router.push(`/author/articles/edit/${article.id}`);
-            } finally {
-              // Only reset if we didn't navigate
-              setPendingEditArticleId(null);
-            }
-          }}
-          className={`inline-flex items-center gap-1 px-2 py-1 rounded-md border text-sm transition font-sans!
-            ${
-              pendingEditArticleId === article.id
-                ? "border-[#D8CDBE] text-[#4A3820]/50 cursor-not-allowed"
-                : "border-[#D8CDBE] text-[#4A3820] hover:bg-[#EFE6D8]"
-            }
-          `}
-        >
-
-           {pendingEditArticleId === article.id ? (
-            <>
-              <Loader2 size={18} className="animate-spin" />
-              <span className="hidden lg:inline">Checking…</span>
-            </>
-          ) : (
-            <>
-              <Pencil size={18} />
-              <span className="hidden lg:inline">Edit</span>
-            </>
-          )}
-
-          </button>
-
-
-              <button
-                onClick={(e) => {
+            <button
+              disabled={pendingEditArticleId === article.id}
+              onClick={async (e) => {
                 e.stopPropagation();
-                  setSelectedArticle(article);
-                  setDeleteModalOpen(true);
-                }}
-                className="inline-flex items-center gap-1 px-2 py-1 rounded-md border border-red-200 text-red-600 hover:bg-red-50 text-sm transition font-sans!"
-                title="Delete article"
-              >
-                <Trash2 size={18} />
-                <span className="hidden lg:inline">Delete</span>
-              </button>
-            </div>
-          </td>
-        </tr>
+                setPendingEditArticleId(article.id);
+
+                try {
+                  const conflicts = await checkPendingDraftConflict(article.id);
+
+                  if (conflicts.length > 0) {
+                    setDraftConflictUsers(conflicts);
+                    setShowDraftWarning(true);
+                    return;
+                  }
+
+                  router.push(`/author/articles/edit/${article.id}`);
+                } finally {
+                  // Only reset if we didn't navigate
+                  setPendingEditArticleId(null);
+                }
+              }}
+              className={`inline-flex items-center gap-1 px-2 py-1 border text-sm! transition font-sans!
+                ${
+                  pendingEditArticleId === article.id
+                    ? "cursor-not-allowed"
+                    : ""
+                }
+              `}
+            >
+              {pendingEditArticleId === article.id ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  <span className="hidden lg:inline text-sm!">Checking…</span>
+                </>
+              ) : (
+                <>
+                  <Pencil size={18} />
+                  <span className="hidden lg:inline text-sm!">Edit</span>
+                </>
+              )}
+            </button>
+            
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedArticle(article);
+                setDeleteModalOpen(true);
+              }}
+              className="inline-flex items-center gap-1 px-2 py-1 border border-red-600 text-red-600 text-sm! transition font-sans!"
+              title="Delete article"
+            >
+              <Trash2 size={18} />
+              <span className="hidden lg:inline text-sm!">Delete</span>
+            </button>
+          </div>
+        </td>
+      </tr>
       ))}
     </tbody>
   </table>
@@ -610,8 +603,8 @@ const handleHeaderSort = (key: typeof sortKey) => {
 
           {/* Results count */}
           {filteredArticles.length > 0 && (
-            <div className="mt-6 pt-6 border-t border-[#D8CDBE]">
-              <p className="text-base! text-[#4A3820]/70 font-sans!">
+            <div className="mt-6 pt-6 border-t">
+              <p className="text-base! font-sans!">
                 Showing {filteredArticles.length} of {articles.length} articles
               </p>
             </div>
@@ -629,22 +622,22 @@ const handleHeaderSort = (key: typeof sortKey) => {
 
        {showDraftWarning && (
   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-    <div className="bg-[#F0E8DB] max-w-md w-full rounded-lg border border-[#D8CDBE] p-6 shadow-xl">
-      <h2 className="text-2xl font-bold text-[#4A3820] mb-3 font-sans!">
+    <div className="bg-[#F0E8DB] max-w-md w-full  border  p-6 shadow-xl">
+      <h2 className="text-2xl font-bold  mb-3 font-sans!">
         Draft Conflict Detected
       </h2>
 
-      <p className="text-[#4A3820] mb-4 text-base ">
+      <p className=" mb-4 text-base ">
         The article update you are trying to write will be <strong>overwritten</strong> by
         a pending draft currently open on the author’s machine.
       </p>
 
-      <p className="text-[#4A3820] mb-4 text-base">
+      <p className=" mb-4 text-base">
         Please ask the author to go to <strong>Dashboard → Write New Article</strong> and
         save their draft before continuing.
       </p>
 
-      <div className="mb-4 text-xl text-[#4A3820]">
+      <div className="mb-4 text-xl ">
         Active draft detected for:
         <ul className="list-disc ml-6 mt-2">
           {draftConflictUsers.map(u => (
@@ -665,7 +658,7 @@ const handleHeaderSort = (key: typeof sortKey) => {
             setShowDraftWarning(false);
             setPendingEditArticleId(null);
           }}
-          className="px-4 py-2 rounded-md border border-[#D8CDBE] text-[#4A3820] font-sans!"
+          className="px-4 py-2 border   font-sans!"
         >
           Cancel
         </button>
@@ -675,7 +668,7 @@ const handleHeaderSort = (key: typeof sortKey) => {
             setShowDraftWarning(false);
             router.push(`/author/articles/edit/${pendingEditArticleId}`);
           }}
-          className="px-4 py-2 rounded-md bg-red-600 text-white font-semibold font-sans!"
+          className="px-4 py-2 bg-red-600 text-white font-semibold font-sans!"
         >
           Edit Anyway
         </button>

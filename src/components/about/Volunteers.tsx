@@ -9,67 +9,17 @@ interface Volunteer {
   bgColor: string;
 }
 
-const volunteers: Volunteer[] = [
-  {
-    name: "Scott Singer",
-    role: "Senior Software Developer., USA",
-    description: "Volunteering as a website developer at DWA was truly rewarding. I felt proud to support their mission of empowering Dalit communities through education, women's entrepreneurship, and sustainable livelihoods.",
-    src: "/images/SplatterImages/orange splatter.png",
-    linkedin: "#",
-    bgColor: "bg-[#FED6F8]",
-  },
-  {
-    name: "Prince Sithole",
-    role: "Junior Software Developer., S.A.",
-    description: "Volunteering as a website developer at DWA was truly rewarding. I felt proud to support their mission of empowering Dalit communities through education, women's entrepreneurship, and sustainable livelihoods.",
-    src: "/images/SplatterImages/orange splatter 2.png",
-    linkedin: "#",
-    bgColor: "bg-[#FFEEB5]",
-  },
-  {
-    name: "Michael M",
-    role: "Junior Software Developer., S.A.",
-    description: "Volunteering as a website developer at DWA was truly rewarding. I felt proud to support their mission of empowering Dalit communities through education, women's entrepreneurship, and sustainable livelihoods.",
-    src: "/images/SplatterImages/orange splatter 2.png",
-    linkedin: "#",
-    bgColor: "bg-[#FFEEB5]",
-  },
-  {
-    name: "Fatimoh B",
-    role: "Software Developer., Nigeria.",
-    description: "Volunteering as a website developer at DWA was truly rewarding. I felt proud to support their mission of empowering Dalit communities through education, women's entrepreneurship, and sustainable livelihoods.",
-    src: "/images/SplatterImages/orange splatter 2.png",
-    linkedin: "#",
-    bgColor: "bg-[#FFEEB5]",
-  },
-  {
-    name: "Dayo Abdul",
-    role: "Senior Software Developer., Nigeria.",
-    description: "Volunteering as a website developer at DWA was truly rewarding. I felt proud to support their mission of empowering Dalit communities through education, women's entrepreneurship, and sustainable livelihoods.",
-    src: "/images/SplatterImages/orange splatter.png",
-    linkedin: "#",
-    bgColor: "bg-[#FED6F8]",
-  },
-  {
-    name: "Megan Ward",
-    role: "Salesforce Admin., Ireland.",
-    description: "Volunteering as a website developer at DWA was truly rewarding. I felt proud to support their mission of empowering Dalit communities through education, women's entrepreneurship, and sustainable livelihoods.",
-    src: "/images/SplatterImages/orange splatter.png",
-    linkedin: "#",
-    bgColor: "bg-[#FED6F8]",
-  },
-];
-
 interface VolunteersProps {
-  // Add any props if needed
+  volunteers: Volunteer[];
+  heading?: string; // Required from outside, no fallback
 }
 
-const Volunteers: React.FC<VolunteersProps> = () => {
+const Volunteers: React.FC<VolunteersProps> = ({ volunteers, heading }) => {
   return (
-    <section className="py-12 bg-white px-4 sm:px-6 lg:px-8">
+    <section className="py-12 bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Heading */}
-      <h2 className="heading-responsive font-bold mb-8 text-black leading-tight text-center md:text-left max-w-4xl mx-auto">
-        Volunteers
+      <h2 className="heading-responsive font-bold mb-8 text-black leading-tight">
+        {heading}
       </h2>
 
       {/* Volunteers Grid */}

@@ -7,20 +7,21 @@ interface FacilitySection {
 }
 
 interface OrphanageOldageHomeProps {
-  sections: FacilitySection[];
+  sections: FacilitySection[]; // Required prop, no fallback
+  heading: string; // Required prop, no fallback
 }
 
-const OrphanageOldageHome: React.FC<OrphanageOldageHomeProps> = ({ sections }) => {
+const OrphanageOldageHome: React.FC<OrphanageOldageHomeProps> = ({ sections, heading }) => {
   return (
     <section className="py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="heading-responsive font-bold text-black mb-6">
-          Orphanage & Oldage Home
+          {heading}
         </h2>
 
         {sections.map((section, sectionIndex) => (
           <div key={sectionIndex} className={sectionIndex === 0 ? "mb-12" : ""}>
-            <h3 className="text-2xl font-semibold text-black mb-6">
+            <h3 className="text-2xl font-semibold text-black mb-6 text-center sm:text-left">
               {section.title}
             </h3>
             <GalleryLightbox 

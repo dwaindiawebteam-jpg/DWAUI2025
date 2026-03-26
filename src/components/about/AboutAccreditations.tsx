@@ -1,37 +1,35 @@
 import Image from "next/image";
 
-interface AboutAccreditationsProps {
-  // Add any props if needed
+interface TextSegment {
+  text: string;
+  bold?: boolean;
 }
 
-const AboutAccreditations: React.FC<AboutAccreditationsProps> = () => {
-  const logos: string[] = [
-    "/images/aboutpage/givedo.png",
-    "/images/aboutpage/guidestarindia.png",
-    "/images/aboutpage/benevity.png",
-    "/images/aboutpage/goodstack.png"
-  ];
+interface AboutAccreditationsProps {
+  paragraph: TextSegment[]; // Required prop, no fallback
+  logos: string[]; // Required prop, no fallback
+  heading?: string; // Required from outside, no fallback
+}
 
+const AboutAccreditations: React.FC<AboutAccreditationsProps> = ({ 
+  paragraph,
+  logos,
+  heading
+}) => {
   return (
     <section className="py-12 bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Heading */}
-      <h2 className="heading-responsive leading-tight text-center md:text-left font-bold mb-8 text-black max-w-7xl mx-auto">
-        Accreditations
+      <h2 className="heading-responsive leading-tight font-bold mb-8 text-black max-w-7xl mx-auto">
+        {heading}
       </h2>
 
       {/* Paragraph */}
-      <p className="text-base sm:text-lg text-black leading-relaxed max-w-7xl mx-auto mb-12 text-left">
-        Dalit Welfare Association is a legally registered nonprofit organization,
-        governed by all statutory requirements under Indian law. We hold valid{" "}
-        <span className="font-bold">Registration Certificates</span>,{" "}
-        <span className="font-bold">12A & 80G tax exemption approvals</span>, and
-        maintain compliance with the{" "}
-        <span className="font-bold">
-          FCRA (Foreign Contribution Regulation Act)
-        </span>{" "}
-        to receive international donations. Our financial records are audited
-        annually, ensuring transparency, accountability, and trust with donors,
-        partners, and the communities we serve.
+      <p className="text-base sm:text-lg text-center sm:text-left text-black leading-relaxed max-w-7xl mx-auto mb-12">
+        {paragraph.map((s, i) => (
+          <span key={i} className={s.bold ? "font-bold" : undefined}>
+            {s.text}
+          </span>
+        ))}
       </p>
 
       {/* Logos */}

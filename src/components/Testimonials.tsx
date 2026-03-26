@@ -53,7 +53,7 @@ function TestimonialCard({ testimonial }: TestimonialCardProps): React.JSX.Eleme
         <p className="mb-4">
           {testimonial.title}
         </p>
-        <p className="text-sm! leading-relaxed">
+        <p className="text-sm!  leading-relaxed">
           {testimonial.text}
         </p>
       </div>

@@ -280,7 +280,7 @@ useEffect(() => {
   if (!authReady || loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center ">
-        <div className="w-48 h-2 bg-[#E0D6C7] overflow-hidden">
+        <div className="w-48 h-2 overflow-hidden">
           <div className="h-full w-full bg-[#004265] animate-pulse"></div>
         </div>
         <p className="mt-4 font-medium text-lg font-sans!">
@@ -318,7 +318,7 @@ useEffect(() => {
         {/* Guest State - When user is not logged in */}
         {!currentAuthUser && (
           <div className="space-y-6 mt-8">
-            <div className="bg-[#F0E8DB] border border-[#D8CDBE] shadow-md p-6 sm:p-8">
+            <div className=" border  shadow-md p-6 sm:p-8">
               <h2 className="text-2xl font-extrabold  mb-6 text-center font-sans!">
                 Please Log In
               </h2>
@@ -348,7 +348,7 @@ useEffect(() => {
               </div>
             )}
 
-            <div className="border border-[#D8CDBE] shadow-md p-6 sm:p-8">
+            <div className="border  shadow-md p-6 sm:p-8">
              <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-6 mb-8">
               {/* LEFT: Heading + counts */}
               <div className="flex flex-col">
@@ -370,8 +370,8 @@ useEffect(() => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                  className="w-full sm:w-80 px-4 py-2
-                border border-[#C9BBAA] bg-white 
-                placeholder-[#4A3820]/50 focus:ring-2 focus:ring-[#004265]/40"
+                border  bg-white 
+                focus:ring-2"
                 />
               </div>
             </div>
@@ -399,7 +399,7 @@ useEffect(() => {
                       <div
                         key={u.uid}
                         className={`
-                           bg-white border border-[#E6DED1]
+                           bg-white border 
                           p-4
                           shadow-sm hover:shadow-md transition-shadow
                           ${isCurrentUser ? "border-l-4 border-l-[#004265]" : ""}
@@ -459,7 +459,7 @@ useEffect(() => {
                             <select
                               className="
                                 px-3 py-1.5 text-sm border 
-                                focus:ring-2 focus:ring-[#004265]/40
+                                focus:ring-2 
                                 disabled:bg-gray-100 disabled:border-gray-300 disabled:text-gray-500
                               "
                               value={u.role || 'reader'}
@@ -556,7 +556,7 @@ useEffect(() => {
           <div className="flex justify-end gap-3">
             <button
               onClick={cancelUpdate}
-              className="px-4 py-2 border-2 border-[#D8CDBE]  font-sans! hover:bg-[#F0E8DB] transition-colors"
+              className="px-4 py-2 border-2   font-sans! hover:bg-[#F0E8DB] transition-colors"
             >
               Cancel
             </button>

@@ -139,7 +139,7 @@ export default function ProfilePage() {
         <div className="w-48 h-2 bg-[#E0D6C7] overflow-hidden">
           <div className="h-full w-full bg-[#004265] animate-pulse"></div>
         </div>
-        <p className="mt-4 text-[#004265] font-medium text-lg font-sans!">
+        <p className="mt-4 font-medium text-lg font-sans!">
           Loading profile...
         </p>
       </div>
@@ -148,7 +148,7 @@ export default function ProfilePage() {
   
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-[#004265] text-lg font-sans!">
+      <div className="min-h-screen flex items-center justify-center  text-lg font-sans!">
         Please log in to view page
       </div>
     );
@@ -160,8 +160,8 @@ export default function ProfilePage() {
         <h1 className="text-3xl font-extrabold mb-6  text-center font-sans!">
           My Profile
         </h1>
-        <div className="border border-[#D8CDBE] shadow-md p-6 sm:p-8">
-          <h1 className={`text-2xl font-sans! font-medium mb-6 text-[#004265]`}>
+        <div className="border  shadow-md p-6 sm:p-8">
+          <h1 className={`text-2xl font-sans! font-medium mb-6`}>
             Profile Information
           </h1>
           

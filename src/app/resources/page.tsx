@@ -4,27 +4,11 @@ import ProjectsGallery from "@/components/resources/ProjectsGallery"
 import OrphanageOldageHome from "@/components/resources/OrphanageOldageHome"
 import AnnualReports from "@/components/resources/AnnualReports"
 import InfoForm from "@/components/InfoForm"
+import storyPosts from "@/data/storyPosts"
 
 
 export default function ResourcesPage() {
 
-    const storiesData = [
-    {
-      id: 1,
-      title: "Livelihoods, micro-credit and economic empowerment for Dalit and rural families",
-      image: "/images/resourcespage/Feature Stories Card Component Image.png"
-    },
-    {
-      id: 2,
-      title: "Livelihoods, micro-credit and economic empowerment for Dalit and rural families",
-      image: "/images/resourcespage/Feature Stories Card Component Image.png"
-    },
-    {
-      id: 3,
-      title: "Livelihoods, micro-credit and economic empowerment for Dalit and rural families",
-      image: "/images/resourcespage/Feature Stories Card Component Image.png"
-    }
-  ];
 
   const galleryData = [
   {
@@ -94,9 +78,19 @@ const reports = [
           ],
         }}
       />
-      <FeaturedStories stories={storiesData} />
-      <ProjectsGallery sections={galleryData} />
-      <OrphanageOldageHome sections={facilityData} />
+      <FeaturedStories 
+        stories={storyPosts}
+        heading="Featured Stories"
+        subheading="Stories of Hope & Resilience"
+      />
+      <ProjectsGallery 
+        sections={galleryData}
+        heading="Projects Gallery"
+      />
+      <OrphanageOldageHome 
+        sections={facilityData}
+        heading="Orphanage & Oldage Home"
+      />
       <AnnualReports reports={reports} />
       <InfoForm />
     </main>

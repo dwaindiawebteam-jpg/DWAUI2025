@@ -149,7 +149,7 @@ export default function AuthorArticlesPage() {
         <h1 className="text-2xl sm:text-3xl font-extrabold mb-6 text-center font-sans!">
           My Articles
         </h1>
-        <div className=" border border-[#BFDBFE] shadow-md p-4 sm:p-6 md:p-8">
+        <div className=" border shadow-md p-4 sm:p-6 md:p-8">
           {/* PAGE HEADER */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <h2 className="text-xl sm:text-2xl font-medium font-sans!">
@@ -163,7 +163,7 @@ export default function AuthorArticlesPage() {
             </a>
           </div>
 
-          <hr className="border-[#BFDBFE] mb-6 sm:mb-8" />
+          <hr className=" mb-6 sm:mb-8" />
 
           {/* SEARCH */}
           <input
@@ -171,7 +171,7 @@ export default function AuthorArticlesPage() {
             placeholder="Search articles..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full p-3 mb-4 sm:mb-6 border border-[#BFDBFE] bg-white focus:outline-none focus:ring-2  text-base sm:text-lg font-sans!"
+            className="w-full p-3 mb-4 sm:mb-6 border bg-white focus:outline-none focus:ring-2  text-base sm:text-lg font-sans!"
           />
           
           {/* FILTERS */}
@@ -180,7 +180,7 @@ export default function AuthorArticlesPage() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as any)}
-              className="p-3 border border-[#BFDBFE] bg-white focus:outline-none focus:ring-2  text-base sm:text-lg font-sans!"
+              className="p-3 border  bg-white focus:outline-none focus:ring-2  text-base sm:text-lg font-sans!"
             >
               <option value="all">All statuses</option>
               <option value="published">Published</option>
@@ -191,7 +191,7 @@ export default function AuthorArticlesPage() {
             <select
               value={dateSort}
               onChange={(e) => setDateSort(e.target.value as any)}
-              className="p-3 border border-[#BFDBFE] bg-white focus:outline-none focus:ring-2  text-base sm:text-lg font-sans!"
+              className="p-3 border  bg-white focus:outline-none focus:ring-2  text-base sm:text-lg font-sans!"
             >
               <option value="newest">Newest first</option>
               <option value="oldest">Oldest first</option>

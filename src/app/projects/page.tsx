@@ -53,7 +53,7 @@ export default function ProjectsPage() {
       <DualContentBlock
         left={{
           title: "Dairy Project – Govindapalle",
-          titleSize: "text-2xl md:text-3xl",
+          titleSize: "text-2xl md:text-3xl text-center sm:text-left",
           type: "list",
           bgColor: "bg-purple",
           titleColor: "#FFFFFF",
@@ -84,7 +84,7 @@ export default function ProjectsPage() {
         }}
         right={{
           title: "Finance Awareness – Sirivella",
-          titleSize: "text-2xl md:text-3xl",
+          titleSize: "text-2xl md:text-3xl text-center sm:text-left",
           type: "list",
           bgColor: "bg-pink/50",
           content: [
