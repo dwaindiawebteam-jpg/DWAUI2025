@@ -23,7 +23,7 @@ const AboutTeam: React.FC<AboutTeamProps> = () => {
   return (
     <section className="pt-12 bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Heading */}
-      <h2 className="heading-responsive font-bold mb-8 text-black text-left  mx-auto">
+      <h2 className="heading-responsive font-bold mb-8 text-black leading-tight text-center md:text-left  mx-auto">
         DWA Team
       </h2>
 

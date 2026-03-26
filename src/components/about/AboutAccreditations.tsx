@@ -15,7 +15,7 @@ const AboutAccreditations: React.FC<AboutAccreditationsProps> = () => {
   return (
     <section className="py-12 bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Heading */}
-      <h2 className="heading-responsive font-bold mb-8 text-black text-left max-w-7xl mx-auto">
+      <h2 className="heading-responsive leading-tight text-center md:text-left font-bold mb-8 text-black max-w-7xl mx-auto">
         Accreditations
       </h2>
 
