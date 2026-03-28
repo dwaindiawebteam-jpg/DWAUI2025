@@ -117,26 +117,25 @@ export default function AdminArticleAnalytics() {
 
   if (!authReady || loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-4 font-sans!">
-        <div className="w-48 h-2 bg-[#E0D6C7] overflow-hidden">
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <div className="w-48 h-2 overflow-hidden">
           <div className="h-full w-full bg-[#004265] animate-pulse"></div>
         </div>
-        <p className="mt-4font-medium text-lg text-center font-sans!">
+        <p className="mt-4 font-medium text-lg font-sans!">
           Loading article analytics...
         </p>
       </div>
     );
   }
 
-
   if (role !== "admin") {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 font-sans!">
+      <div className="min-h-screen flex items-center justify-center font-sans!">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-[#4A3820] mb-4 font-sans!">
+          <h1 className="text-2xl font-bold mb-4 font-sans!">
             Access Denied
           </h1>
-          <p className="text-[#4A3820]/70 font-sans!">
+          <p className="font-sans!">
             Admin access required.
           </p>
         </div>
@@ -146,17 +145,17 @@ export default function AdminArticleAnalytics() {
 
   if (!articleId) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 font-sans!">
+      <div className="min-h-screen flex items-center justify-center font-sans!">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-[#4A3820] mb-4 font-sans!">
+          <h1 className="text-2xl font-bold mb-4 font-sans!">
             Article Not Found
           </h1>
-          <p className="text-[#4A3820]/70 font-sans!">
+          <p className="font-sans!">
             The requested article analytics could not be found.
           </p>
           <Link 
             href="/admin/analytics" 
-            className="mt-4 inline-block text-[#4A3820] hover:text-[#6B4B2B] font-medium font-sans!"
+            className="mt-4 inline-block font-medium font-sans! hover:underline"
           >
             ← Back to Admin Analytics
           </Link>
@@ -182,94 +181,79 @@ export default function AdminArticleAnalytics() {
   const sortedSources = Object.entries(sources).sort(([,a], [,b]) => b - a);
 
   return (
-    <div className="px-6 min-h-screen pb-32 font-sans!">
+    <div className="px-4 sm:px-6 py-12 min-h-screen pb-32 font-sans">
       <div className="max-w-7xl mx-auto">
         {/* Back Button */}
         <div className="mb-6">
           <Link 
             href="/admin/analytics" 
-            className="inline-flex items-center text-[#4A3820] hover:text-[#6B4B2B] font-medium font-sans!"
+            className="inline-flex items-center font-medium font-sans! hover:underline"
           >
             ← Back to Admin Analytics
           </Link>
         </div>
 
-        <h1 className="text-3xl font-extrabold text-[#4A3820] mb-2 text-center font-sans!">
-          Article Analytics (Admin)
+        <h1 className="text-2xl sm:text-3xl font-extrabold mb-2 text-center font-sans!">
+          Article Analytics
         </h1>
         
         {/* Article Title & Author */}
         <div className="text-center mb-8">
-          <h2 className="text-xl text-[#4A3820] font-sans!">
+          <h2 className="text-xl font-sans!">
             {articleTitle}
           </h2>
-          <p className="text-lg text-[#4A3820]/70 font-sans!">
+          <p className="text-lg font-sans!">
             by {articleAuthor}
           </p>
         </div>
         
         {/* Overview Stats Container */}
-        <div className="bg-[#F0E8DB] border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8 mb-8">
+        <div className="border shadow-md p-6 sm:p-8 mb-8">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-medium text-[#4A3820] font-sans!">
+            <h2 className="text-xl sm:text-2xl font-medium font-sans!">
               Overview
             </h2>
           </div>
 
-          <hr className="border-[#D8CDBE] mb-8" />
+          <hr className="mb-8" />
 
-          {/* Stats Cards */}
+          {/* Stats Cards - 2 column grid to match admin articles */}
           <div className="flex justify-center mb-8">
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 max-w-5xl mx-auto">
-              <div className="bg-white border border-[#D8CDBE] rounded-lg p-6 text-center">
-                <div className="text-sm text-[#4A3820]/70 font-sans!">Total Reads</div>
-                <div className="mt-2 text-3xl font-bold text-[#4A3820] font-sans!">
+            <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
+              <div className="bg-white border p-4 text-center">
+                <div className="text-sm font-sans!">Total Reads</div>
+                <div className="mt-1 text-2xl font-bold font-sans!">
                   {totalReads}
                 </div>
               </div>
 
-              <div className="bg-white border border-[#D8CDBE] rounded-lg p-6 text-center">
-                <div className="text-sm text-[#4A3820]/70 font-sans!">Days Tracked</div>
-                <div className="mt-2 text-3xl font-bold text-[#4A3820] font-sans!">
+              <div className="bg-white border p-4 text-center">
+                <div className="text-sm font-sans!">Days Tracked</div>
+                <div className="mt-1 text-2xl font-bold font-sans!">
                   {sortedDays.length}
-                </div>
-              </div>
-
-              <div className="bg-white border border-[#D8CDBE] rounded-lg p-6 text-center">
-                <div className="text-sm text-[#4A3820]/70 font-sans!">Daily Avg</div>
-                <div className="mt-2 text-3xl font-bold text-[#4A3820] font-sans!">
-                  {sortedDays.length > 0 ? Math.round(totalReads / sortedDays.length) : 0}
-                </div>
-              </div>
-
-              <div className="bg-white border border-[#D8CDBE] rounded-lg p-6 text-center">
-                <div className="text-sm text-[#4A3820]/70 font-sans!">Peak Day</div>
-                <div className="mt-2 text-3xl font-bold text-[#4A3820] font-sans!">
-                  {sortedDays.length > 0 ? Math.max(...sortedDays.map(([, count]) => count)) : 0}
                 </div>
               </div>
             </div>
           </div>
 
-       
-            {/* DEVICES PANEL - Now takes full width */}
-          <div className="bg-white border border-[#D8CDBE] rounded-lg p-6 max-w-2xl mx-auto">
-            <h3 className="text-xl font-medium text-[#4A3820] mb-4 font-sans!">
+          {/* DEVICES PANEL */}
+          <div className="border p-6 max-w-2xl mx-auto">
+            <h3 className="text-xl font-medium mb-4 font-sans!">
               Devices
             </h3>
             
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between mb-1">
-                  <span className="text-[#4A3820] font-sans!">📱 Mobile</span>
-                  <span className="text-[#4A3820] font-medium font-sans!">
+                  <span className="font-sans!">📱 Mobile</span>
+                  <span className="font-medium font-sans!">
                     {devices.mobile} ({devices.mobile + devices.desktop > 0 ? 
                       Math.round((devices.mobile / (devices.mobile + devices.desktop)) * 100) : 0}%)
                   </span>
                 </div>
-                <div className="h-2 bg-[#E0D6C7] rounded-full overflow-hidden">
+                <div className="h-2 bg-gray-200 overflow-hidden">
                   <div 
-                    className="h-full bg-[#4A3820] rounded-full transition-all"
+                    className="h-full bg-[#004265] transition-all"
                     style={{ 
                       width: `${devices.mobile + devices.desktop > 0 ? 
                         (devices.mobile / (devices.mobile + devices.desktop)) * 100 : 0}%` 
@@ -280,15 +264,15 @@ export default function AdminArticleAnalytics() {
 
               <div>
                 <div className="flex justify-between mb-1">
-                  <span className="text-[#4A3820] font-sans!">🖥 Desktop</span>
-                  <span className="text-[#4A3820] font-medium font-sans!">
+                  <span className="font-sans!">🖥 Desktop</span>
+                  <span className="font-medium font-sans!">
                     {devices.desktop} ({devices.mobile + devices.desktop > 0 ? 
                       Math.round((devices.desktop / (devices.mobile + devices.desktop)) * 100) : 0}%)
                   </span>
                 </div>
-                <div className="h-2 bg-[#E0D6C7] rounded-full overflow-hidden">
+                <div className="h-2 bg-gray-200 overflow-hidden">
                   <div 
-                    className="h-full bg-[#4A3820] rounded-full transition-all"
+                    className="h-full bg-[#004265] transition-all"
                     style={{ 
                       width: `${devices.mobile + devices.desktop > 0 ? 
                         (devices.desktop / (devices.mobile + devices.desktop)) * 100 : 0}%` 
@@ -298,34 +282,32 @@ export default function AdminArticleAnalytics() {
               </div>
             </div>
           </div>
-
-   
         </div>
 
         {/* DAILY READS */}
-        <div className="bg-[#F0E8DB] border border-[#D8CDBE] rounded-lg shadow-md p-6 sm:p-8">
+        <div className="border shadow-md p-6 sm:p-8">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-medium text-[#4A3820] font-sans!">
+            <h2 className="text-xl sm:text-2xl font-medium font-sans!">
               Daily Reads
             </h2>
           </div>
 
-          <hr className="border-[#D8CDBE] mb-6" />
+          <hr className="mb-6" />
           
           {chartData.length > 0 ? (
             <div className="mb-8">
               <DailyReadsChart data={chartData} />
             </div>
           ) : (
-            <div className="text-center py-10 text-[#4A3820]/60 font-sans!">
+            <div className="text-center py-10 font-sans!">
               No read data available for this article.
             </div>
           )}
 
           {/* Results count */}
           {sortedDays.length > 0 && (
-            <div className="mt-6 pt-6 border-t border-[#D8CDBE]">
-              <p className="text-base! text-[#4A3820]/70 font-sans!">
+            <div className="mt-6 pt-6 border-t">
+              <p className="text-base! font-sans!">
                 Showing {sortedDays.length} days of activity
               </p>
             </div>
