@@ -1,3 +1,4 @@
+// components/DualContentBlock.tsx
 import React from 'react';
 
 // Define the weight type based on Tailwind's font weight classes
@@ -17,7 +18,7 @@ interface ContentBlock {
   titleSize?: string;
   bgColor?: string;
   type?: "paragraph" | "list";
-  content?: TextSegment[][];
+  content?: TextSegment[] | TextSegment[][]; // Allow both formats
 }
 
 // Define the props interface for the component
@@ -33,6 +34,19 @@ const weightMap: Record<FontWeight, string> = {
   medium: "500",
   semibold: "600",
   bold: "700",
+};
+
+// Helper function to normalize content to 2D array
+const normalizeContent = (content: TextSegment[] | TextSegment[][] | undefined): TextSegment[][] => {
+  if (!content || content.length === 0) return [];
+  
+  // Check if it's a 2D array (first element is an array)
+  if (Array.isArray(content[0])) {
+    return content as TextSegment[][];
+  }
+  
+  // Convert 1D array to 2D array (each segment in its own list item)
+  return (content as TextSegment[]).map(segment => [segment]);
 };
 
 const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = {} }) => {
@@ -82,20 +96,20 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
   const renderContent = (section: ContentBlock): React.ReactElement => {
     // Ensure section has required properties with defaults
     const sectionType = section.type || "paragraph";
-    const sectionContent = section.content || [];
+    const rawContent = section.content || [];
+    const normalizedContent = normalizeContent(rawContent);
 
     if (sectionType === "list") {
       return (
-       <ul className="list-none space-y-2 text-lg text-center sm:text-left leading-relaxed">
-          {sectionContent.map((itemSegments: TextSegment[], idx: number) => (
+        <ul className="list-none space-y-2 text-lg text-center sm:text-left leading-relaxed">
+          {normalizedContent.map((itemSegments: TextSegment[], idx: number) => (
             <li key={idx}>
               {itemSegments.map((segment: TextSegment, sidx: number) => (
                 <span
                   key={sidx}
                   style={{
                     color: segment.color || "#000",
-                    fontWeight:
-                      weightMap[segment.weight || "medium"],
+                    fontWeight: weightMap[segment.weight || "medium"],
                   }}
                 >
                   {segment.text}
@@ -107,24 +121,23 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
       );
     }
 
-    // Default to paragraph
+    // Default to paragraph - combine all segments into one paragraph
     return (
-      <p className="text-lg text-center sm:text-left leading-relaxed ">
-        {sectionContent.map((itemSegments: TextSegment[], idx: number) => (
-          <span key={idx}>
+      <p className="text-lg text-center sm:text-left leading-relaxed">
+        {normalizedContent.map((itemSegments: TextSegment[], idx: number) => (
+          <React.Fragment key={idx}>
             {itemSegments.map((segment: TextSegment, sidx: number) => (
               <span
                 key={sidx}
                 style={{
                   color: segment.color || "#000",
-                  fontWeight:
-                    weightMap[segment.weight || "medium"],
+                  fontWeight: weightMap[segment.weight || "medium"],
                 }}
               >
                 {segment.text}
               </span>
             ))}
-          </span>
+          </React.Fragment>
         ))}
       </p>
     );
@@ -138,9 +151,9 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
       >
         <div className="max-w-md mx-auto flex flex-col justify-start">
           <h2
-              className={`font-bold mb-6  ${finalLeft.titleSize}`}
-              style={{ color: finalLeft.titleColor }}
-            >
+            className={`font-bold mb-6 ${finalLeft.titleSize}`}
+            style={{ color: finalLeft.titleColor }}
+          >
             {finalLeft.title}
           </h2>
           {renderContent(finalLeft)}
@@ -152,10 +165,10 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
         className={`${finalRight.bgColor} flex p-12 text-left`}
       >
         <div className="max-w-md mx-auto flex flex-col justify-start">
-        <h2
-          className={`font-bold mb-6  ${finalRight.titleSize}`}
-          style={{ color: finalRight.titleColor }}
-        >
+          <h2
+            className={`font-bold mb-6 ${finalRight.titleSize}`}
+            style={{ color: finalRight.titleColor }}
+          >
             {finalRight.title}
           </h2>
           {renderContent(finalRight)}

@@ -59,6 +59,31 @@ textarea.scrollable-description::-webkit-scrollbar-thumb:hover {
   background: #2C5F7F;
 }
 
+/* Custom scrollbar for tabs */
+.scrollable-tabs::-webkit-scrollbar {
+  height: 4px; /* Horizontal scrollbar height */
+}
+
+.scrollable-tabs::-webkit-scrollbar-track {
+  background: #E8F0F5;
+  border-radius: 3px;
+}
+
+.scrollable-tabs::-webkit-scrollbar-thumb {
+  background: #3A7CA5;
+  border-radius: 3px;
+}
+
+.scrollable-tabs::-webkit-scrollbar-thumb:hover {
+  background: #2C5F7F;
+}
+
+/* Firefox scrollbar support for tabs */
+.scrollable-tabs {
+  scrollbar-width: thin;
+  scrollbar-color: #3A7CA5 #E8F0F5;
+}
+
 /* Firefox scrollbar support */
 .scrollable-description {
   scrollbar-width: thin;

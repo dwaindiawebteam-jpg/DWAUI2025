@@ -6,7 +6,6 @@ interface Program {
   title: string
   description: string
   image: string
-  bgColor: string
 }
 
 interface ProgramsGridProps {

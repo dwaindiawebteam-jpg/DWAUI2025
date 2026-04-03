@@ -1,28 +1,36 @@
+// components/home/FeaturedProjects.tsx
 import React from "react";
 
+// Define the full weight type that matches your TextSegment
+type FontWeight = "light" | "normal" | "medium" | "semibold" | "bold";
+
 interface ContentSegment {
-  text: string
-  weight: "normal" | "bold"
+  text: string;
+  weight?: FontWeight; // Make it optional and accept all weights
 }
 
 interface LeftProject {
-  title: string
-  content: ContentSegment[]
+  title: string;
+  content: ContentSegment[];
 }
 
 interface RightNumber {
-  label: string
-  value: string
+  label: string;
+  value: string;
 }
 
 interface FeaturedProjectsProps {
-  leftProjects: LeftProject[]
-  rightNumbers: RightNumber[]
+  leftProjects: LeftProject[];
+  rightNumbers: RightNumber[];
 }
 
 const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ leftProjects, rightNumbers }) => {
-  const weightMap: Record<ContentSegment["weight"], string> = {
+  // Weight map for all possible font weights
+  const weightMap: Record<FontWeight, string> = {
+    light: "300",
     normal: "400",
+    medium: "500",
+    semibold: "600",
     bold: "700",
   };
   
@@ -36,7 +44,12 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ leftProjects, right
               <h3 className="text-center md:text-left heading-responsive font-bold mb-4">{project.title}</h3>
               <p className="text-center md:text-left text-lg leading-relaxed">
                 {project.content.map((seg: ContentSegment, sidx: number) => (
-                  <span key={sidx} style={{ fontWeight: weightMap[seg.weight] }}>
+                  <span 
+                    key={sidx} 
+                    style={{ 
+                      fontWeight: seg.weight ? weightMap[seg.weight] : weightMap.normal 
+                    }}
+                  >
                     {seg.text}
                   </span>
                 ))}
@@ -50,13 +63,11 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ leftProjects, right
       <div className="flex p-12 bg-blue/50" style={{ color: "#000000" }}>
         <div className="mx-auto flex flex-col justify-start space-y-6">
           <h2 className="text-center heading-responsive font-bold flex items-center mb-12">
-          <img
-            src="/icons/homepage/arrow-left.svg"
-            alt="Arrow Left"
-            className="mr-4
-              h-6 w-6
-              sm:h-8 sm:w-8"
-          />
+            <img
+              src="/icons/homepage/arrow-left.svg"
+              alt="Arrow Left"
+              className="mr-4 h-6 w-6 sm:h-8 sm:w-8"
+            />
             Featured Projects
           </h2>
 

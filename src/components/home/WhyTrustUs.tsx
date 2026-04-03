@@ -1,14 +1,18 @@
+// components/home/WhyTrustUs.tsx
 import React from 'react'
 
+// Define all possible font weights
+type FontWeight = "light" | "normal" | "medium" | "semibold" | "bold";
+
 interface ContentSegment {
-  text: string
-  weight: "normal" | "bold"
+  text: string;
+  weight?: FontWeight; // Make it optional and accept all weights
 }
 
 interface WhyTrustUsProps {
-  title: string
-  content: ContentSegment[]
-  bgColor?: string
+  title: string;
+  content: ContentSegment[];
+  bgColor?: string;
 }
 
 const WhyTrustUs: React.FC<WhyTrustUsProps> = ({ 
@@ -16,8 +20,12 @@ const WhyTrustUs: React.FC<WhyTrustUsProps> = ({
   content, 
   bgColor = "#9FDFFC"
 }) => {
-  const weightMap: Record<ContentSegment["weight"], string> = {
+  // Weight map for all font weights
+  const weightMap: Record<FontWeight, string> = {
+    light: "300",
     normal: "400",
+    medium: "500",
+    semibold: "600",
     bold: "700",
   };
 
@@ -33,7 +41,9 @@ const WhyTrustUs: React.FC<WhyTrustUsProps> = ({
             <span
               key={idx}
               className="text-xl!"
-              style={{ fontWeight: weightMap[seg.weight] }}
+              style={{ 
+                fontWeight: seg.weight ? weightMap[seg.weight] : weightMap.normal 
+              }}
             >
               {seg.text}
             </span>

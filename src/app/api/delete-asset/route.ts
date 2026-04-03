@@ -8,56 +8,48 @@ const imagekit = new ImageKit({
 });
 
 export async function POST(req: Request) {
-  console.log("---- DELETE ASSET ROUTE HIT ----");
-
   try {
-    //----------------------------------
-    // Read request body
-    //----------------------------------
     const body = await req.json();
-    console.log("Request body:", body);
+    const { fileId, url } = body;
 
-    const { fileId } = body;
-
-    //----------------------------------
-    // Validate fileId
-    //----------------------------------
-    if (!fileId) {
-      console.error("Missing fileId in request");
-
+    if (!fileId && !url) {
       return NextResponse.json(
-        { error: "Missing fileId", received: body },
+        { error: "Missing fileId or url", received: body },
         { status: 400 }
       );
     }
 
-    console.log("Deleting fileId:", fileId);
+    let resolvedFileId = fileId;
 
-    //----------------------------------
-    // Call ImageKit delete
-    //----------------------------------
-    const result = await imagekit.deleteFile(fileId);
+    // Fallback: look up fileId from URL if not provided directly
+    if (!resolvedFileId && url) {
+      try {
+        const urlObj = new URL(url);
+        // Strip leading slash and imagekit endpoint prefix to get the file path
+        const filePath = decodeURIComponent(urlObj.pathname.replace(/^\//, ""));
 
-    console.log("ImageKit delete result:", result);
+        const results = await imagekit.listFiles({ searchQuery: `name="${filePath.split("/").pop()}"`, limit: 10 });
+        const match = (results as any[]).find((f) => f.url === url || f.filePath === `/${filePath}`);
+        resolvedFileId = match?.fileId;
+      } catch (err) {
+        console.error("Failed to resolve fileId from URL:", url, err);
+      }
+    }
 
-    return NextResponse.json({
-      success: true,
-      deleted: fileId,
-      result,
-    });
+    if (!resolvedFileId) {
+      // Not fatal — file may have already been deleted or never uploaded to ImageKit
+      console.warn("Could not resolve fileId, skipping delete for:", url ?? fileId);
+      return NextResponse.json({ success: true, skipped: true });
+    }
+
+    await imagekit.deleteFile(resolvedFileId);
+
+    return NextResponse.json({ success: true, deleted: resolvedFileId });
 
   } catch (err: any) {
-    console.error("ImageKit delete error FULL:", err);
-    console.error("Error message:", err?.message);
-    console.error("Error stack:", err?.stack);
-    console.error("Error response:", err?.response);
-
+    console.error("ImageKit delete error:", err?.message);
     return NextResponse.json(
-      {
-        error: "Failed to delete image",
-        message: err?.message,
-        details: err,
-      },
+      { error: "Failed to delete image", message: err?.message },
       { status: 500 }
     );
   }
