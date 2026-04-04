@@ -1,17 +1,21 @@
-// lib/getHomeContentNew.ts
+// lib/getHomeContent.ts
 import { adminDb } from "@/lib/firebaseAdmin";
 import { HomeContent } from "@/types/home";
 
 export async function getHomeContent(): Promise<HomeContent | null> {
   try {
-    const ref = adminDb.collection("siteContent").doc("homeNew");
+    const ref = adminDb.collection("siteContent").doc("home");
     const snap = await ref.get();
 
+    console.log("Doc exists:", snap.exists);
+
     if (!snap.exists) {
+      console.log("Document not found");
       return null;
     }
 
     const data = snap.data();
+    console.log("Fetched data:", data);
 
     // Return null if document exists but has no data
     if (!data) {
