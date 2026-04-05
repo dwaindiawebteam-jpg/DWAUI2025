@@ -1,15 +1,17 @@
+// components/about/AboutTeam.tsx
 import Image from "next/image";
 
 interface TeamMember {
   name: string;
   role: string;
-  src: string;
+  src?: string;  // Make optional
+  image?: string; // Add image as an alternative
 }
 
 interface AboutTeamProps {
   teamMembers: TeamMember[];
-  heading?: string; // Optional with default "DWA Team" if you want, but removed fallback as requested
-  paragraph?: string; // Optional with default paragraph if you want, but removed fallback as requested
+  heading?: string;
+  paragraph?: string;
 }
 
 const AboutTeam: React.FC<AboutTeamProps> = ({ teamMembers, heading, paragraph }) => {
@@ -30,7 +32,7 @@ const AboutTeam: React.FC<AboutTeamProps> = ({ teamMembers, heading, paragraph }
         {teamMembers.map((member, index) => (
           <div key={index} className="text-center">
             <Image
-              src={member.src}
+              src={member.src || member.image || ""}
               alt={member.name}
               width={200}
               height={200}

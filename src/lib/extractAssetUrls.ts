@@ -1,4 +1,5 @@
 import type { HomeContent } from "@/types/home";
+import type { AboutContent } from "@/types/about";
 
 // Types for the new homepage structure
 interface NewHomeContent {
@@ -84,6 +85,43 @@ export function extractAssetUrlsFromHome(content: NewHomeContent): string[] {
     content.featuredProjects.leftProjects.forEach(project => {
       if (project.image) urls.push(project.image);
     });
+  }
+
+  return [...new Set(urls)];
+}
+
+export function extractAssetUrlsFromAbout(content: AboutContent): string[] {
+  const urls: string[] = [];
+
+  // Hero section image
+  if (content.heroSection?.image) {
+    urls.push(content.heroSection.image);
+  }
+
+  // Accreditations logos
+  if (content.accreditations?.logos) {
+    content.accreditations.logos.forEach(logo => {
+      if (logo) urls.push(logo);
+    });
+  }
+
+  // Team members
+  if (content.team?.teamMembers) {
+    content.team.teamMembers.forEach(member => {
+      if (member.image) urls.push(member.image);
+    });
+  }
+
+  // Volunteers
+  if (content.volunteers?.volunteers) {
+    content.volunteers.volunteers.forEach(volunteer => {
+      if (volunteer.image) urls.push(volunteer.image);
+    });
+  }
+
+  // President message image
+  if (content.presidentMessage?.image) {
+    urls.push(content.presidentMessage.image);
   }
 
   return [...new Set(urls)];

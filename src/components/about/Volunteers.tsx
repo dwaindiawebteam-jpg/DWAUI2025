@@ -1,17 +1,19 @@
+// components/about/Volunteers.tsx
 import Image from "next/image";
 
 interface Volunteer {
   name: string;
   role: string;
   description: string;
-  src: string;
-  linkedin: string;
+  src?: string;
+  image?: string;
+  linkedin?: string; // Make optional
   bgColor: string;
 }
 
 interface VolunteersProps {
   volunteers: Volunteer[];
-  heading?: string; // Required from outside, no fallback
+  heading?: string;
 }
 
 const Volunteers: React.FC<VolunteersProps> = ({ volunteers, heading }) => {
@@ -32,7 +34,7 @@ const Volunteers: React.FC<VolunteersProps> = ({ volunteers, heading }) => {
             {/* Image */}
             <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mr-6 w-full sm:w-60 max-w-xs h-40 sm:h-auto">
               <Image
-                src={volunteer.src}
+                src={volunteer.src || volunteer.image || ""}
                 alt={volunteer.name}
                 width={350}
                 height={350}
@@ -42,14 +44,16 @@ const Volunteers: React.FC<VolunteersProps> = ({ volunteers, heading }) => {
 
             {/* Text */}
             <div className="flex flex-col flex-1">
-              <a
-                href={volunteer.linkedin}
-                className="text-[#3EBFF9] font-black text-lg mb-2 self-end"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                LinkedIn
-              </a>
+              {volunteer.linkedin && (
+                <a
+                  href={volunteer.linkedin}
+                  className="text-[#3EBFF9] font-black text-lg mb-2 self-end"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  LinkedIn
+                </a>
+              )}
               <h3 className="text-2xl font-bold text-black">{volunteer.name}</h3>
               <p className="text-xl font-medium text-gray-700 mb-2">{volunteer.role}</p>
               <p className="text-base text-black">{volunteer.description}</p>

@@ -153,7 +153,7 @@ export default function SiteContentDashboard() {
         <h1 className="text-3xl font-extrabold mb-2 text-center font-sans!">
           Site Content Management
         </h1>
-        <p className="text-2xl! mb-8 text-center">
+        <p className="text-xl! mb-8 text-center">
           Adjust the text, images, and structure of your public website pages.
         </p>
 

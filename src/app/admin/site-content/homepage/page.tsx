@@ -378,7 +378,6 @@ export default function AdminHomePage() {
           setOriginalContent(structuredClone(loaded));
         }
       } catch (err) {
-        console.error("Error loading content:", err);
         setErrorMessage("Failed to load content.");
       } finally {
         setLoading(false);
@@ -510,23 +509,14 @@ async function uploadAsset(
     return undefinedPaths;
   }
 async function handleSave() {
-    console.log("🚀 Starting handleSave...");
-    console.log("📊 Current state:", {
-        pendingAssetsCount: pendingAssets.length,
-        pendingAssets: pendingAssets.map(a => ({ url: a.url, fileId: a.fileId, oldFileId: a.oldFileId })),
-        hasUser: !!user
-    });
-    
     // Check for undefined values before saving
     const undefinedPaths = findUndefinedValues(content);
     if (undefinedPaths.length > 0) {
-      console.error("❌ Found undefined values in content:", undefinedPaths);
       setErrorMessage(`Cannot save: Found undefined values at: ${undefinedPaths.join(", ")}`);
       return;
     }
     
     if (!user) {
-      console.error("❌ No user logged in");
       setErrorMessage("Please log in to save changes.");
       return;
     }
@@ -543,7 +533,6 @@ async function handleSave() {
 
     try {
       const token = await user.getIdTokenResult();
-      console.log("👤 User role:", token.claims.role);
       
       if (token.claims.role !== "admin" && token.claims.role !== "author") {
         throw new Error("Insufficient permissions. Admin or author role required.");
@@ -552,33 +541,16 @@ async function handleSave() {
       const ref = doc(db, "siteContent", "home");
       let finalContent = content;
 
-      console.log(`📦 Pending assets count: ${pendingAssets.length}`);
-      console.log("📦 Pending assets details:", pendingAssets.map(a => ({
-        url: a.url,
-        fileId: a.fileId,
-        oldUrl: a.oldUrl,
-        oldFileId: a.oldFileId,
-        isTmp: a.url?.includes('/tmp/')
-      })));
       
       if (pendingAssets.length) {
         // Filter assets that are actually used in content
         const assetsToPromote = pendingAssets.filter(asset => {
           const isUsed = extractAssetUrlsFromHome(finalContent as any).includes(asset.url);
-          console.log(`  Asset ${asset.url} used in content: ${isUsed}`);
           return isUsed;
         });
 
-        console.log(`📦 Assets to promote: ${assetsToPromote.length}`);
-        console.log("📦 Assets to promote details:", assetsToPromote.map(a => ({
-          url: a.url,
-          fileId: a.fileId,
-          oldUrl: a.oldUrl,
-          oldFileId: a.oldFileId
-        })));
         
         if (assetsToPromote.length) {
-          console.log("🔄 Calling /api/promote-assets with:", JSON.stringify(assetsToPromote, null, 2));
           
           // Send the full asset objects with fileId, url, oldUrl, oldFileId
           const res = await fetch("/api/promote-assets", {
@@ -589,24 +561,15 @@ async function handleSave() {
           
           if (!res.ok) {
             const errorText = await res.text();
-            console.error("❌ Promote-assets API error:", res.status, errorText);
             throw new Error(`Failed to promote assets: ${res.status} ${errorText}`);
           }
           
           const { replacements } = await res.json();
-          console.log("🔄 Replacements received from API:", replacements);
-          console.log("🔄 Replacements mapping:", Object.entries(replacements).map(([oldUrl, newData]) => ({
-            oldUrl,
-            newUrl: (newData as any).url,
-            newFileId: (newData as any).fileId
-          })));
 
           // Update all references in finalContent
-          console.log("📝 Updating content with new URLs and fileIds...");
           
           // Hero section
           if (finalContent.heroSection.image && replacements[finalContent.heroSection.image]) {
-            console.log(`  Hero image: ${finalContent.heroSection.image} → ${replacements[finalContent.heroSection.image].url}`);
             finalContent = {
               ...finalContent,
               heroSection: {
@@ -624,7 +587,6 @@ async function handleSave() {
               ...finalContent.programs,
               items: finalContent.programs.items.map(p => {
                 if (p.image && replacements[p.image]) {
-                  console.log(`  Program "${p.title}" image: ${p.image} → ${replacements[p.image].url}`);
                   return {
                     ...p,
                     image: replacements[p.image].url,
@@ -641,7 +603,6 @@ async function handleSave() {
             ...finalContent,
             testimonials: finalContent.testimonials.map(t => {
               if (t.splatterImage && replacements[t.splatterImage]) {
-                console.log(`  Testimonial "${t.name}" splatter: ${t.splatterImage} → ${replacements[t.splatterImage].url}`);
                 return {
                   ...t,
                   splatterImage: replacements[t.splatterImage].url,
@@ -659,7 +620,6 @@ async function handleSave() {
               ...finalContent.featuredProjects,
               leftProjects: finalContent.featuredProjects.leftProjects.map(p => {
                 if (p.image && replacements[p.image]) {
-                  console.log(`  Project "${p.title}" image: ${p.image} → ${replacements[p.image].url}`);
                   return {
                     ...p,
                     image: replacements[p.image].url,
@@ -674,7 +634,6 @@ async function handleSave() {
           // Benevity Board splatter images
           const updatedSplatterImages = finalContent.benevityBoard.splatterImages.map(img => {
             if (replacements[img]) {
-              console.log(`  Splatter image: ${img} → ${replacements[img].url}`);
               return replacements[img].url;
             }
             return img;
@@ -696,7 +655,6 @@ async function handleSave() {
               splatterImageFileIds: updatedSplatterImageFileIds,
               boardMembers: finalContent.benevityBoard.boardMembers.map(m => {
                 if (m.image && replacements[m.image]) {
-                  console.log(`  Board member "${m.name}" image: ${m.image} → ${replacements[m.image].url}`);
                   return {
                     ...m,
                     image: replacements[m.image].url,
@@ -708,20 +666,18 @@ async function handleSave() {
             },
           };
           
-          console.log("✅ Updated finalContent with replacements");
           setContent(finalContent);
         } else {
-          console.log("⚠️ No assets to promote (none are used in content)");
+          // No assets to promote
         }
         setPendingAssets([]);
       } else {
-        console.log("📦 No pending assets to process");
+        // No pending assets to process
       }
 
       // Rest of your save logic remains the same...
       const finalUndefinedPaths = findUndefinedValues(finalContent);
       if (finalUndefinedPaths.length > 0) {
-        console.error("❌ Found undefined values in finalContent before saving:", finalUndefinedPaths);
         throw new Error(`Cannot save to Firestore: undefined values at ${finalUndefinedPaths.join(", ")}`);
       }
 
@@ -742,25 +698,12 @@ async function handleSave() {
         updatedAt: new Date(),
       };
       
-      console.log("💾 Saving to Firestore...");
-      console.log("📄 Data being saved:", {
-        heroImage: dataToSave.heroSection.image,
-        heroImageFileId: dataToSave.heroSection.imageFileId,
-        programsCount: dataToSave.programs.items.length,
-        programsWithFileIds: dataToSave.programs.items.filter(p => p.imageFileId).length,
-        testimonialsCount: dataToSave.testimonials.length,
-        boardMembersCount: dataToSave.benevityBoard.boardMembers.length
-      });
-      
       await setDoc(ref, dataToSave);
-      console.log("✅ Successfully saved to Firestore!");
 
       if (originalContent) {
         const before = new Set(extractAssetUrlsFromHome(originalContent as any));
         const after = new Set(extractAssetUrlsFromHome(finalContent as any));
         const unusedAssets = [...before].filter(url => !after.has(url));
-        
-        console.log(`🗑️ Cleaning up ${unusedAssets.length} unused assets:`, unusedAssets);
         
         await Promise.all(
           unusedAssets.map(url =>
@@ -769,7 +712,6 @@ async function handleSave() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ url }),
             }).then(res => {
-              console.log(`  Deleted asset ${url}: ${res.status}`);
               return res;
             })
           )
@@ -780,7 +722,6 @@ async function handleSave() {
       setOriginalContent(structuredClone(finalContent));
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (err: any) {
-      console.error("❌ Save error:", err);
       setErrorMessage(err.message || "Failed to save changes.");
     } finally {
       setSaving(false);
