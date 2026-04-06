@@ -1,27 +1,32 @@
-
-import PostHeader from "@/components/projects/PostHeader";
+// app/resources/[slug]/page.tsx
+import { db } from "@/lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
 import PostImage from "@/components/projects/PostImage";
 import PostContent from "@/components/projects/PostContent";
 import InfoForm from "@/components/InfoForm";
 import BackButton from "@/components/BackButton";
 import { notFound } from "next/navigation";
-import storyPosts from "@/data/storyPosts";
+import { StoryPost } from "@/types/resources";
 
-interface ProjectPostParams {
+interface ResourcePostParams {
   params: {
     slug: string;
   };
 }
 
-export default async function StoryPosts({ params }: ProjectPostParams) {
+export default async function ResourcePostPage({ params }: ResourcePostParams) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
 
-  const ongoingProjectPosts = storyPosts.find((p) => p.slug === slug);
+  // Fetch from Firebase Firestore
+  const postRef = doc(db, "storyPosts", slug);
+  const postSnap = await getDoc(postRef);
 
-  if (!ongoingProjectPosts) {
+  if (!postSnap.exists()) {
     notFound();
   }
+
+  const storyPost = postSnap.data() as StoryPost;
 
   return (
     <>
@@ -30,39 +35,44 @@ export default async function StoryPosts({ params }: ProjectPostParams) {
           {/* Back button */}
           <BackButton />
 
-          {/* Project Card */}
+          {/* Resource Card */}
           <div className="shadow-xl p-6 sm:p-8 border border-gray-200">
-            {/* Project Header */}
+            {/* Resource Header */}
             <h1 className="font-cinzel text-[22px] sm:text-[26px] lg:text-[30px] font-bold min-w-0 break-words text-center mb-4">
-              {ongoingProjectPosts.title}
+              {storyPost.title}
             </h1>
 
-            {/* Project Date */}
-            {ongoingProjectPosts.date && (
+            {/* Resource Date and Read Time */}
+            {(storyPost.date || storyPost.readTime) && (
               <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 font-inter mb-6 justify-center text-center">
-                <span>
-                  {new Date(ongoingProjectPosts.date).toLocaleDateString("en-GB", {
-                    day: "2-digit",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </span>
+                {storyPost.date && (
+                  <span>
+                    {new Date(storyPost.date).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </span>
+                )}
+                {storyPost.readTime && (
+                  <span className="text-gray-600">{storyPost.readTime}</span>
+                )}
               </div>
             )}
 
-            {/* Project Image */}
-            {ongoingProjectPosts.image && (
+            {/* Resource Image */}
+            {storyPost.image && (
               <div className="mb-8">
                 <PostImage 
-                  src={ongoingProjectPosts.image} 
-                  alt={ongoingProjectPosts.title} 
+                  src={storyPost.image} 
+                  alt={storyPost.title} 
                 />
               </div>
             )}
 
-            {/* Project Content */}
+            {/* Resource Content */}
             <article className="article-content">
-              <PostContent content={ongoingProjectPosts.content} />
+              <PostContent content={storyPost.content} />
             </article>
           </div>
 

@@ -1,6 +1,7 @@
 import type { HomeContent } from "@/types/home";
 import type { AboutContent } from "@/types/about";
 import type { ProjectsContent } from "@/types/projects";
+import type { ResourcesContent } from "@/types/resources";
 
 // Types for the new homepage structure
 interface NewHomeContent {
@@ -158,6 +159,48 @@ export function extractAssetUrlsFromProjects(content: ProjectsContent): string[]
   // Image divider
   if (content.imageDivider?.image) {
     urls.push(content.imageDivider.image);
+  }
+
+  return [...new Set(urls)];
+}
+
+export function extractAssetUrlsFromResources(content: ResourcesContent): string[] {
+  const urls: string[] = [];
+
+  // Hero section image
+  if (content.heroSection?.image) {
+    urls.push(content.heroSection.image);
+  }
+
+  // Featured stories images
+  if (content.featuredStories?.stories) {
+    content.featuredStories.stories.forEach(story => {
+      if (story.image) {
+        urls.push(story.image);
+      }
+    });
+  }
+
+  // Projects gallery images
+  if (content.projectsGallery?.sections) {
+    content.projectsGallery.sections.forEach(section => {
+      if (section.images) {
+        section.images.forEach(image => {
+          if (image) urls.push(image);
+        });
+      }
+    });
+  }
+
+  // Orphanage & Oldage Home images
+  if (content.orphanageOldageHome?.sections) {
+    content.orphanageOldageHome.sections.forEach(section => {
+      if (section.images) {
+        section.images.forEach(image => {
+          if (image) urls.push(image);
+        });
+      }
+    });
   }
 
   return [...new Set(urls)];

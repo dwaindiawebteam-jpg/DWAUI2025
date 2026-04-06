@@ -38,21 +38,6 @@ export default function SiteContentDashboard() {
       icon: FiUsers,
     },
     {
-      label: "Edit Mentorship",
-      href: "/admin/site-content/mentorship",
-      icon: FiAward,
-    },
-    {
-      label: "Edit Beta Reading",
-      href: "/admin/site-content/betareading",
-      icon: FiBookOpen,
-    },
-    {
-      label: "Edit Workshops",
-      href: "/admin/site-content/workshops",
-      icon: FiCpu,
-    },
-    {
       label: "Edit Resources",
       href: "/admin/site-content/resources",
       icon: FiPackage,
