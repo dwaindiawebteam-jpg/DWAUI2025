@@ -11,6 +11,12 @@ interface TextSegment {
   color?: string;
 }
 
+// Define the row interface for the projects format
+interface DualContentRow {
+  label: TextSegment;
+  value: TextSegment;
+}
+
 // Define the content block interface
 interface ContentBlock {
   title?: string;
@@ -19,6 +25,7 @@ interface ContentBlock {
   bgColor?: string;
   type?: "paragraph" | "list";
   content?: TextSegment[] | TextSegment[][]; // Allow both formats
+  rows?: DualContentRow[]; // Add support for rows format from projects
 }
 
 // Define the props interface for the component
@@ -47,6 +54,24 @@ const normalizeContent = (content: TextSegment[] | TextSegment[][] | undefined):
   
   // Convert 1D array to 2D array (each segment in its own list item)
   return (content as TextSegment[]).map(segment => [segment]);
+};
+
+// Helper function to convert rows format to 2D array format
+const convertRowsToContent = (rows: DualContentRow[] | undefined): TextSegment[][] => {
+  if (!rows || rows.length === 0) return [];
+  
+  return rows.map(row => [
+    { text: row.label.text, weight: row.label.weight || "normal", color: row.label.color },
+    { text: row.value.text, weight: row.value.weight || "normal", color: row.value.color }
+  ]);
+};
+
+// Helper to get content from either content or rows prop
+const getContent = (block: ContentBlock): TextSegment[][] => {
+  if (block.rows && block.rows.length > 0) {
+    return convertRowsToContent(block.rows);
+  }
+  return normalizeContent(block.content);
 };
 
 const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = {} }) => {
@@ -96,8 +121,7 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({ left = {}, right = 
   const renderContent = (section: ContentBlock): React.ReactElement => {
     // Ensure section has required properties with defaults
     const sectionType = section.type || "paragraph";
-    const rawContent = section.content || [];
-    const normalizedContent = normalizeContent(rawContent);
+    const normalizedContent = getContent(section);
 
     if (sectionType === "list") {
       return (

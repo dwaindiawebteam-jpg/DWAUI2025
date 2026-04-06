@@ -1,5 +1,6 @@
 import type { HomeContent } from "@/types/home";
 import type { AboutContent } from "@/types/about";
+import type { ProjectsContent } from "@/types/projects";
 
 // Types for the new homepage structure
 interface NewHomeContent {
@@ -122,6 +123,41 @@ export function extractAssetUrlsFromAbout(content: AboutContent): string[] {
   // President message image
   if (content.presidentMessage?.image) {
     urls.push(content.presidentMessage.image);
+  }
+
+  return [...new Set(urls)];
+}
+
+// lib/extractAssetUrls.ts (add projects extraction)
+export function extractAssetUrlsFromProjects(content: ProjectsContent): string[] {
+  const urls: string[] = [];
+
+  // Hero section image
+  if (content.heroSection?.image) {
+    urls.push(content.heroSection.image);
+  }
+
+  // Ongoing projects images
+  if (content.ongoingProjects?.projects) {
+    content.ongoingProjects.projects.forEach(project => {
+      if (project.image) {
+        urls.push(project.image);
+      }
+    });
+  }
+
+  // Testimonials splatter images
+  if (content.testimonials?.testimonials) {
+    content.testimonials.testimonials.forEach(testimonial => {
+      if (testimonial.splatterImage) {
+        urls.push(testimonial.splatterImage);
+      }
+    });
+  }
+
+  // Image divider
+  if (content.imageDivider?.image) {
+    urls.push(content.imageDivider.image);
   }
 
   return [...new Set(urls)];

@@ -11,16 +11,22 @@ interface Testimonial {
 
 interface TestimonialsProps {
   testimonials: Testimonial[];
+  heading?: string;
 }
 
 interface TestimonialCardProps {
   testimonial: Testimonial;
 }
 
-export default function Testimonials({ testimonials }: TestimonialsProps): React.JSX.Element {
+export default function Testimonials({ testimonials, heading }: TestimonialsProps): React.JSX.Element {
   return (
     <section className="bg-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {heading && (
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            {heading}
+          </h2>
+        )}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
           {testimonials.map((testimonial: Testimonial, index: number) => (
             <TestimonialCard key={index} testimonial={testimonial} />
@@ -53,7 +59,7 @@ function TestimonialCard({ testimonial }: TestimonialCardProps): React.JSX.Eleme
         <p className="mb-4">
           {testimonial.title}
         </p>
-        <p className="text-sm!  leading-relaxed">
+        <p className="text-sm! leading-relaxed">
           {testimonial.text}
         </p>
       </div>

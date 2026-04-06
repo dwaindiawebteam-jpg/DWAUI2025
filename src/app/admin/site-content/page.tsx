@@ -33,8 +33,8 @@ export default function SiteContentDashboard() {
       icon: FiInfo,
     },
     {
-      label: "Edit Team Page",
-      href: "/admin/site-content/team",
+      label: "Edit Projects Page",
+      href: "/admin/site-content/projects",
       icon: FiUsers,
     },
     {

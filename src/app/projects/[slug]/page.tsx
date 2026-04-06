@@ -1,10 +1,12 @@
-import projectPosts from "@/data/projectPosts";
-import PostHeader from "@/components/projects/PostHeader";
+import { db } from "@/lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { getProjectsContent } from "@/lib/getProjectsContent";
 import PostImage from "@/components/projects/PostImage";
 import PostContent from "@/components/projects/PostContent";
 import InfoForm from "@/components/InfoForm";
 import BackButton from "@/components/BackButton";
 import { notFound } from "next/navigation";
+import type { ProjectPost, OngoingProject } from "@/types/projects";
 
 interface ProjectPostParams {
   params: {
@@ -16,11 +18,24 @@ export default async function ProjectsPost({ params }: ProjectPostParams) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
 
-  const ongoingProjectPosts = projectPosts.find((p) => p.slug === slug);
+  // Fetch the detailed post content
+  const postRef = doc(db, "projectPosts", slug);
+  const postSnap = await getDoc(postRef);
 
-  if (!ongoingProjectPosts) {
+  if (!postSnap.exists()) {
     notFound();
   }
+
+  const post = postSnap.data() as ProjectPost;
+  
+  // Fetch the ongoing projects to get the image URL
+  const projectsContent = await getProjectsContent();
+  const ongoingProject = projectsContent?.ongoingProjects?.projects.find(
+    (p: OngoingProject) => p.slug === slug
+  );
+  
+  // Use the project image from the ongoing project, or fallback to a default
+  const projectImage = ongoingProject?.image || "/images/placeholder.jpg";
 
   return (
     <>
@@ -33,35 +48,29 @@ export default async function ProjectsPost({ params }: ProjectPostParams) {
           <div className="shadow-xl p-6 sm:p-8 border border-gray-200">
             {/* Project Header */}
             <h1 className="font-cinzel text-[22px] sm:text-[26px] lg:text-[30px] font-bold min-w-0 break-words text-center mb-4">
-              {ongoingProjectPosts.title}
+              {post.title}
             </h1>
 
             {/* Project Date */}
-            {ongoingProjectPosts.date && (
+            {post.date && (
               <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 font-inter mb-6 justify-center text-center">
-                <span>
-                  {new Date(ongoingProjectPosts.date).toLocaleDateString("en-GB", {
-                    day: "2-digit",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </span>
+                <span>{post.date}</span>
               </div>
             )}
 
-            {/* Project Image */}
-            {ongoingProjectPosts.splatterImage && (
+            {/* Project Image - using the main project image */}
+            {projectImage && (
               <div className="mb-8">
                 <PostImage 
-                  src={ongoingProjectPosts.splatterImage} 
-                  alt={ongoingProjectPosts.title} 
+                  src={projectImage} 
+                  alt={post.title} 
                 />
               </div>
             )}
 
             {/* Project Content */}
             <article className="article-content">
-              <PostContent content={ongoingProjectPosts.content} />
+              <PostContent content={post.content} />
             </article>
           </div>
 
