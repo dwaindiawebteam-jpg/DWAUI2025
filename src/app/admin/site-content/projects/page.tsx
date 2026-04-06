@@ -1469,281 +1469,406 @@ function OngoingProjectDatePicker({
           )}
 
           {/* Completed Projects Section (Dual Content) */}
-          {activeTab === "dual" && (
-            <div className="space-y-8">
-              <h2 className="text-xl sm:text-2xl font-medium mb-6 font-sans!">Completed Projects</h2>
-              
-              {/* Left Column */}
-              <div className="border p-5">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-bold">Left Project (Dairy Project – Govindapalle)</h3>
-                  <button
-                    onClick={() => addRow('left')}
-                    className="px-3 py-1 border text-sm hover:bg-gray-50"
-                  >
-                    + Add Row
-                  </button>
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Title</label>
-                  <input
-                    type="text"
-                    value={content.dualContentBlock.left.title}
-                    onChange={(e) => setContent(prev => ({
-                      ...prev,
-                      dualContentBlock: {
-                        ...prev.dualContentBlock,
-                        left: { ...prev.dualContentBlock.left, title: e.target.value }
-                      }
-                    }))}
-                    className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Title Size Class</label>
-                  <input
-                    type="text"
-                    value={content.dualContentBlock.left.titleSize}
-                    onChange={(e) => setContent(prev => ({
-                      ...prev,
-                      dualContentBlock: {
-                        ...prev.dualContentBlock,
-                        left: { ...prev.dualContentBlock.left, titleSize: e.target.value }
-                      }
-                    }))}
-                    className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Background Color Class</label>
-                  <input
-                    type="text"
-                    value={content.dualContentBlock.left.bgColor}
-                    onChange={(e) => setContent(prev => ({
-                      ...prev,
-                      dualContentBlock: {
-                        ...prev.dualContentBlock,
-                        left: { ...prev.dualContentBlock.left, bgColor: e.target.value }
-                      }
-                    }))}
-                    className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Title Color</label>
-                  <input
-                    type="text"
-                    value={content.dualContentBlock.left.titleColor}
-                    onChange={(e) => setContent(prev => ({
-                      ...prev,
-                      dualContentBlock: {
-                        ...prev.dualContentBlock,
-                        left: { ...prev.dualContentBlock.left, titleColor: e.target.value }
-                      }
-                    }))}
-                    className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium mb-2">Content Rows</label>
-                  {content.dualContentBlock.left.rows.map((row, rowIdx) => (
-                    <div key={rowIdx} className="mb-3 p-3 border rounded">
-                      <div className="flex gap-2 mb-2">
-                        <input
-                          type="text"
-                          value={row.label.text}
-                          onChange={(e) => updateRowLabel('left', rowIdx, 'text', e.target.value)}
-                          placeholder="Label"
-                          className="flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        />
-                        <select
-                          value={row.label.weight || "normal"}
-                          onChange={(e) => updateRowLabel('left', rowIdx, 'weight', e.target.value as any)}
-                          className="px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        >
-                          <option value="normal">Normal</option>
-                          <option value="bold">Bold</option>
-                        </select>
-                        <input
-                          type="text"
-                          value={row.label.color || ""}
-                          onChange={(e) => updateRowLabel('left', rowIdx, 'color', e.target.value)}
-                          placeholder="Color"
-                          className="px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        />
-                      </div>
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          value={row.value.text}
-                          onChange={(e) => updateRowValue('left', rowIdx, 'text', e.target.value)}
-                          placeholder="Value"
-                          className="flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        />
-                        <select
-                          value={row.value.weight || "normal"}
-                          onChange={(e) => updateRowValue('left', rowIdx, 'weight', e.target.value as any)}
-                          className="px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        >
-                          <option value="normal">Normal</option>
-                          <option value="bold">Bold</option>
-                        </select>
-                        <input
-                          type="text"
-                          value={row.value.color || ""}
-                          onChange={(e) => updateRowValue('left', rowIdx, 'color', e.target.value)}
-                          placeholder="Color"
-                          className="px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        />
-                      </div>
-                      <button
-                        onClick={() => removeRow('left', rowIdx)}
-                        className="mt-2 px-3 py-1 border border-red-500 text-red-500 text-sm"
-                      >
-                        Remove Row
-                      </button>
-                    </div>
-                  ))}
-                </div>
+{activeTab === "dual" && (
+
+  <div className="space-y-8">
+
+    <h2 className="text-xl sm:text-2xl font-medium mb-6 font-sans!">
+      Completed Projects
+    </h2>
+
+    {/* GRID WRAPPER — stacks on mobile, 2 cols on desktop */}
+
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      {/* LEFT COLUMN */}
+
+      <div className="border p-5 space-y-4">
+
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+
+          <h3 className="text-lg font-bold">
+            Left Project (Dairy Project – Govindapalle)
+          </h3>
+
+          <button
+            onClick={() => addRow('left')}
+            className="px-3 py-2 border text-sm hover:bg-gray-50 w-full sm:w-auto"
+          >
+            + Add Row
+          </button>
+
+        </div>
+
+        {/* TITLE */}
+
+        <div>
+
+          <label className="block text-sm font-medium mb-1">
+            Title
+          </label>
+
+          <textarea
+            rows={1}
+            value={content.dualContentBlock.left.title}
+            onChange={(e) =>
+              setContent(prev => ({
+                ...prev,
+                dualContentBlock: {
+                  ...prev.dualContentBlock,
+                  left: {
+                    ...prev.dualContentBlock.left,
+                    title: e.target.value
+                  }
+                }
+              }))
+            }
+            onInput={(e) => {
+              e.currentTarget.style.height = "auto";
+              e.currentTarget.style.height =
+                e.currentTarget.scrollHeight + "px";
+            }}
+            className="w-full px-4 py-2 border bg-white overflow-hidden resize-none"
+          />
+
+        </div>
+
+        {/* ROWS */}
+
+        {content.dualContentBlock.left.rows.map((row, rowIdx) => (
+
+          <div
+            key={rowIdx}
+            className="p-4 border rounded space-y-4"
+          >
+
+            {/* LABEL SECTION */}
+
+            <div className="space-y-2">
+
+              <textarea
+                rows={1}
+                value={row.label.text}
+                onChange={(e) =>
+                  updateRowLabel(
+                    'left',
+                    rowIdx,
+                    'text',
+                    e.target.value
+                  )
+                }
+                onInput={(e) => {
+                  e.currentTarget.style.height = "auto";
+                  e.currentTarget.style.height =
+                    e.currentTarget.scrollHeight + "px";
+                }}
+                placeholder="Label"
+                className="w-full px-4 py-2 border resize-none overflow-hidden"
+              />
+
+              {/* Controls Grid */}
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+
+                <select
+                  value={row.label.weight || "normal"}
+                  onChange={(e) =>
+                    updateRowLabel(
+                      'left',
+                      rowIdx,
+                      'weight',
+                      e.target.value as any
+                    )
+                  }
+                  className="px-3 py-2 border"
+                >
+                  <option value="normal">
+                    Normal
+                  </option>
+
+                  <option value="bold">
+                    Bold
+                  </option>
+
+                </select>
+
+                <input
+                  type="color"
+                  value={row.label.color || "#000000"}
+                  onChange={(e) =>
+                    updateRowLabel(
+                      'left',
+                      rowIdx,
+                      'color',
+                      e.target.value
+                    )
+                  }
+                  className="w-full h-10 border"
+                />
+
               </div>
 
-              {/* Right Column */}
-              <div className="border p-5">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-bold">Right Project (Finance Awareness – Sirivella)</h3>
-                  <button
-                    onClick={() => addRow('right')}
-                    className="px-3 py-1 border text-sm hover:bg-gray-50"
-                  >
-                    + Add Row
-                  </button>
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Title</label>
-                  <input
-                    type="text"
-                    value={content.dualContentBlock.right.title}
-                    onChange={(e) => setContent(prev => ({
-                      ...prev,
-                      dualContentBlock: {
-                        ...prev.dualContentBlock,
-                        right: { ...prev.dualContentBlock.right, title: e.target.value }
-                      }
-                    }))}
-                    className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Title Size Class</label>
-                  <input
-                    type="text"
-                    value={content.dualContentBlock.right.titleSize}
-                    onChange={(e) => setContent(prev => ({
-                      ...prev,
-                      dualContentBlock: {
-                        ...prev.dualContentBlock,
-                        right: { ...prev.dualContentBlock.right, titleSize: e.target.value }
-                      }
-                    }))}
-                    className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Background Color Class</label>
-                  <input
-                    type="text"
-                    value={content.dualContentBlock.right.bgColor}
-                    onChange={(e) => setContent(prev => ({
-                      ...prev,
-                      dualContentBlock: {
-                        ...prev.dualContentBlock,
-                        right: { ...prev.dualContentBlock.right, bgColor: e.target.value }
-                      }
-                    }))}
-                    className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Title Color</label>
-                  <input
-                    type="text"
-                    value={content.dualContentBlock.right.titleColor}
-                    onChange={(e) => setContent(prev => ({
-                      ...prev,
-                      dualContentBlock: {
-                        ...prev.dualContentBlock,
-                        right: { ...prev.dualContentBlock.right, titleColor: e.target.value }
-                      }
-                    }))}
-                    className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium mb-2">Content Rows</label>
-                  {content.dualContentBlock.right.rows.map((row, rowIdx) => (
-                    <div key={rowIdx} className="mb-3 p-3 border rounded">
-                      <div className="flex gap-2 mb-2">
-                        <input
-                          type="text"
-                          value={row.label.text}
-                          onChange={(e) => updateRowLabel('right', rowIdx, 'text', e.target.value)}
-                          placeholder="Label"
-                          className="flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        />
-                        <select
-                          value={row.label.weight || "normal"}
-                          onChange={(e) => updateRowLabel('right', rowIdx, 'weight', e.target.value as any)}
-                          className="px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        >
-                          <option value="normal">Normal</option>
-                          <option value="bold">Bold</option>
-                        </select>
-                        <input
-                          type="text"
-                          value={row.label.color || ""}
-                          onChange={(e) => updateRowLabel('right', rowIdx, 'color', e.target.value)}
-                          placeholder="Color"
-                          className="px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        />
-                      </div>
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          value={row.value.text}
-                          onChange={(e) => updateRowValue('right', rowIdx, 'text', e.target.value)}
-                          placeholder="Value"
-                          className="flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        />
-                        <select
-                          value={row.value.weight || "normal"}
-                          onChange={(e) => updateRowValue('right', rowIdx, 'weight', e.target.value as any)}
-                          className="px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        >
-                          <option value="normal">Normal</option>
-                          <option value="bold">Bold</option>
-                        </select>
-                        <input
-                          type="text"
-                          value={row.value.color || ""}
-                          onChange={(e) => updateRowValue('right', rowIdx, 'color', e.target.value)}
-                          placeholder="Color"
-                          className="px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        />
-                      </div>
-                      <button
-                        onClick={() => removeRow('right', rowIdx)}
-                        className="mt-2 px-3 py-1 border border-red-500 text-red-500 text-sm"
-                      >
-                        Remove Row
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
-          )}
+
+            {/* VALUE SECTION */}
+
+            <div className="space-y-2">
+
+              <textarea
+                rows={3}
+                value={row.value.text}
+                onChange={(e) =>
+                  updateRowValue(
+                    'left',
+                    rowIdx,
+                    'text',
+                    e.target.value
+                  )
+                }
+                onInput={(e) => {
+                  e.currentTarget.style.height = "auto";
+                  e.currentTarget.style.height =
+                    e.currentTarget.scrollHeight + "px";
+                }}
+                placeholder="Value"
+                className="w-full px-4 py-2 border resize-none overflow-hidden"
+              />
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+
+                <select
+                  value={row.value.weight || "normal"}
+                  onChange={(e) =>
+                    updateRowValue(
+                      'left',
+                      rowIdx,
+                      'weight',
+                      e.target.value as any
+                    )
+                  }
+                  className="px-3 py-2 border"
+                >
+
+                  <option value="normal">
+                    Normal
+                  </option>
+
+                  <option value="bold">
+                    Bold
+                  </option>
+
+                </select>
+
+                <input
+                  type="color"
+                  value={row.value.color || "#000000"}
+                  onChange={(e) =>
+                    updateRowValue(
+                      'left',
+                      rowIdx,
+                      'color',
+                      e.target.value
+                    )
+                  }
+                  className="w-full h-auto border"
+                />
+
+              </div>
+
+            </div>
+
+            <button
+              onClick={() =>
+                removeRow('left', rowIdx)
+              }
+              className="px-3 py-2 border border-red-500 text-red-500 text-sm w-full sm:w-auto"
+            >
+              Remove Row
+            </button>
+
+          </div>
+
+        ))}
+
+      </div>
+
+
+
+      {/* RIGHT COLUMN */}
+
+      <div className="border p-5 space-y-4">
+
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+
+          <h3 className="text-lg font-bold">
+            Right Project (Finance Awareness – Sirivella)
+          </h3>
+
+          <button
+            onClick={() => addRow('right')}
+            className="px-3 py-2 border text-sm hover:bg-gray-50 w-full sm:w-auto"
+          >
+            + Add Row
+          </button>
+
+        </div>
+
+        {content.dualContentBlock.right.rows.map((row, rowIdx) => (
+
+          <div
+            key={rowIdx}
+            className="p-4 border rounded space-y-4"
+          >
+
+            {/* LABEL */}
+
+            <div className="space-y-2">
+
+              <input
+                type="text"
+                value={row.label.text}
+                onChange={(e) =>
+                  updateRowLabel(
+                    'right',
+                    rowIdx,
+                    'text',
+                    e.target.value
+                  )
+                }
+                placeholder="Label"
+                className="w-full px-4 py-2 border"
+              />
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+
+                <select
+                  value={row.label.weight || "normal"}
+                  onChange={(e) =>
+                    updateRowLabel(
+                      'right',
+                      rowIdx,
+                      'weight',
+                      e.target.value as any
+                    )
+                  }
+                  className="px-3 py-2 border"
+                >
+
+                  <option value="normal">
+                    Normal
+                  </option>
+
+                  <option value="bold">
+                    Bold
+                  </option>
+
+                </select>
+
+                <input
+                  type="color"
+                  value={row.label.color || "#000000"}
+                  onChange={(e) =>
+                    updateRowLabel(
+                      'right',
+                      rowIdx,
+                      'color',
+                      e.target.value
+                    )
+                  }
+                  className="w-full h-10 border"
+                />
+
+              </div>
+
+            </div>
+
+            {/* VALUE */}
+
+            <div className="space-y-2">
+
+           <textarea
+            rows={3}
+            value={row.value.text}
+            onChange={(e) =>
+              updateRowValue(
+                'right',
+                rowIdx,
+                'text',
+                e.target.value
+              )
+            }
+            onInput={(e) => {
+              e.currentTarget.style.height = "auto";
+              e.currentTarget.style.height =
+                e.currentTarget.scrollHeight + "px";
+            }}
+            placeholder="Value"
+            className="w-full px-4 py-2 border resize-none overflow-hidden"
+          />
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+
+                <select
+                  value={row.value.weight || "normal"}
+                  onChange={(e) =>
+                    updateRowValue(
+                      'right',
+                      rowIdx,
+                      'weight',
+                      e.target.value as any
+                    )
+                  }
+                  className="px-3 py-2 border"
+                >
+
+                  <option value="normal">
+                    Normal
+                  </option>
+
+                  <option value="bold">
+                    Bold
+                  </option>
+
+                </select>
+
+                <input
+                  type="color"
+                  value={row.value.color || "#000000"}
+                  onChange={(e) =>
+                    updateRowValue(
+                      'right',
+                      rowIdx,
+                      'color',
+                      e.target.value
+                    )
+                  }
+                  className="w-full h-10 border"
+                />
+
+              </div>
+
+            </div>
+
+            <button
+              onClick={() =>
+                removeRow('right', rowIdx)
+              }
+              className="px-3 py-2 border border-red-500 text-red-500 text-sm w-full sm:w-auto"
+            >
+              Remove Row
+            </button>
+
+          </div>
+
+        ))}
+
+      </div>
+
+    </div>
+
+  </div>
+
+)}       
 
           {/* Testimonials */}
           {activeTab === "testimonials" && (
