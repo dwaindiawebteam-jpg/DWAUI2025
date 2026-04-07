@@ -934,31 +934,48 @@ export default function AdminAboutPage() {
 
               <div>
                 <label className="block text-sm font-medium mb-2">Below Text Title Color</label>
-                <input
-                  type="text"
-                  value={content.heroSection.belowText.titleColor}
-                  onChange={(e) => setContent(prev => ({
-                    ...prev,
-                    heroSection: {
-                      ...prev.heroSection,
-                      belowText: { ...prev.heroSection.belowText, titleColor: e.target.value }
-                    }
-                  }))}
-                  className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                />
+                <div className="flex items-center gap-3">
+                  <input
+                    type="color"
+                    value={content.heroSection.belowText.titleColor}
+                    onChange={(e) => setContent(prev => ({
+                      ...prev,
+                      heroSection: {
+                        ...prev.heroSection,
+                        belowText: { ...prev.heroSection.belowText, titleColor: e.target.value }
+                      }
+                    }))}
+                    className="w-12 h-10 border cursor-pointer"
+                  />
+                  <input
+                    type="text"
+                    value={content.heroSection.belowText.titleColor}
+                    onChange={(e) => setContent(prev => ({
+                      ...prev,
+                      heroSection: {
+                        ...prev.heroSection,
+                        belowText: { ...prev.heroSection.belowText, titleColor: e.target.value }
+                      }
+                    }))}
+                    className="flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                    placeholder="#004265"
+                  />
+                </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium mb-2">Content</label>
                 {content.heroSection.belowText.content.map((segment, idx) => (
                   <div key={idx} className="mb-4 p-4 border rounded">
-                    <div className="mb-2">
-                      <label className="block text-sm font-medium mb-1">Text</label>
-                      <textarea
-                        value={segment.text}
+                   <div>
+                    <label className="block text-sm font-medium mb-1">Color</label>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="color"
+                        value={segment.color || "#000000"}
                         onChange={(e) => {
                           const updated = [...content.heroSection.belowText.content];
-                          updated[idx] = { ...updated[idx], text: e.target.value };
+                          updated[idx] = { ...updated[idx], color: e.target.value };
                           setContent(prev => ({
                             ...prev,
                             heroSection: {
@@ -967,10 +984,27 @@ export default function AdminAboutPage() {
                             }
                           }));
                         }}
-                        className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2 scrollable-description"
-                        rows={4}
+                        className="w-10 h-10 border cursor-pointer"
+                      />
+                      <input
+                        type="text"
+                        value={segment.color || ""}
+                        onChange={(e) => {
+                          const updated = [...content.heroSection.belowText.content];
+                          updated[idx] = { ...updated[idx], color: e.target.value };
+                          setContent(prev => ({
+                            ...prev,
+                            heroSection: {
+                              ...prev.heroSection,
+                              belowText: { ...prev.heroSection.belowText, content: updated }
+                            }
+                          }));
+                        }}
+                        className="flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                        placeholder="black"
                       />
                     </div>
+                  </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium mb-1">Weight</label>
@@ -1078,8 +1112,21 @@ export default function AdminAboutPage() {
                   className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">Title Color</label>
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-1">Title Color</label>
+              <div className="flex items-center gap-3">
+                <input
+                  type="color"
+                  value={content.dualContentBlock.left.titleColor}
+                  onChange={(e) => setContent(prev => ({
+                    ...prev,
+                    dualContentBlock: {
+                      ...prev.dualContentBlock,
+                      left: { ...prev.dualContentBlock.left, titleColor: e.target.value }
+                    }
+                  }))}
+                  className="w-12 h-10 border cursor-pointer"
+                />
                 <input
                   type="text"
                   value={content.dualContentBlock.left.titleColor}
@@ -1090,9 +1137,10 @@ export default function AdminAboutPage() {
                       left: { ...prev.dualContentBlock.left, titleColor: e.target.value }
                     }
                   }))}
-                  className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                  className="flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
                 />
               </div>
+            </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-1">Background Color Class</label>
                 <input
@@ -1129,7 +1177,7 @@ export default function AdminAboutPage() {
                       className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2 scrollable-description"
                       rows={3}
                     />
-                    <div className="mt-2 flex gap-2">
+                    <div className="mt-2 flex flex-col sm:flex-row gap-2">
                       <select
                         value={segment.weight || "normal"}
                         onChange={(e) => {
@@ -1151,23 +1199,39 @@ export default function AdminAboutPage() {
                         <option value="medium">Medium</option>
                         <option value="semibold">Semibold</option>
                       </select>
-                      <input
-                        type="text"
-                        value={segment.color || ""}
-                        onChange={(e) => {
-                          const updated = [...content.dualContentBlock.left.content];
-                          updated[idx] = { ...segment, color: e.target.value };
-                          setContent(prev => ({
-                            ...prev,
-                            dualContentBlock: {
-                              ...prev.dualContentBlock,
-                              left: { ...prev.dualContentBlock.left, content: updated }
-                            }
-                          }));
-                        }}
-                        className="flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        placeholder="Color (optional)"
-                      />
+                    <input
+                      type="color"
+                      value={segment.color || "#000000"}
+                      onChange={(e) => {
+                        const updated = [...content.dualContentBlock.left.content];
+                        updated[idx] = { ...segment, color: e.target.value };
+                        setContent(prev => ({
+                          ...prev,
+                          dualContentBlock: {
+                            ...prev.dualContentBlock,
+                            left: { ...prev.dualContentBlock.left, content: updated }
+                          }
+                        }));
+                      }}
+                      className="w-10 h-10 border cursor-pointer"
+                    />
+                    <input
+                      type="text"
+                      value={segment.color || ""}
+                      onChange={(e) => {
+                        const updated = [...content.dualContentBlock.left.content];
+                        updated[idx] = { ...segment, color: e.target.value };
+                        setContent(prev => ({
+                          ...prev,
+                          dualContentBlock: {
+                            ...prev.dualContentBlock,
+                            left: { ...prev.dualContentBlock.left, content: updated }
+                          }
+                        }));
+                      }}
+                      className="flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                      placeholder="Color (optional)"
+                    />
                       <button
                         onClick={() => {
                           const updated = content.dualContentBlock.left.content.filter((_, i) => i !== idx);
@@ -1226,18 +1290,32 @@ export default function AdminAboutPage() {
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-1">Title Color</label>
-                <input
-                  type="text"
-                  value={content.dualContentBlock.right.titleColor}
-                  onChange={(e) => setContent(prev => ({
-                    ...prev,
-                    dualContentBlock: {
-                      ...prev.dualContentBlock,
-                      right: { ...prev.dualContentBlock.right, titleColor: e.target.value }
-                    }
-                  }))}
-                  className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                />
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                  <input
+                    type="color"
+                    value={content.dualContentBlock.right.titleColor}
+                    onChange={(e) => setContent(prev => ({
+                      ...prev,
+                      dualContentBlock: {
+                        ...prev.dualContentBlock,
+                        right: { ...prev.dualContentBlock.right, titleColor: e.target.value }
+                      }
+                    }))}
+                   className="w-full sm:flex-1 min-w-0 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                  />
+                  <input
+                    type="text"
+                    value={content.dualContentBlock.right.titleColor}
+                    onChange={(e) => setContent(prev => ({
+                      ...prev,
+                      dualContentBlock: {
+                        ...prev.dualContentBlock,
+                        right: { ...prev.dualContentBlock.right, titleColor: e.target.value }
+                      }
+                    }))}
+                    className="flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                  />
+                </div>
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-1">Background Color Class</label>
@@ -1275,7 +1353,7 @@ export default function AdminAboutPage() {
                       className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2 scrollable-description"
                       rows={3}
                     />
-                    <div className="mt-2 flex gap-2">
+                    <div className="mt-2 flex flex-col sm:flex-row gap-2">
                       <select
                         value={segment.weight || "normal"}
                         onChange={(e) => {
@@ -1297,6 +1375,22 @@ export default function AdminAboutPage() {
                         <option value="medium">Medium</option>
                         <option value="semibold">Semibold</option>
                       </select>
+                      <input
+                        type="color"
+                        value={segment.color || "#000000"}
+                        onChange={(e) => {
+                          const updated = [...content.dualContentBlock.right.content];
+                          updated[idx] = { ...segment, color: e.target.value };
+                          setContent(prev => ({
+                            ...prev,
+                            dualContentBlock: {
+                              ...prev.dualContentBlock,
+                              right: { ...prev.dualContentBlock.right, content: updated }
+                            }
+                          }));
+                        }}
+                        className="w-10 h-10 border cursor-pointer"
+                      />
                       <input
                         type="text"
                         value={segment.color || ""}
@@ -1555,15 +1649,26 @@ export default function AdminAboutPage() {
               
               <div>
                 <label className="block text-sm font-medium mb-2">Text Color</label>
-                <input
-                  type="text"
-                  value={content.impactStats.textColor}
-                  onChange={(e) => setContent(prev => ({
-                    ...prev,
-                    impactStats: { ...prev.impactStats, textColor: e.target.value }
-                  }))}
-                  className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                />
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                  <input
+                    type="color"
+                    value={content.impactStats.textColor}
+                    onChange={(e) => setContent(prev => ({
+                      ...prev,
+                      impactStats: { ...prev.impactStats, textColor: e.target.value }
+                    }))}
+                    className="w-12 h-10 border cursor-pointer"
+                  />
+                  <input
+                    type="text"
+                    value={content.impactStats.textColor}
+                    onChange={(e) => setContent(prev => ({
+                      ...prev,
+                      impactStats: { ...prev.impactStats, textColor: e.target.value }
+                    }))}
+                    className="flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                  />
+                </div>
               </div>
               
               <div className="grid grid-cols-3 gap-4">
@@ -1838,10 +1943,19 @@ export default function AdminAboutPage() {
                       <label className="block text-sm font-medium mb-2">Description</label>
                       <textarea
                         value={volunteer.description}
-                        onChange={(e) => updateVolunteer(idx, "description", e.target.value)}
+                        onChange={(e) =>
+                          updateVolunteer(
+                            idx,
+                            "description",
+                            e.target.value.slice(0, 215) // limit to 215 chars
+                          )
+                        }
                         className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2 scrollable-description"
                         rows={3}
                       />
+                      <p className="text-xs text-gray-500 mt-1">
+                        {volunteer.description.length}/215 characters
+                      </p>
                     </div>
 
                     <div>

@@ -1134,7 +1134,7 @@ async function handleSave() {
                     rows={3}
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium mb-1">Weight</label>
                     <select
@@ -1156,23 +1156,38 @@ async function handleSave() {
                       <option value="semibold">Semibold</option>
                     </select>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1">Color (optional)</label>
-                    <input
-                      type="text"
-                      value={segment.color || ""}
-                      onChange={(e) => {
-                        const updated = [...content.heroSection.content];
-                        updated[idx] = { ...updated[idx], color: e.target.value };
-                        setContent(prev => ({
-                          ...prev,
-                          heroSection: { ...prev.heroSection, content: updated }
-                        }));
-                      }}
-                      className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                      placeholder="#004265"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Color (optional)</label>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="color"
+                          value={segment.color || "#000000"}
+                          onChange={(e) => {
+                            const updated = [...content.heroSection.content];
+                            updated[idx] = { ...updated[idx], color: e.target.value };
+                            setContent(prev => ({
+                              ...prev,
+                              heroSection: { ...prev.heroSection, content: updated }
+                            }));
+                          }}
+                          className="w-10 h-10 border cursor-pointer"
+                        />
+                        <input
+                          type="text"
+                          value={segment.color || ""}
+                          onChange={(e) => {
+                            const updated = [...content.heroSection.content];
+                            updated[idx] = { ...updated[idx], color: e.target.value };
+                            setContent(prev => ({
+                              ...prev,
+                              heroSection: { ...prev.heroSection, content: updated }
+                            }));
+                          }}
+                          className="flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                          placeholder="#004265"
+                        />
+                      </div>
+                    </div>
                 </div>
                 <button
                   onClick={() => {
@@ -1230,21 +1245,47 @@ async function handleSave() {
                 className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
                 />
             </div>
-            <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">Title Color</label>
-                <input
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-1">
+              Title Color
+            </label>
+
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              
+              <input
+                type="color"
+                value={content.dualContentBlock.left.titleColor}
+                onChange={(e) => setContent(prev => ({
+                  ...prev,
+                  dualContentBlock: {
+                    ...prev.dualContentBlock,
+                    left: {
+                      ...prev.dualContentBlock.left,
+                      titleColor: e.target.value
+                    }
+                  }
+                }))}
+                className="w-12 h-10 border cursor-pointer"
+              />
+
+              <input
                 type="text"
                 value={content.dualContentBlock.left.titleColor}
                 onChange={(e) => setContent(prev => ({
-                    ...prev,
-                    dualContentBlock: {
+                  ...prev,
+                  dualContentBlock: {
                     ...prev.dualContentBlock,
-                    left: { ...prev.dualContentBlock.left, titleColor: e.target.value }
+                    left: {
+                      ...prev.dualContentBlock.left,
+                      titleColor: e.target.value
                     }
+                  }
                 }))}
-                className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                />
+                className="w-full sm:flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+              />
+
             </div>
+          </div>
             <div className="mb-4">
                 <label className="block text-sm font-medium mb-1">Background Color Class</label>
                 <input
@@ -1281,7 +1322,7 @@ async function handleSave() {
                     className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2 scrollable-description"
                     rows={2}
                     />
-                    <div className="mt-2 flex gap-2">
+                    <div className="mt-2 flex flex-col sm:flex-row gap-2">
                     <select
                         value={item.weight || "normal"}
                         onChange={(e) => {
@@ -1295,7 +1336,7 @@ async function handleSave() {
                             }
                         }));
                         }}
-                        className="px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                        className="w-full sm:flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
                     >
                         <option value="normal">Normal</option>
                         <option value="bold">Bold</option>
@@ -1303,22 +1344,38 @@ async function handleSave() {
                         <option value="medium">Medium</option>
                         <option value="semibold">Semibold</option>
                     </select>
-                    <input
-                        type="text"
-                        value={item.color || ""}
-                        onChange={(e) => {
+                   <input
+                      type="color"
+                      value={item.color || "#FFFFFF"}
+                      onChange={(e) => {
                         const updated = [...content.dualContentBlock.left.content];
                         updated[idx] = { ...item, color: e.target.value };
                         setContent(prev => ({
-                            ...prev,
-                            dualContentBlock: {
+                          ...prev,
+                          dualContentBlock: {
                             ...prev.dualContentBlock,
                             left: { ...prev.dualContentBlock.left, content: updated }
-                            }
+                          }
                         }));
-                        }}
-                        className="px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        placeholder="Color (optional)"
+                      }}
+                      className="w-10 h-10 border cursor-pointer"
+                    />
+                    <input
+                      type="text"
+                      value={item.color || ""}
+                      onChange={(e) => {
+                        const updated = [...content.dualContentBlock.left.content];
+                        updated[idx] = { ...item, color: e.target.value };
+                        setContent(prev => ({
+                          ...prev,
+                          dualContentBlock: {
+                            ...prev.dualContentBlock,
+                            left: { ...prev.dualContentBlock.left, content: updated }
+                          }
+                        }));
+                      }}
+                      className="px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                      placeholder="Color (optional)"
                     />
                     </div>
                     <button
@@ -1377,19 +1434,33 @@ async function handleSave() {
                 />
             </div>
             <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">Title Color</label>
+              <label className="block text-sm font-medium mb-1">Title Color</label>
+              <div className="flex items-center gap-3">
                 <input
-                type="text"
-                value={content.dualContentBlock.right.titleColor}
-                onChange={(e) => setContent(prev => ({
+                  type="color"
+                  value={content.dualContentBlock.right.titleColor}
+                  onChange={(e) => setContent(prev => ({
                     ...prev,
                     dualContentBlock: {
-                    ...prev.dualContentBlock,
-                    right: { ...prev.dualContentBlock.right, titleColor: e.target.value }
+                      ...prev.dualContentBlock,
+                      right: { ...prev.dualContentBlock.right, titleColor: e.target.value }
                     }
-                }))}
-                className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                  }))}
+                  className="w-12 h-10 border cursor-pointer"
                 />
+                <input
+                  type="text"
+                  value={content.dualContentBlock.right.titleColor}
+                  onChange={(e) => setContent(prev => ({
+                    ...prev,
+                    dualContentBlock: {
+                      ...prev.dualContentBlock,
+                      right: { ...prev.dualContentBlock.right, titleColor: e.target.value }
+                    }
+                  }))}
+                  className="flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                />
+              </div>
             </div>
             <div className="mb-4">
                 <label className="block text-sm font-medium mb-1">Background Color Class</label>
@@ -1427,7 +1498,7 @@ async function handleSave() {
                     className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2 scrollable-description"
                     rows={2}
                     />
-                    <div className="mt-2 flex gap-2">
+                    <div className="mt-2 flex flex-col sm:flex-row gap-2">
                     <select
                         value={item.weight || "normal"}
                         onChange={(e) => {
@@ -1449,23 +1520,39 @@ async function handleSave() {
                         <option value="medium">Medium</option>
                         <option value="semibold">Semibold</option>
                     </select>
-                    <input
-                        type="text"
-                        value={item.color || ""}
-                        onChange={(e) => {
-                        const updated = [...content.dualContentBlock.right.content];
-                        updated[idx] = { ...item, color: e.target.value };
-                        setContent(prev => ({
-                            ...prev,
-                            dualContentBlock: {
-                            ...prev.dualContentBlock,
-                            right: { ...prev.dualContentBlock.right, content: updated }
-                            }
-                        }));
-                        }}
-                        className="px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        placeholder="Color (optional)"
-                    />
+                  <input
+                    type="color"
+                    value={item.color || "#FFFFFF"}
+                    onChange={(e) => {
+                      const updated = [...content.dualContentBlock.right.content];
+                      updated[idx] = { ...item, color: e.target.value };
+                      setContent(prev => ({
+                        ...prev,
+                        dualContentBlock: {
+                          ...prev.dualContentBlock,
+                          right: { ...prev.dualContentBlock.right, content: updated }  // ✅ Fixed
+                        }
+                      }));
+                    }}
+                    className="w-10 h-10 border cursor-pointer"
+                  />
+                  <input
+                    type="text"
+                    value={item.color || ""}
+                    onChange={(e) => {
+                      const updated = [...content.dualContentBlock.right.content];
+                      updated[idx] = { ...item, color: e.target.value };
+                      setContent(prev => ({
+                        ...prev,
+                        dualContentBlock: {
+                          ...prev.dualContentBlock,
+                          right: { ...prev.dualContentBlock.right, content: updated }
+                        }
+                      }));
+                    }}
+                    className="px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                    placeholder="Color (optional)"
+                  />
                     </div>
                     <button
                     onClick={() => {
@@ -1678,8 +1765,18 @@ async function handleSave() {
                 />
               </div>
               
-              <div>
-                <label className="block text-sm font-medium mb-2">Text Color</label>
+           <div>
+              <label className="block text-sm font-medium mb-2">Text Color</label>
+              <div className="flex items-center gap-3">
+                <input
+                  type="color"
+                  value={content.impactStats.textColor}
+                  onChange={(e) => setContent(prev => ({
+                    ...prev,
+                    impactStats: { ...prev.impactStats, textColor: e.target.value }
+                  }))}
+                  className="w-12 h-10 border cursor-pointer"
+                />
                 <input
                   type="text"
                   value={content.impactStats.textColor}
@@ -1687,10 +1784,11 @@ async function handleSave() {
                     ...prev,
                     impactStats: { ...prev.impactStats, textColor: e.target.value }
                   }))}
-                  className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                  className="flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
                   placeholder="#004265"
                 />
               </div>
+            </div>
               
               <div className="grid grid-cols-3 gap-4">
                 <div>
@@ -2471,16 +2569,27 @@ async function handleSave() {
               
               <div>
                 <label className="block text-sm font-medium mb-2">Background Color</label>
-                <input
-                  type="text"
-                  value={content.whyTrustUs.bgColor}
-                  onChange={(e) => setContent(prev => ({
-                    ...prev,
-                    whyTrustUs: { ...prev.whyTrustUs, bgColor: e.target.value }
-                  }))}
-                  className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                  placeholder="#9FDFFC"
-                />
+                <div className="flex items-center gap-3">
+                  <input
+                    type="color"
+                    value={content.whyTrustUs.bgColor}
+                    onChange={(e) => setContent(prev => ({
+                      ...prev,
+                      whyTrustUs: { ...prev.whyTrustUs, bgColor: e.target.value }
+                    }))}
+                    className="w-12 h-10 border cursor-pointer"
+                  />
+                  <input
+                    type="text"
+                    value={content.whyTrustUs.bgColor}
+                    onChange={(e) => setContent(prev => ({
+                      ...prev,
+                      whyTrustUs: { ...prev.whyTrustUs, bgColor: e.target.value }
+                    }))}
+                    className="flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                    placeholder="#9FDFFC"
+                  />
+                </div>
               </div>
               
               <div>
@@ -2576,7 +2685,7 @@ async function handleSave() {
                 />
               </div>
               
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {content.partners.partners.map((partner, idx) => (
                   <div key={idx} className="flex items-center gap-2">
                     <input

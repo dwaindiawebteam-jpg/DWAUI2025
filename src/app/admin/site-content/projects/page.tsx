@@ -1072,8 +1072,21 @@ function OngoingProjectDatePicker({
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium mb-2">Title Color</label>
+            <div>
+              <label className="block text-sm font-medium mb-2">Title Color</label>
+              <div className="flex items-center gap-3">
+                <input
+                  type="color"
+                  value={content.heroSection.belowText.titleColor}
+                  onChange={(e) => setContent(prev => ({
+                    ...prev,
+                    heroSection: {
+                      ...prev.heroSection,
+                      belowText: { ...prev.heroSection.belowText, titleColor: e.target.value }
+                    }
+                  }))}
+                  className="w-12 h-10 border cursor-pointer"
+                />
                 <input
                   type="text"
                   value={content.heroSection.belowText.titleColor}
@@ -1084,9 +1097,11 @@ function OngoingProjectDatePicker({
                       belowText: { ...prev.heroSection.belowText, titleColor: e.target.value }
                     }
                   }))}
-                  className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                  className="flex-1 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                  placeholder="#004265"
                 />
               </div>
+            </div>
 
               <div>
                 <label className="block text-sm font-medium mb-2">Content</label>
