@@ -2,6 +2,7 @@ import type { HomeContent } from "@/types/home";
 import type { AboutContent } from "@/types/about";
 import type { ProjectsContent } from "@/types/projects";
 import type { ResourcesContent } from "@/types/resources";
+import type { SupportContent } from "@/types/support";
 
 // Types for the new homepage structure
 interface NewHomeContent {
@@ -199,6 +200,28 @@ export function extractAssetUrlsFromResources(content: ResourcesContent): string
         section.images.forEach(image => {
           if (image) urls.push(image);
         });
+      }
+    });
+  }
+
+  return [...new Set(urls)];
+}
+
+
+// lib/extractAssetUrls.ts (add this function to your existing file)
+export function extractAssetUrlsFromSupport(content: SupportContent): string[] {
+  const urls: string[] = [];
+
+  // Hero section image
+  if (content.heroSection?.image) {
+    urls.push(content.heroSection.image);
+  }
+
+  // Causes section images
+  if (content.causes?.causesList) {
+    content.causes.causesList.forEach(cause => {
+      if (cause.imageSrc) {
+        urls.push(cause.imageSrc);
       }
     });
   }

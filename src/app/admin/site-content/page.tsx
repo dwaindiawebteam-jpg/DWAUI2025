@@ -23,7 +23,7 @@ export default function SiteContentDashboard() {
   // Content management cards
   const contentOptions: Option[] = [
     {
-      label: "Edit Homepage",
+      label: "Edit Home Page",
       href: "/admin/site-content/homepage",
       icon: FiHome,
     },
@@ -38,8 +38,13 @@ export default function SiteContentDashboard() {
       icon: FiUsers,
     },
     {
-      label: "Edit Resources",
+      label: "Edit Resources Page",
       href: "/admin/site-content/resources",
+      icon: FiPackage,
+    },
+     {
+      label: "Edit Support Page",
+      href: "/admin/site-content/support",
       icon: FiPackage,
     },
     {

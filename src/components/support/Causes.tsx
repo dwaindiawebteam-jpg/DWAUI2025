@@ -5,6 +5,8 @@ interface CauseDetail {
   id: number;
   title: string;
   details: string;
+  imageSrc: string;  // Add this field
+  imageAlt: string;  // Optional: add alt text per image
 }
 
 interface CausesProps {
@@ -57,8 +59,8 @@ export default function Causes({ causesDetails }: CausesProps) {
 
             <div className="w-1/2 flex justify-center items-center max-md:w-full">
                 <Image
-                src="/images/supportpage/children-img.png"
-                alt="children from Dalit communities"
+                src={cause.imageSrc}  // Use the image from the cause object
+                alt={cause.imageAlt || "Cause image"}  // Use custom alt text or fallback
                 width={400}
                 height={400}
                 className="object-contain"
