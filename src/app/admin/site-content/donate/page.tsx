@@ -1,3 +1,4 @@
+// app/admin/donate/page.tsx
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -8,12 +9,12 @@ import {
   isNonEmptyString,
   isNonEmptyArray,
 } from "@/lib/contentValidation";
-import { extractAssetUrlsFromSupport } from "@/lib/extractAssetUrls";
+import { extractAssetUrlsFromDonate } from "@/lib/extractAssetUrls";
 import { compressImageClient } from "@/lib/compressImage";
 import FloatingSaveBar from "@/components/editor/FloatingSaveBar";
-import type { SupportContent, SupportCause } from "@/types/support";
+import type { DonateContent, DonateDonorOption, DonatePolicyContent } from "@/types/donate";
 
-export default function AdminSupportPage() {
+export default function AdminDonatePage() {
   const { user, role, authReady } = useAuth();
   
   const [loading, setLoading] = useState(true);
@@ -23,7 +24,7 @@ export default function AdminSupportPage() {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({});
   
-  const [originalContent, setOriginalContent] = useState<SupportContent | null>(null);
+  const [originalContent, setOriginalContent] = useState<DonateContent | null>(null);
   const sessionId = useRef(crypto.randomUUID()).current;
   const [pendingAssets, setPendingAssets] = useState<Array<{ 
     url: string; 
@@ -34,120 +35,130 @@ export default function AdminSupportPage() {
     
   const [activeTab, setActiveTab] = useState("hero");
 
-  const [content, setContent] = useState<SupportContent>({
+  const [content, setContent] = useState<DonateContent>({
     heroSection: {
-      image: "/images/supportpage/hero-img.png",
+      image: "/images/donatepage/DonatepageChildrenImage.png",
       imageFileId: "",
-      imageAlt: "farmers from Dalit community",
-      belowSectionBackground: "#FD7E14",
-      belowText: {
-        title: "Support Our Cause!",
-        titleColor: "#004265",
+      imageAlt: "Children from Dalit community",
+    },
+    dualContentBlock: {
+      left: {
+        title: "For Indian Donors",
+        titleColor: "#000000",
+        bgColor: "bg-yellow",
+        type: "image",
+        content: {
+          imageSrc: "/images/donatepage/QR_code.png",
+          imageAlt: "QR_code",
+          imageFileId: "",
+        },
+      },
+      right: {
+        title: "For International Donors",
+        titleColor: "#000000",
+        bgColor: "#FFFFFF",
         content: [
           {
-            text: `DALIT WELFARE is a grassroot NGO working directly with Dalit communities in tribal and rural regions of Nandyal & Kurnnol districts.`,
-            color: "black",
+            text: "Razorpay",
+            bgColor: "bg-blue/60",
+            url: "/apply",
+          },
+          {
+            text: "Stripe",
+            bgColor: "bg-purple/60",
+            url: "/apply",
           },
         ],
       },
     },
-    causes: {
-      causesList: [
-        {
-          id: 1,
-          title: "1. Corporate Foundations",
-          details: "Partner with us through CSR initiatives to create sustainable impact in rural Dalit communities. Your support can empower women entrepreneurs, digital education, and healthcare projects, aligning with SDGs and long-term social change.",
-          imageSrc: "/images/supportpage/children-img.png",
-          imageAlt: "Corporate partnership meeting for social impact",
-          imageFileId: "",
-        },
-        {
-          id: 2,
-          title: "2. Philanthropies",
-          details: "Your investment fuels transformative programs tackling poverty, caste discrimination, and gender inequality. By backing our initiatives, you help scale solutions that create dignity, opportunity, and resilience in marginalized communities.",
-          imageSrc: "/images/supportpage/children-img.png",
-          imageAlt: "Philanthropic investment in community development",
-          imageFileId: "",
-        },
-        {
-          id: 3,
-          title: "3. Generous Donors",
-          details: "Every contribution, big or small, creates ripples of change. Your donation supports education, healthcare, and livelihoods for Dalit families, ensuring a brighter, more equal future for generations to come.",
-          imageSrc: "/images/supportpage/children-img.png",
-          imageAlt: "Donors supporting Dalit communities",
-          imageFileId: "",
-        },
-        {
-          id: 4,
-          title: "4. Volunteers",
-          details: "Share your skills, time, and passion to uplift communities. From digital support to field activities, volunteers are the heart of our mission, bringing energy and expertise where it matters most.",
-          imageSrc: "/images/supportpage/children-img.png",
-          imageAlt: "Volunteers working with rural community",
-          imageFileId: "",
-        },
-        {
-          id: 5,
-          title: "5. Fundraisers",
-          details: "Champion our cause by mobilizing networks and resources. As a fundraiser, you amplify our reach and ensure more people can join hands in building inclusive, thriving rural communities.",
-          imageSrc: "/images/supportpage/children-img.png",
-          imageAlt: "Fundraising event for community causes",
-          imageFileId: "",
-        },
-        {
-          id: 6,
-          title: "6. Field Visit Teams",
-          details: "Experience the impact firsthand by visiting our projects in Nandyal and Kurnool. Field visits build deeper understanding, accountability, and connection between supporters and the communities they help transform.",
-          imageSrc: "/images/supportpage/children-img.png",
-          imageAlt: "Field visit team interacting with community members",
-          imageFileId: "",
-        },
-      ],
+    privacyPolicy: {
+      title: "Privacy Policy",
+      content: {
+        text: "At Dalit Welfare Association, we respect your privacy. Any personal information shared through our website, donations, or newsletters is kept secure and never shared with third parties. We use your data only to improve services, provide updates, and maintain transparent communication with our supporters.",
+      },
+      bgColor: "bg-pink/50",
     },
-    entireWorld: {
-      text: "Whoever saves one life, saves the entire world.",
+    refundPolicy: {
+      title: "Refund Policy",
+      content: {
+        text: "All donations made to Dalit Welfare Association are non-refundable, as they are immediately directed toward our community programs. However, if you made an error in your contribution, please contact us within one week. We will carefully review refund requests raised during this period.",
+      },
+      bgColor: "bg-blue/50",
     },
     infoForm: {
       enabled: true,
     },
   });
 
-  // Causes management functions
-  const addCause = () => {
-    const newId = Math.max(...content.causes.causesList.map(c => c.id), 0) + 1;
-    const newCause: SupportCause = {
-      id: newId,
-      title: "New Cause",
-      details: "Description of the cause goes here...",
-      imageSrc: "",
-      imageAlt: "Cause image",
-      imageFileId: "",
-    };
+  // Donor options management functions
+  const addDonorOption = () => {
     setContent(prev => ({
       ...prev,
-      causes: {
-        causesList: [...prev.causes.causesList, newCause]
+      dualContentBlock: {
+        ...prev.dualContentBlock,
+        right: {
+          ...prev.dualContentBlock.right,
+          content: [
+            ...prev.dualContentBlock.right.content,
+            { text: "New Option", bgColor: "bg-gray/60", url: "/donate" }
+          ]
+        }
       }
     }));
   };
 
-  const removeCause = (index: number) => {
+  const removeDonorOption = (index: number) => {
     setContent(prev => ({
       ...prev,
-      causes: {
-        causesList: prev.causes.causesList.filter((_, i) => i !== index)
+      dualContentBlock: {
+        ...prev.dualContentBlock,
+        right: {
+          ...prev.dualContentBlock.right,
+          content: prev.dualContentBlock.right.content.filter((_, i) => i !== index)
+        }
       }
     }));
   };
 
-  const updateCause = (index: number, field: keyof SupportCause, value: any) => {
+  const updateDonorOption = (index: number, field: keyof DonateDonorOption, value: string) => {
     setContent(prev => {
-      const updated = [...prev.causes.causesList];
+      const updated = [...prev.dualContentBlock.right.content];
       updated[index] = { ...updated[index], [field]: value };
       return {
         ...prev,
-        causes: { causesList: updated }
+        dualContentBlock: {
+          ...prev.dualContentBlock,
+          right: { ...prev.dualContentBlock.right, content: updated }
+        }
       };
     });
+  };
+
+  // Policy content update functions
+  const updatePrivacyPolicy = (field: keyof DonatePolicyContent | "content.text", value: string) => {
+    setContent(prev => ({
+      ...prev,
+      privacyPolicy: {
+        ...prev.privacyPolicy,
+        ...(field === "content.text" 
+          ? { content: { ...prev.privacyPolicy.content, text: value } }
+          : { [field]: value }
+        )
+      }
+    }));
+  };
+
+  const updateRefundPolicy = (field: keyof DonatePolicyContent | "content.text", value: string) => {
+    setContent(prev => ({
+      ...prev,
+      refundPolicy: {
+        ...prev.refundPolicy,
+        ...(field === "content.text" 
+          ? { content: { ...prev.refundPolicy.content, text: value } }
+          : { [field]: value }
+        )
+      }
+    }));
   };
 
   useEffect(() => {
@@ -159,15 +170,16 @@ export default function AdminSupportPage() {
 
       setLoading(true);
       try {
-        const ref = doc(db, "siteContent", "support");
+        const ref = doc(db, "siteContent", "donate");
         const snap = await getDoc(ref);
 
         if (snap.exists()) {
           const data = snap.data();
-          const loaded: SupportContent = {
+          const loaded: DonateContent = {
             heroSection: data.heroSection || content.heroSection,
-            causes: data.causes || content.causes,
-            entireWorld: data.entireWorld || content.entireWorld,
+            dualContentBlock: data.dualContentBlock || content.dualContentBlock,
+            privacyPolicy: data.privacyPolicy || content.privacyPolicy,
+            refundPolicy: data.refundPolicy || content.refundPolicy,
             infoForm: data.infoForm || content.infoForm,
           };
           setContent(loaded);
@@ -242,12 +254,15 @@ export default function AdminSupportPage() {
     });
   }
 
-  function validateSupportContent(content: SupportContent): string | null {
-    if (!isNonEmptyString(content.heroSection.belowText.title)) {
-      return "Hero section title is required.";
+  function validateDonateContent(content: DonateContent): string | null {
+    if (!isNonEmptyString(content.heroSection.imageAlt)) {
+      return "Hero section image alt text is required.";
     }
-    if (!isNonEmptyArray(content.causes.causesList)) {
-      return "Please add at least one cause.";
+    if (!isNonEmptyString(content.dualContentBlock.left.title)) {
+      return "Left block title is required.";
+    }
+    if (!isNonEmptyArray(content.dualContentBlock.right.content)) {
+      return "Please add at least one donor option.";
     }
     return null;
   }
@@ -295,7 +310,7 @@ export default function AdminSupportPage() {
       return;
     }
 
-    const validationError = validateSupportContent(content);
+    const validationError = validateDonateContent(content);
     if (validationError) {
       setErrorMessage(validationError);
       return;
@@ -312,13 +327,13 @@ export default function AdminSupportPage() {
         throw new Error("Insufficient permissions. Admin or author role required.");
       }
 
-      const ref = doc(db, "siteContent", "support");
+      const ref = doc(db, "siteContent", "donate");
       
       let finalContent = structuredClone(content);
 
       if (pendingAssets.length) {
         const assetsToPromote = pendingAssets.filter(asset => {
-          const isUsed = extractAssetUrlsFromSupport(finalContent as any).includes(asset.url);
+          const isUsed = extractAssetUrlsFromDonate(finalContent as any).includes(asset.url);
           return isUsed;
         });
 
@@ -348,23 +363,22 @@ export default function AdminSupportPage() {
             };
           }
           
-          // Causes images
-          if (finalContent.causes?.causesList) {
-            const updatedCauses = finalContent.causes.causesList.map(cause => {
-              if (cause.imageSrc && replacements[cause.imageSrc]) {
-                return {
-                  ...cause,
-                  imageSrc: replacements[cause.imageSrc].url,
-                  imageFileId: replacements[cause.imageSrc].fileId,
-                };
-              }
-              return cause;
-            });
-            
+          // Left block image (QR code)
+          if (finalContent.dualContentBlock.left.type === "image" && 
+              finalContent.dualContentBlock.left.content.imageSrc && 
+              replacements[finalContent.dualContentBlock.left.content.imageSrc]) {
             finalContent = {
               ...finalContent,
-              causes: {
-                causesList: updatedCauses
+              dualContentBlock: {
+                ...finalContent.dualContentBlock,
+                left: {
+                  ...finalContent.dualContentBlock.left,
+                  content: {
+                    ...finalContent.dualContentBlock.left.content,
+                    imageSrc: replacements[finalContent.dualContentBlock.left.content.imageSrc].url,
+                    imageFileId: replacements[finalContent.dualContentBlock.left.content.imageSrc].fileId,
+                  }
+                }
               }
             };
           }
@@ -381,8 +395,9 @@ export default function AdminSupportPage() {
 
       const dataToSave = {
         heroSection: finalContent.heroSection,
-        causes: finalContent.causes,
-        entireWorld: finalContent.entireWorld,
+        dualContentBlock: finalContent.dualContentBlock,
+        privacyPolicy: finalContent.privacyPolicy,
+        refundPolicy: finalContent.refundPolicy,
         infoForm: finalContent.infoForm,
         updatedAt: new Date(),
       };
@@ -390,8 +405,8 @@ export default function AdminSupportPage() {
       await setDoc(ref, dataToSave);
 
       if (originalContent) {
-        const before = new Set(extractAssetUrlsFromSupport(originalContent as any));
-        const after = new Set(extractAssetUrlsFromSupport(finalContent as any));
+        const before = new Set(extractAssetUrlsFromDonate(originalContent as any));
+        const after = new Set(extractAssetUrlsFromDonate(finalContent as any));
         const unusedAssets = [...before].filter(url => !after.has(url));
         
         await Promise.all(
@@ -407,7 +422,7 @@ export default function AdminSupportPage() {
         );
       }
 
-      setSuccessMessage("Support page content saved successfully!");
+      setSuccessMessage("Donate page content saved successfully!");
       setOriginalContent(structuredClone(finalContent));
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (err: any) {
@@ -441,15 +456,15 @@ export default function AdminSupportPage() {
 
   const tabs = [
     { id: "hero", label: "Hero Section" },
-    { id: "causes", label: "Causes / Support Options" },
-    { id: "quote", label: "Quote Section" },
+    { id: "donorOptions", label: "Donor Options" },
+    { id: "policies", label: "Policies" },
   ];
 
   return (
     <div className="px-4 sm:px-6 py-12 min-h-screen font-sans">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-2xl sm:text-3xl font-extrabold mb-6 text-center font-sans!">
-          Support Page Management
+          Donate Page Management
         </h1>
 
         {successMessage && (
@@ -500,7 +515,7 @@ export default function AdminSupportPage() {
                       try {
                         const result = await uploadAsset(
                           e.target.files[0],
-                          "support/hero",
+                          "donate/hero",
                           (p) => setUploadProgress(prev => ({ ...prev, hero_image: p })),
                           content.heroSection.image,
                           content.heroSection.imageFileId
@@ -539,7 +554,7 @@ export default function AdminSupportPage() {
                       try {
                         const result = await uploadAsset(
                           file,
-                          "support/hero",
+                          "donate/hero",
                           (p) => setUploadProgress(prev => ({ ...prev, hero_image: p })),
                           content.heroSection.image,
                           content.heroSection.imageFileId
@@ -622,335 +637,414 @@ export default function AdminSupportPage() {
                   className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
                 />
               </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-2">Below Section Background Color</label>
-                <input
-                  type="color"
-                  value={content.heroSection.belowSectionBackground}
-                  onChange={(e) => setContent(prev => ({
-                    ...prev,
-                    heroSection: { ...prev.heroSection, belowSectionBackground: e.target.value }
-                  }))}
-                  className="w-full h-12 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-2">Section Title</label>
-                <input
-                  type="text"
-                  value={content.heroSection.belowText.title}
-                  onChange={(e) => setContent(prev => ({
-                    ...prev,
-                    heroSection: {
-                      ...prev.heroSection,
-                      belowText: { ...prev.heroSection.belowText, title: e.target.value }
-                    }
-                  }))}
-                  className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-2">Title Color</label>
-                <input
-                  type="color"
-                  value={content.heroSection.belowText.titleColor}
-                  onChange={(e) => setContent(prev => ({
-                    ...prev,
-                    heroSection: {
-                      ...prev.heroSection,
-                      belowText: { ...prev.heroSection.belowText, titleColor: e.target.value }
-                    }
-                  }))}
-                  className="w-full h-12 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-2">Content</label>
-                {content.heroSection.belowText.content.map((segment, idx) => (
-                  <div key={idx} className="mb-4 p-4 border rounded">
-                    <div className="mb-2">
-                      <label className="block text-sm font-medium mb-1">Text</label>
-                      <textarea
-                        value={segment.text}
-                        onChange={(e) => {
-                          const updated = [...content.heroSection.belowText.content];
-                          updated[idx] = { ...updated[idx], text: e.target.value };
-                          setContent(prev => ({
-                            ...prev,
-                            heroSection: {
-                              ...prev.heroSection,
-                              belowText: { ...prev.heroSection.belowText, content: updated }
-                            }
-                          }));
-                        }}
-                        className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2 scrollable-description"
-                        rows={4}
-                      />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium mb-1">Weight</label>
-                        <select
-                          value={segment.weight || "normal"}
-                          onChange={(e) => {
-                            const updated = [...content.heroSection.belowText.content];
-                            updated[idx] = { ...updated[idx], weight: e.target.value as any };
-                            setContent(prev => ({
-                              ...prev,
-                              heroSection: {
-                                ...prev.heroSection,
-                                belowText: { ...prev.heroSection.belowText, content: updated }
-                              }
-                            }));
-                          }}
-                          className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        >
-                          <option value="normal">Normal</option>
-                          <option value="bold">Bold</option>
-                          <option value="light">Light</option>
-                          <option value="medium">Medium</option>
-                          <option value="semibold">Semibold</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium mb-1">Color</label>
-                        <input
-                          type="color"
-                          value={segment.color || "#000000"}
-                          onChange={(e) => {
-                            const updated = [...content.heroSection.belowText.content];
-                            updated[idx] = { ...updated[idx], color: e.target.value };
-                            setContent(prev => ({
-                              ...prev,
-                              heroSection: {
-                                ...prev.heroSection,
-                                belowText: { ...prev.heroSection.belowText, content: updated }
-                              }
-                            }));
-                          }}
-                          className="w-full h-12 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                        />
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => {
-                        const updated = content.heroSection.belowText.content.filter((_, i) => i !== idx);
-                        setContent(prev => ({
-                          ...prev,
-                          heroSection: {
-                            ...prev.heroSection,
-                            belowText: { ...prev.heroSection.belowText, content: updated }
-                          }
-                        }));
-                      }}
-                      className="mt-2 px-3 py-1 border border-red-500 text-red-500 text-sm hover:bg-red-50"
-                    >
-                      Remove Segment
-                    </button>
-                  </div>
-                ))}
-                <button
-                  onClick={() => {
-                    setContent(prev => ({
-                      ...prev,
-                      heroSection: {
-                        ...prev.heroSection,
-                        belowText: {
-                          ...prev.heroSection.belowText,
-                          content: [...prev.heroSection.belowText.content, { text: "", weight: "normal", color: "#000000" }]
-                        }
-                      }
-                    }));
-                  }}
-                  className="mt-2 px-4 py-2 border font-medium hover:bg-gray-50"
-                >
-                  + Add Text Segment
-                </button>
-              </div>
             </div>
           )}
 
-          {/* Causes Section */}
-          {activeTab === "causes" && (
+          {/* Donor Options Section */}
+          {activeTab === "donorOptions" && (
             <div className="space-y-6">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl sm:text-2xl font-medium font-sans!">Causes / Support Options</h2>
+                <h2 className="text-xl sm:text-2xl font-medium font-sans!">Donor Options</h2>
                 <button
-                  onClick={addCause}
+                  onClick={addDonorOption}
                   className="px-4 py-2 border font-medium hover:bg-gray-50"
                 >
-                  + Add Cause
+                  + Add Donor Option
                 </button>
               </div>
 
-              {content.causes.causesList.map((cause, idx) => (
-                <div key={cause.id} className="border p-5 mb-6">
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="font-bold text-lg">Cause #{idx + 1}</h3>
-                    <button
-                      onClick={() => removeCause(idx)}
-                      className="px-3 py-1 border border-red-500 text-red-500 text-sm hover:bg-red-50"
-                    >
-                      Remove Cause
-                    </button>
+              {/* Left Block (Indian Donors - QR Code) */}
+              <div className="border p-5 mb-8">
+                <h3 className="font-bold text-lg mb-4">Left Block: Indian Donors (QR Code)</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Title</label>
+                    <input
+                      type="text"
+                      value={content.dualContentBlock.left.title}
+                      onChange={(e) => setContent(prev => ({
+                        ...prev,
+                        dualContentBlock: {
+                          ...prev.dualContentBlock,
+                          left: { ...prev.dualContentBlock.left, title: e.target.value }
+                        }
+                      }))}
+                      className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                    />
                   </div>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Title</label>
-                      <input
-                        type="text"
-                        value={cause.title}
-                        onChange={(e) => updateCause(idx, "title", e.target.value)}
-                        className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                      />
-                    </div>
 
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Details / Description</label>
-                      <textarea
-                        value={cause.details}
-                        onChange={(e) => updateCause(idx, "details", e.target.value)}
-                        className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2 scrollable-description"
-                        rows={4}
-                      />
-                    </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Title Color</label>
+                    <input
+                      type="color"
+                      value={content.dualContentBlock.left.titleColor}
+                      onChange={(e) => setContent(prev => ({
+                        ...prev,
+                        dualContentBlock: {
+                          ...prev.dualContentBlock,
+                          left: { ...prev.dualContentBlock.left, titleColor: e.target.value }
+                        }
+                      }))}
+                      className="w-full h-12 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                    />
+                  </div>
 
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Image Alt Text</label>
-                      <input
-                        type="text"
-                        value={cause.imageAlt}
-                        onChange={(e) => updateCause(idx, "imageAlt", e.target.value)}
-                        className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
-                      />
-                    </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Background Color Class</label>
+                    <input
+                      type="text"
+                      value={content.dualContentBlock.left.bgColor}
+                      onChange={(e) => setContent(prev => ({
+                        ...prev,
+                        dualContentBlock: {
+                          ...prev.dualContentBlock,
+                          left: { ...prev.dualContentBlock.left, bgColor: e.target.value }
+                        }
+                      }))}
+                      className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                      placeholder="bg-yellow, bg-blue, etc."
+                    />
+                  </div>
 
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Cause Image</label>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={async (e) => {
-                          if (!e.target.files?.[0]) return;
-                          setUploading(true);
-                          try {
-                            const result = await uploadAsset(
-                              e.target.files[0],
-                              "support/causes",
-                              (p) => setUploadProgress(prev => ({ ...prev, [`cause_${idx}`]: p })),
-                              cause.imageSrc,
-                              cause.imageFileId
-                            );
-                            updateCause(idx, "imageFileId", result.fileId);
-                            updateCause(idx, "imageSrc", result.url);
-                          } catch (err) {
-                            setErrorMessage("Image upload failed");
-                          } finally {
-                            setUploading(false);
-                            setUploadProgress(prev => {
-                              const newPrev = { ...prev };
-                              delete newPrev[`cause_${idx}`];
-                              return newPrev;
-                            });
-                          }
-                        }}
-                        className="hidden"
-                        id={`cause-image-${idx}`}
-                      />
-                      
-                      <div
-                        onDragOver={(e) => e.preventDefault()}
-                        onDrop={async (e) => {
-                          e.preventDefault();
-                          const file = e.dataTransfer.files?.[0];
-                          if (!file || !file.type.startsWith("image/")) return;
-                          
-                          setUploading(true);
-                          try {
-                            const result = await uploadAsset(
-                              file,
-                              "support/causes",
-                              (p) => setUploadProgress(prev => ({ ...prev, [`cause_${idx}`]: p })),
-                              cause.imageSrc,
-                              cause.imageFileId
-                            );
-                            updateCause(idx, "imageFileId", result.fileId);
-                            updateCause(idx, "imageSrc", result.url);
-                          } catch (err) {
-                            setErrorMessage("Image upload failed");
-                          } finally {
-                            setUploading(false);
-                            setUploadProgress(prev => {
-                              const newPrev = { ...prev };
-                              delete newPrev[`cause_${idx}`];
-                              return newPrev;
-                            });
-                          }
-                        }}
+                  <div>
+                    <label className="block text-sm font-medium mb-2">QR Code Image</label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        if (!e.target.files?.[0]) return;
+                        setUploading(true);
+                        try {
+                          const result = await uploadAsset(
+                            e.target.files[0],
+                            "donate/qrcode",
+                            (p) => setUploadProgress(prev => ({ ...prev, qr_code: p })),
+                            content.dualContentBlock.left.content.imageSrc,
+                            content.dualContentBlock.left.content.imageFileId
+                          );
+                          setContent(prev => ({
+                            ...prev,
+                            dualContentBlock: {
+                              ...prev.dualContentBlock,
+                              left: {
+                                ...prev.dualContentBlock.left,
+                                content: {
+                                  ...prev.dualContentBlock.left.content,
+                                  imageSrc: result.url,
+                                  imageFileId: result.fileId
+                                }
+                              }
+                            }
+                          }));
+                        } catch (err) {
+                          setErrorMessage("QR code upload failed");
+                        } finally {
+                          setUploading(false);
+                          setUploadProgress(prev => {
+                            const newPrev = { ...prev };
+                            delete newPrev.qr_code;
+                            return newPrev;
+                          });
+                        }
+                      }}
+                      className="hidden"
+                      id="qr-image"
+                    />
+                    
+                    <div
+                      onDragOver={(e) => e.preventDefault()}
+                      onDrop={async (e) => {
+                        e.preventDefault();
+                        const file = e.dataTransfer.files?.[0];
+                        if (!file || !file.type.startsWith("image/")) return;
+                        
+                        setUploading(true);
+                        try {
+                          const result = await uploadAsset(
+                            file,
+                            "donate/qrcode",
+                            (p) => setUploadProgress(prev => ({ ...prev, qr_code: p })),
+                            content.dualContentBlock.left.content.imageSrc,
+                            content.dualContentBlock.left.content.imageFileId
+                          );
+                          setContent(prev => ({
+                            ...prev,
+                            dualContentBlock: {
+                              ...prev.dualContentBlock,
+                              left: {
+                                ...prev.dualContentBlock.left,
+                                content: {
+                                  ...prev.dualContentBlock.left.content,
+                                  imageSrc: result.url,
+                                  imageFileId: result.fileId
+                                }
+                              }
+                            }
+                          }));
+                        } catch (err) {
+                          setErrorMessage("QR code upload failed");
+                        } finally {
+                          setUploading(false);
+                          setUploadProgress(prev => {
+                            const newPrev = { ...prev };
+                            delete newPrev.qr_code;
+                            return newPrev;
+                          });
+                        }
+                      }}
+                    >
+                      <label
+                        htmlFor="qr-image"
+                        className="flex items-center justify-center w-full px-4 py-4 border-2 border-dashed cursor-pointer hover:bg-gray-50"
                       >
-                        <label
-                          htmlFor={`cause-image-${idx}`}
-                          className="flex items-center justify-center w-full px-4 py-4 border-2 border-dashed cursor-pointer hover:bg-gray-50"
-                        >
-                          Click or drag image here
-                        </label>
-                      </div>
-                      
-                      {uploadProgress[`cause_${idx}`] !== undefined && (
-                        <div className="mt-2">
-                          <div className="h-2 w-full bg-gray-200">
-                            <div
-                              className="h-2 bg-[#004265] transition-all"
-                              style={{ width: `${uploadProgress[`cause_${idx}`]}%` }}
-                            />
-                          </div>
-                          <p className="text-xs mt-1">Uploading… {uploadProgress[`cause_${idx}`]}%</p>
-                        </div>
-                      )}
-                      {cause.imageSrc && (
-                        <div className="mt-4">
-                          <img src={cause.imageSrc} alt={cause.title} className="max-h-48 border object-cover" />
-                          <button
-                            onClick={() => {
-                              updateCause(idx, "imageSrc", "");
-                              updateCause(idx, "imageFileId", "");
-                            }}
-                            className="mt-2 px-3 py-1 border border-red-500 text-red-500 text-sm hover:bg-red-50"
-                          >
-                            Remove Image
-                          </button>
-                        </div>
-                      )}
+                        Click or drag QR code image here
+                      </label>
                     </div>
+                    
+                    {uploadProgress.qr_code !== undefined && (
+                      <div className="mt-2">
+                        <div className="h-2 w-full bg-gray-200">
+                          <div
+                            className="h-2 bg-[#004265] transition-all"
+                            style={{ width: `${uploadProgress.qr_code}%` }}
+                          />
+                        </div>
+                        <p className="text-xs mt-1">Uploading… {uploadProgress.qr_code}%</p>
+                      </div>
+                    )}
+                    {content.dualContentBlock.left.content.imageSrc && (
+                      <div className="mt-4">
+                        <img 
+                          src={content.dualContentBlock.left.content.imageSrc} 
+                          alt="QR Code" 
+                          className="max-h-48 border object-cover" 
+                        />
+                        <button
+                          onClick={() => {
+                            setContent(prev => ({
+                              ...prev,
+                              dualContentBlock: {
+                                ...prev.dualContentBlock,
+                                left: {
+                                  ...prev.dualContentBlock.left,
+                                  content: {
+                                    ...prev.dualContentBlock.left.content,
+                                    imageSrc: "",
+                                    imageFileId: ""
+                                  }
+                                }
+                              }
+                            }));
+                          }}
+                          className="mt-2 px-3 py-1 border border-red-500 text-red-500 text-sm hover:bg-red-50"
+                        >
+                          Remove Image
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">QR Code Alt Text</label>
+                    <input
+                      type="text"
+                      value={content.dualContentBlock.left.content.imageAlt}
+                      onChange={(e) => setContent(prev => ({
+                        ...prev,
+                        dualContentBlock: {
+                          ...prev.dualContentBlock,
+                          left: {
+                            ...prev.dualContentBlock.left,
+                            content: {
+                              ...prev.dualContentBlock.left.content,
+                              imageAlt: e.target.value
+                            }
+                          }
+                        }
+                      }))}
+                      className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                    />
                   </div>
                 </div>
-              ))}
+              </div>
+
+              {/* Right Block (International Donors - Buttons) */}
+              <div className="border p-5">
+                <h3 className="font-bold text-lg mb-4">Right Block: International Donors</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Title</label>
+                    <input
+                      type="text"
+                      value={content.dualContentBlock.right.title}
+                      onChange={(e) => setContent(prev => ({
+                        ...prev,
+                        dualContentBlock: {
+                          ...prev.dualContentBlock,
+                          right: { ...prev.dualContentBlock.right, title: e.target.value }
+                        }
+                      }))}
+                      className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Title Color</label>
+                    <input
+                      type="color"
+                      value={content.dualContentBlock.right.titleColor}
+                      onChange={(e) => setContent(prev => ({
+                        ...prev,
+                        dualContentBlock: {
+                          ...prev.dualContentBlock,
+                          right: { ...prev.dualContentBlock.right, titleColor: e.target.value }
+                        }
+                      }))}
+                      className="w-full h-12 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Background Color</label>
+                    <input
+                      type="color"
+                      value={content.dualContentBlock.right.bgColor}
+                      onChange={(e) => setContent(prev => ({
+                        ...prev,
+                        dualContentBlock: {
+                          ...prev.dualContentBlock,
+                          right: { ...prev.dualContentBlock.right, bgColor: e.target.value }
+                        }
+                      }))}
+                      className="w-full h-12 px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Donor Options</label>
+                    {content.dualContentBlock.right.content.map((option, idx) => (
+                      <div key={idx} className="mb-4 p-4 border rounded">
+                        <div className="flex justify-between items-start mb-2">
+                          <h4 className="font-medium">Option #{idx + 1}</h4>
+                          <button
+                            onClick={() => removeDonorOption(idx)}
+                            className="px-3 py-1 border border-red-500 text-red-500 text-sm hover:bg-red-50"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                        <div className="space-y-3">
+                          <div>
+                            <label className="block text-sm font-medium mb-1">Button Text</label>
+                            <input
+                              type="text"
+                              value={option.text}
+                              onChange={(e) => updateDonorOption(idx, "text", e.target.value)}
+                              className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium mb-1">Button Color Class</label>
+                            <input
+                              type="text"
+                              value={option.bgColor}
+                              onChange={(e) => updateDonorOption(idx, "bgColor", e.target.value)}
+                              className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                              placeholder="bg-blue/60, bg-purple/60, etc."
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium mb-1">Redirect URL</label>
+                            <input
+                              type="text"
+                              value={option.url}
+                              onChange={(e) => updateDonorOption(idx, "url", e.target.value)}
+                              className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                              placeholder="/donate or external URL"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 
-          {/* Quote Section */}
-          {activeTab === "quote" && (
+          {/* Policies Section */}
+          {activeTab === "policies" && (
             <div className="space-y-6">
-              <h2 className="text-xl sm:text-2xl font-medium mb-6 font-sans!">Quote Section</h2>
+              <h2 className="text-xl sm:text-2xl font-medium mb-6 font-sans!">Policies</h2>
               
-              <div>
-                <label className="block text-sm font-medium mb-2">Quote Text</label>
-                <textarea
-                  value={content.entireWorld.text}
-                  onChange={(e) => setContent(prev => ({
-                    ...prev,
-                    entireWorld: { text: e.target.value }
-                  }))}
-                  className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2 scrollable-description"
-                  rows={3}
-                  placeholder="Enter the quote text here..."
-                />
-                <p className="text-base! text-gray-500 mt-1">This quote is displayed prominently on the support page.</p>
+              {/* Privacy Policy */}
+              <div className="border p-5 mb-6">
+                <h3 className="font-bold text-lg mb-4">Privacy Policy</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Title</label>
+                    <input
+                      type="text"
+                      value={content.privacyPolicy.title}
+                      onChange={(e) => updatePrivacyPolicy("title", e.target.value)}
+                      className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Content</label>
+                    <textarea
+                      value={content.privacyPolicy.content.text}
+                      onChange={(e) => updatePrivacyPolicy("content.text", e.target.value)}
+                      className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2 scrollable-description"
+                      rows={6}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Background Color Class</label>
+                    <input
+                      type="text"
+                      value={content.privacyPolicy.bgColor}
+                      onChange={(e) => updatePrivacyPolicy("bgColor", e.target.value)}
+                      className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                      placeholder="bg-pink/50, bg-blue/50, etc."
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Refund Policy */}
+              <div className="border p-5">
+                <h3 className="font-bold text-lg mb-4">Refund Policy</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Title</label>
+                    <input
+                      type="text"
+                      value={content.refundPolicy.title}
+                      onChange={(e) => updateRefundPolicy("title", e.target.value)}
+                      className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Content</label>
+                    <textarea
+                      value={content.refundPolicy.content.text}
+                      onChange={(e) => updateRefundPolicy("content.text", e.target.value)}
+                      className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2 scrollable-description"
+                      rows={6}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Background Color Class</label>
+                    <input
+                      type="text"
+                      value={content.refundPolicy.bgColor}
+                      onChange={(e) => updateRefundPolicy("bgColor", e.target.value)}
+                      className="w-full px-4 py-2 border bg-white focus:outline-none focus:ring-2"
+                      placeholder="bg-blue/50, bg-green/50, etc."
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           )}

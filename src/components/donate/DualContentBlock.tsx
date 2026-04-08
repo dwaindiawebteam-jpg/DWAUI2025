@@ -1,6 +1,7 @@
 // components/DualContentBlock.tsx
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 // Define the weight type based on Tailwind's font weight classes
 type FontWeight = "light" | "normal" | "medium" | "semibold" | "bold";
@@ -97,18 +98,28 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({
           >
             {finalRight.title}
           </h2>
-          <div className=" flex flex-col gap-5 justify-between justify-content-center pb-10">
+          <div className="flex flex-col gap-5 justify-between justify-content-center pb-10">
             {finalRight.content?.map((itemSegments, idx: number) => (
-
-            <button
-            key={idx}
-              type="submit"
-              className= {`cursor-pointer editor-content text-xl py-3 px-4 
-                    text-white ${itemSegments.bgColor}`}
-            >
-              {itemSegments.text}
-            </button>
-              ))}
+              itemSegments.url ? (
+                <Link
+                  key={idx}
+                  href={itemSegments.url}
+                  target={itemSegments.url.startsWith('http') ? '_blank' : '_self'}
+                  rel={itemSegments.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  className={`cursor-pointer editor-content text-2xl! sm:text-3xl! md:text-4x! py-3 px-4 text-white text-center inline-block ${itemSegments.bgColor}`}
+                >
+                  {itemSegments.text}
+                </Link>
+              ) : (
+                <button
+                  key={idx}
+                  type="submit"
+                  className={`cursor-pointer editor-content text-2xl! sm:text-3xl! md:text-4x! py-3 px-4 text-white ${itemSegments.bgColor}`}
+                >
+                  {itemSegments.text}
+                </button>
+              )
+            ))}
           </div>
         </div>
       </div>
@@ -117,4 +128,3 @@ const DualContentBlock: React.FC<DualContentBlockProps> = ({
 };
 
 export default DualContentBlock;
-

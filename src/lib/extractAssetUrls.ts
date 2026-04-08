@@ -3,6 +3,8 @@ import type { AboutContent } from "@/types/about";
 import type { ProjectsContent } from "@/types/projects";
 import type { ResourcesContent } from "@/types/resources";
 import type { SupportContent } from "@/types/support";
+import type { DonateContent } from "@/types/donate";
+
 
 // Types for the new homepage structure
 interface NewHomeContent {
@@ -224,6 +226,23 @@ export function extractAssetUrlsFromSupport(content: SupportContent): string[] {
         urls.push(cause.imageSrc);
       }
     });
+  }
+
+  return [...new Set(urls)];
+}
+
+// lib/extractAssetUrls.ts (add this function to your existing file)
+export function extractAssetUrlsFromDonate(content: DonateContent): string[] {
+  const urls: string[] = [];
+
+  // Hero section image
+  if (content.heroSection?.image) {
+    urls.push(content.heroSection.image);
+  }
+
+  // Left block QR code image (if type is image)
+  if (content.dualContentBlock?.left?.type === "image" && content.dualContentBlock.left.content?.imageSrc) {
+    urls.push(content.dualContentBlock.left.content.imageSrc);
   }
 
   return [...new Set(urls)];
