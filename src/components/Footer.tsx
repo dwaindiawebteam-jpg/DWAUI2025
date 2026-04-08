@@ -9,9 +9,11 @@ const Footer: FC = () => {
         <span className="justify-center text-purple">
           Ready to get involved?
         </span>
-        <button className="py-4 px-6 md:mr-20 bg-purple text-white hover:bg-purple/80 transition-colors">
-          Donate Now
-        </button>
+        <a href="/donate">
+          <button className="py-4 px-6 md:mr-20 bg-purple text-white hover:bg-purple/80 transition-colors">
+            Donate Now
+          </button>
+        </a>
       </div>
       <div className="relative flex flex-col md:flex-row editor-content bg-teal-900">
         {/* logo and company name */}
