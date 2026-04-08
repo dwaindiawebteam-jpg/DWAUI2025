@@ -204,22 +204,24 @@ const coverUrl = getCoverUrl(post.coverImage);
             </span>
           </div>
 
-          {/* Featured Image */}
+          {/* Featured Image - added mb-8 wrapper to match blog */}
           {coverUrl && (
-            <div className="relative w-full h-64 sm:h-96 lg:h-[500px] overflow-hidden border border-[#BFDBFE]">
-              <Image
-                src={coverUrl}
-                alt={post.coverImageAlt || post.title || "Article cover"}
-                fill
-                sizes="100vw"
-                className="object-cover"
-                style={{
-                  objectPosition: post.coverImagePosition
-                    ? `${post.coverImagePosition.x}% ${post.coverImagePosition.y}%`
-                    : "50% 50%",
-                }}
-                priority
-              />
+            <div className="mb-8">
+              <div className="relative w-full h-64 sm:h-96 lg:h-[500px] overflow-hidden border border-[#BFDBFE]">
+                <Image
+                  src={coverUrl}
+                  alt={post.coverImageAlt || post.title || "Article cover"}
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                  style={{
+                    objectPosition: post.coverImagePosition
+                      ? `${post.coverImagePosition.x}% ${post.coverImagePosition.y}%`
+                      : "50% 50%",
+                  }}
+                  priority
+                />
+              </div>
             </div>
           )}
 
