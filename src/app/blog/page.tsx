@@ -4,7 +4,7 @@ import { extractExcerptFromBody } from "@/lib/articles/extractExcerpt";
 import ArticleFiltersSuspense from "@/components/blog/ArticleFiltersSuspense";
 import InfoForm from "@/components/InfoForm";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Latest Blog Posts | DWA India",
@@ -14,10 +14,8 @@ export const metadata = {
 const ITEMS_PER_PAGE = 9;
 const PREFETCH_PAGES = 2;
 
-
-
 export default async function BlogPage() {
-    const q = query(
+  const q = query(
     collection(db, "articles"),
     where("status", "==", "published"),
     orderBy("updatedAt", "desc"),
@@ -29,7 +27,7 @@ export default async function BlogPage() {
   const articles = snapshot.docs.map((doc) => {
     const d = doc.data();
 
-     return {
+    return {
       id: doc.id,
       title: d.title,
       slug: d.slug,
@@ -44,11 +42,8 @@ export default async function BlogPage() {
 
   return (
     <main>
-      <ArticleFiltersSuspense
-        articles={articles}
-      />
+      <ArticleFiltersSuspense articles={articles} />
       <InfoForm />
     </main>
   );
 }
-
