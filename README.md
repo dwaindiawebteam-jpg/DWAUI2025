@@ -139,7 +139,7 @@ articles
 - authorId: string (references users)
 - authorEmail: string
 - content: JSON (TipTap output)
-- coverImage: string (R2 URL)
+- coverImage: string (ImageKit URL)
 - createdAt: timestamp
 - updatedAt: timestamp
 - publishedAt: timestamp (null if draft)
