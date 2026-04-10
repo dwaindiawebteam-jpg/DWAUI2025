@@ -73,7 +73,7 @@ To ensure the best experience with DWA India, follow these guidelines when creat
 - *Rich Text* – Use the TipTap editor for formatted content; all text is stored as JSON for flexibility and security
 - *Image Uploads* – Upload images directly through the editor; they'll be automatically optimized:
 - *Client-side*: Resized to max 1600px, ~80% JPEG quality, <1.2MB
-- *Server-side*: Converted to AVIF/WebP with Sharp
+- *Server-side*: Converted to AVIF/WebP with ImageKIt
 - *Special handling*: SVGs pass through, GIFs become animated WebP
 - *Read Tracking* – Views are counted once per IP + device combination to ensure accuracy
 
@@ -121,7 +121,6 @@ To ensure the best experience with DWA India, follow these guidelines when creat
 
 ### 👤 Reader
 - Read all published articles
-- Register for optional features (newsletter, comments)
 - No content creation permissions
 
 ## 🔐 Security Features
