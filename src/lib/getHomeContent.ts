@@ -7,15 +7,15 @@ export async function getHomeContent(): Promise<HomeContent | null> {
     const ref = adminDb.collection("siteContent").doc("home");
     const snap = await ref.get();
 
-    console.log("Doc exists:", snap.exists);
+  //  console.log("Doc exists:", snap.exists);
 
     if (!snap.exists) {
-      console.log("Document not found");
+    //  console.log("Document not found");
       return null;
     }
 
     const data = snap.data();
-    console.log("Fetched data:", data);
+    //console.log("Fetched data:", data);
 
     // Return null if document exists but has no data
     if (!data) {
@@ -107,7 +107,7 @@ export async function getHomeContent(): Promise<HomeContent | null> {
       }
     } as HomeContent;
   } catch (error) {
-    console.error("Error fetching home content:", error);
+   // console.error("Error fetching home content:", error);
     return null;
   }
 }

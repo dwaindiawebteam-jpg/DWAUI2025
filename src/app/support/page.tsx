@@ -1,4 +1,6 @@
 // app/support/page.tsx
+export const revalidate = 60;
+
 import React from 'react';
 import Causes from '@/components/support/Causes';
 import EntireWorld from '@/components/support/EntireWorld';

@@ -7,15 +7,15 @@ export async function getAboutContent(): Promise<AboutContent | null> {
     const ref = adminDb.collection("siteContent").doc("about");
     const snap = await ref.get();
 
-    console.log("About doc exists:", snap.exists);
+   // console.log("About doc exists:", snap.exists);
 
     if (!snap.exists) {
-      console.log("About document not found");
+     // console.log("About document not found");
       return null;
     }
 
     const data = snap.data();
-    console.log("Fetched about data:", data);
+    // console.log("Fetched about data:", data);
 
     if (!data) {
       return null;
@@ -218,7 +218,7 @@ export async function getAboutContent(): Promise<AboutContent | null> {
       }
     } as AboutContent;
   } catch (error) {
-    console.error("Error fetching about content:", error);
+    // console.error("Error fetching about content:", error);
     return null;
   }
 }

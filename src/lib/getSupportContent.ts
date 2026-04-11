@@ -115,7 +115,7 @@ export async function getSupportContent(): Promise<SupportContent> {
     
     return DEFAULT_SUPPORT_CONTENT;
   } catch (error) {
-    console.error("Error fetching support content:", error);
+   // console.error("Error fetching support content:", error);
     return DEFAULT_SUPPORT_CONTENT;
   }
 }
@@ -126,7 +126,7 @@ export async function getSupportCauses(): Promise<SupportCause[]> {
     const supportContent = await getSupportContent();
     return supportContent.causes?.causesList || [];
   } catch (error) {
-    console.error("Error fetching support causes:", error);
+   // console.error("Error fetching support causes:", error);
     return [];
   }
 }
@@ -137,7 +137,7 @@ export async function getSupportHeroSection(): Promise<SupportContent['heroSecti
     const supportContent = await getSupportContent();
     return supportContent.heroSection;
   } catch (error) {
-    console.error("Error fetching hero section:", error);
+   // console.error("Error fetching hero section:", error);
     return DEFAULT_SUPPORT_CONTENT.heroSection;
   }
 }
@@ -148,7 +148,7 @@ export async function getSupportQuote(): Promise<string> {
     const supportContent = await getSupportContent();
     return supportContent.entireWorld?.text || DEFAULT_SUPPORT_CONTENT.entireWorld.text;
   } catch (error) {
-    console.error("Error fetching quote:", error);
+    // console.error("Error fetching quote:", error);
     return DEFAULT_SUPPORT_CONTENT.entireWorld.text;
   }
 }

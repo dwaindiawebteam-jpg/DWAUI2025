@@ -1,4 +1,7 @@
 // app/resources/page.tsx
+
+export const revalidate = 60;
+
 import HeroSection from "@/components/HeroSection";
 import FeaturedStories from "@/components/resources/FeaturedStories";
 import ProjectsGallery from "@/components/resources/ProjectsGallery";

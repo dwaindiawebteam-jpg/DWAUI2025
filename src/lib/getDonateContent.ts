@@ -112,7 +112,7 @@ export async function getDonateContent(): Promise<DonateContent> {
     
     return DEFAULT_DONATE_CONTENT;
   } catch (error) {
-    console.error("Error fetching donate content:", error);
+  //  console.error("Error fetching donate content:", error);
     return DEFAULT_DONATE_CONTENT;
   }
 }

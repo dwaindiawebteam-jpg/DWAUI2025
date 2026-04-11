@@ -14,7 +14,7 @@ export async function getProjectsContent(): Promise<ProjectsContent | null> {
     
     return null;
   } catch (error) {
-    console.error("Error fetching projects content:", error);
+   // console.error("Error fetching projects content:", error);
     return null;
   }
 }

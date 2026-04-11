@@ -82,7 +82,7 @@ export async function getResourcesContent(): Promise<ResourcesContent> {
     
     return DEFAULT_RESOURCES_CONTENT;
   } catch (error) {
-    console.error("Error fetching resources content:", error);
+   // console.error("Error fetching resources content:", error);
     return DEFAULT_RESOURCES_CONTENT;
   }
 }
@@ -93,7 +93,7 @@ export async function getStoryPosts(): Promise<StoryPost[]> {
     const resourcesContent = await getResourcesContent();
     return resourcesContent.featuredStories?.stories || [];
   } catch (error) {
-    console.error("Error fetching story posts:", error);
+   // console.error("Error fetching story posts:", error);
     return [];
   }
 }
@@ -104,7 +104,7 @@ export async function getGallerySections(): Promise<GallerySection[]> {
     const resourcesContent = await getResourcesContent();
     return resourcesContent.projectsGallery?.sections || [];
   } catch (error) {
-    console.error("Error fetching gallery sections:", error);
+   // console.error("Error fetching gallery sections:", error);
     return [];
   }
 }
@@ -115,7 +115,7 @@ export async function getFacilitySections(): Promise<FacilitySection[]> {
     const resourcesContent = await getResourcesContent();
     return resourcesContent.orphanageOldageHome?.sections || [];
   } catch (error) {
-    console.error("Error fetching facility sections:", error);
+    // console.error("Error fetching facility sections:", error);
     return [];
   }
 }
@@ -126,7 +126,7 @@ export async function getAnnualReports(): Promise<AnnualReport[]> {
     const resourcesContent = await getResourcesContent();
     return resourcesContent.annualReports?.reports || [];
   } catch (error) {
-    console.error("Error fetching annual reports:", error);
+   // console.error("Error fetching annual reports:", error);
     return [];
   }
 }

@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import HeroSection from "@/components/HeroSection";
 import OngoingProjects from "@/components/projects/OngoingProjects";
 import DualContentBlock from "@/components/DualContentBlock";

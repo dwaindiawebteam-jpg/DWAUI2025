@@ -1,4 +1,7 @@
 // app/about/page.tsx
+
+export const revalidate = 60;
+
 import DualContentBlock from "@/components/DualContentBlock";
 import HeroSection from "@/components/HeroSection";
 import AboutAccreditations from "@/components/about/AboutAccreditations";

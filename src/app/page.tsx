@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import React, { Suspense } from "react";
 import HeroSection from "@/components/HeroSection";
 import DualContentBlock from "@/components/DualContentBlock";
@@ -10,6 +12,7 @@ import WhyTrustUs from "@/components/home/WhyTrustUs";
 import InfoForm from "@/components/InfoForm";
 import Partners from "@/components/Partners";
 import { getHomeContent } from "@/lib/getHomeContent";
+
 
 export default async function Home(): Promise<React.JSX.Element> {
   // Fetch home content from Firestore
