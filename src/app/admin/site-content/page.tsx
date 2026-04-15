@@ -12,7 +12,8 @@ import {
 
 import { IconType } from "react-icons";
 import { useAuth } from "@/context/AuthContext";
-
+import { useState } from "react";
+import FooterModal from "@/components/admin/FooterModal";
 
 interface Option {
   label: string;
@@ -22,6 +23,7 @@ interface Option {
 
 export default function SiteContentDashboard() {
   const { user, authReady } = useAuth();
+  const [showFooterModal, setShowFooterModal] = useState(false);
 
   // Content management cards
   const contentOptions: Option[] = [
@@ -55,32 +57,39 @@ export default function SiteContentDashboard() {
     href: "/admin/site-content/donate",
     icon: FiHeart,
   },
+  {
+  label: "Edit Footer",
+  href: "#",
+  icon: FiInfo, // or pick a better icon
+},
 ];
 
 
   const renderCard = (option: Option) => {
-    const Icon = option.icon;
+  const Icon = option.icon;
 
-  const handleClick = () => {};
+  const isFooter = option.label === "Edit Footer";
 
-    return (
-      <Link
-        key={option.label}
-        href={option.href}
-        className="flex flex-col items-center justify-center py-6 px-8 border hover:border-[#004265] bg-white/40 transition-colors duration-200 text-lg font-medium group text-center"
-        style={{ minWidth: "200px", minHeight: "120px" }}
-      >
-        <Icon
-          size={28}
-          className="mb-2 stroke-current transition-colors duration-300 group-hover:text-[#004265]"
-        />
-        <span className="leading-tight transition-colors duration-300 group-hover:text-[#004265]">
-          {option.label}
-        </span>
-      </Link>
-    );
+  const handleClick = (e: React.MouseEvent) => {
+    if (isFooter) {
+      e.preventDefault();
+      setShowFooterModal(true);
+    }
   };
 
+  return (
+    <Link
+      key={option.label}
+      href={option.href}
+      onClick={handleClick}
+      className="flex flex-col items-center justify-center py-6 px-8 border hover:border-[#004265] bg-white/40 transition-colors duration-200 text-lg font-medium group text-center"
+      style={{ minWidth: "200px", minHeight: "120px" }}
+    >
+      <Icon size={28} className="mb-2 group-hover:text-[#004265]" />
+      <span>{option.label}</span>
+    </Link>
+  );
+};
   // Show loading until Firebase has finished initializing
   if (!authReady) {
     return (
@@ -129,7 +138,9 @@ export default function SiteContentDashboard() {
           </div>
         </div>
       </div>
-
+      {showFooterModal && (
+        <FooterModal onClose={() => setShowFooterModal(false)} />
+      )}
     </div>
   );
 }
