@@ -39,36 +39,43 @@ export async function getHomeContent(): Promise<HomeContent | null> {
         image: "/images/homepage/HomepageChildrenImage.jpg",
         imageFileId: ""
       },
-      dualContentBlock: data.dualContentBlock || {
-        left: {
-          title: "Goals",
-          titleColor: "#FFFFFF",
-          bgColor: "bg-navy-blue",
-          content: [
-            { text: "End poverty & discrimination 🚫", weight: "normal", color: "#FFFFFF" },
-            { text: "Equal learning for every child 👧👦", weight: "normal", color: "#FFFFFF" },
-            { text: "Economic independence for families 💰", weight: "normal", color: "#FFFFFF" },
-            { text: "Strong, healthy communities 🌱", weight: "normal", color: "#FFFFFF" },
-            { text: "Self-reliant rural villages 🌾", weight: "normal", color: "#FFFFFF" },
-            { text: "Inclusive growth & participation 🌍", weight: "normal", color: "#FFFFFF" },
-            { text: "Respect and empowerment for Dalits 🌟", weight: "normal", color: "#FFFFFF" }
-          ]
-        },
-        right: {
-          title: "Objectives",
-          titleColor: "#000000",
-          bgColor: "bg-blue/50",
-          content: [
-            { text: "Promote equality & justice ⚖️", weight: "normal", color: "#000000" },
-            { text: "Quality education for children 📚", weight: "normal", color: "#000000" },
-            { text: "Women's empowerment & livelihoods 👩‍👩‍👧", weight: "normal", color: "#000000" },
-            { text: "Better health & nutrition 🏥", weight: "normal", color: "#000000" },
-            { text: "Sustainable livelihoods & skills 🛠️", weight: "normal", color: "#000000" },
-            { text: "Community leadership 🤝", weight: "normal", color: "#000000" },
-            { text: "Rights & dignity advocacy ✊", weight: "normal", color: "#000000" }
-          ]
-        }
-      },
+   dualContentBlock: {
+  left: {
+    ...(data.dualContentBlock?.left || {
+      title: "Goals",
+      titleColor: "#FFFFFF",
+      bgColor: "bg-navy-blue",
+      content: [
+        { text: "End poverty & discrimination 🚫", weight: "normal", color: "#FFFFFF" },
+        { text: "Equal learning for every child 👧👦", weight: "normal", color: "#FFFFFF" },
+        { text: "Economic independence for families 💰", weight: "normal", color: "#FFFFFF" },
+        { text: "Strong, healthy communities 🌱", weight: "normal", color: "#FFFFFF" },
+        { text: "Self-reliant rural villages 🌾", weight: "normal", color: "#FFFFFF" },
+        { text: "Inclusive growth & participation 🌍", weight: "normal", color: "#FFFFFF" },
+        { text: "Respect and empowerment for Dalits 🌟", weight: "normal", color: "#FFFFFF" }
+      ]
+    }),
+    type: "list" // ✅ ALWAYS applied
+  },
+
+  right: {
+    ...(data.dualContentBlock?.right || {
+      title: "Objectives",
+      titleColor: "#000000",
+      bgColor: "bg-blue/50",
+      content: [
+        { text: "Promote equality & justice ⚖️", weight: "normal", color: "#000000" },
+        { text: "Quality education for children 📚", weight: "normal", color: "#000000" },
+        { text: "Women's empowerment & livelihoods 👩‍👩‍👧", weight: "normal", color: "#000000" },
+        { text: "Better health & nutrition 🏥", weight: "normal", color: "#000000" },
+        { text: "Sustainable livelihoods & skills 🛠️", weight: "normal", color: "#000000" },
+        { text: "Community leadership 🤝", weight: "normal", color: "#000000" },
+        { text: "Rights & dignity advocacy ✊", weight: "normal", color: "#000000" }
+      ]
+    }),
+    type: "list" // ✅ ALWAYS applied
+  }
+},
       programs: data.programs || {
         title: "Our Programs",
         items: []
